@@ -23,4 +23,6 @@ Cores e fontes vêm do Kit do Elementor do site.
 github.com/TravelTecOficial/traveltec-roteiros e mostra "Atualizar agora" na tela de Plugins.
 Repositório privado: define( 'TT_ROTEIROS_GITHUB_TOKEN', '...' ) no wp-config.php.
 
-1.3.1: a aba do navegador em /roteiros/ deixa de ser "Roteiros Archive".
+1.3.1: rótulos do tipo de conteúdo (busca e lista vazia).
+
+1.3.2: a aba do navegador em /roteiros/ deixa de ser "Roteiros Archive" — quem escrevia isso era o Rank Math.

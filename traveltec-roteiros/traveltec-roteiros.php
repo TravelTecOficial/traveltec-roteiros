@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TravelTec Roteiros
  * Description: Sistema de roteiros do site: tipo de conteúdo "Roteiros", campos, recebimento pela API (n8n / Cliente Ideal) e as páginas do Elementor (galeria, card e roteiro individual). Sem ACF nem CPT UI.
- * Version:     1.3.1
+ * Version:     1.3.2
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TT_ROTEIROS_VERSION', '1.3.1' );
+define( 'TT_ROTEIROS_VERSION', '1.3.2' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
@@ -57,7 +57,6 @@ function tt_roteiros_registrar_tipo() {
 				'all_items'     => 'Todos os roteiros',
 				'search_items'  => 'Buscar roteiros',
 				'not_found'     => 'Nenhum roteiro encontrado.',
-				// Sem isto a aba do navegador em /roteiros/ fica "Roteiros Archive".
 				'archives'      => 'Roteiros',
 			),
 			'public'       => true,
@@ -86,6 +85,20 @@ add_action( 'init', function () {
 		) );
 	}
 }, 20 );
+
+/**
+ * Em /roteiros/ quem escreve o título da aba é o Rank Math, com o modelo dele
+ * ("%pt_plural% Archive %sep% %sitename%") — daí sair "Roteiros Archive".
+ * Tira só esse "Archive" que o próprio Rank Math acrescenta; um título escrito à mão
+ * em Rank Math › Títulos e Meta › Roteiros passa direto, sem ser mexido.
+ */
+add_filter( 'rank_math/frontend/title', function ( $titulo ) {
+	$tipo = get_post_type_object( 'roteiros' );
+	if ( ! is_post_type_archive( 'roteiros' ) || ! $tipo ) {
+		return $titulo;
+	}
+	return str_replace( $tipo->labels->name . ' Archive', $tipo->labels->name, $titulo );
+} );
 
 /**
  * Campo "acf" na API REST — o mesmo formato que o fluxo n8n já envia
