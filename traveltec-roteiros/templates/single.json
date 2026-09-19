@@ -1,0 +1,545 @@
+[
+ {
+  "id": "d53b94a",
+  "elType": "container",
+  "settings": {
+   "flex_direction": "column",
+   "min_height": {
+    "unit": "px",
+    "size": 537,
+    "sizes": []
+   },
+   "flex_justify_content": "center",
+   "background_background": "classic",
+   "background_position": "center center",
+   "background_overlay_background": "classic",
+   "background_overlay_color": "#00000073",
+   "__dynamic__": {
+    "background_image": "[elementor-tag id=\"ttcade6\" name=\"post-featured-image\" settings=\"%7B%22fallback%22%3A%7B%22url%22%3A%22%22%2C%22id%22%3A%22%22%7D%7D\"]"
+   },
+   "background_repeat": "no-repeat",
+   "background_size": "cover",
+   "background_attachment": "fixed",
+   "margin": {
+    "unit": "px",
+    "top": "0",
+    "right": "0",
+    "bottom": "0",
+    "left": "0",
+    "isLinked": true
+   },
+   "padding": {
+    "unit": "px",
+    "top": "0",
+    "right": "0",
+    "bottom": "0",
+    "left": "0",
+    "isLinked": true
+   }
+  },
+  "elements": [
+   {
+    "id": "41ef95a",
+    "elType": "widget",
+    "settings": {
+     "title": "Adicione o texto do seu título aqui",
+     "typography_typography": "custom",
+     "typography_font_size": {
+      "unit": "px",
+      "size": 39,
+      "sizes": []
+     },
+     "typography_font_weight": "600",
+     "title_color": "#FFFFFF",
+     "__dynamic__": {
+      "title": "[elementor-tag id=\"21e23a0\" name=\"post-title\" settings=\"%7B%7D\"]"
+     }
+    },
+    "elements": [],
+    "widgetType": "heading"
+   },
+   {
+    "id": "1cc75f8",
+    "elType": "widget",
+    "settings": {
+     "title": "Adicione o texto do seu título aqui",
+     "typography_typography": "custom",
+     "typography_font_size": {
+      "unit": "px",
+      "size": 20,
+      "sizes": []
+     },
+     "typography_font_weight": "400",
+     "title_color": "#FFFFFF",
+     "__dynamic__": {
+      "title": "[elementor-tag id=\"f90467c\" name=\"post-date\" settings=\"%7B%7D\"]"
+     }
+    },
+    "elements": [],
+    "widgetType": "heading"
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "0127e6b",
+  "elType": "container",
+  "settings": {
+   "flex_direction": "column",
+   "background_background": "classic",
+   "margin": {
+    "unit": "px",
+    "top": "30",
+    "right": "10",
+    "bottom": "10",
+    "left": "10",
+    "isLinked": false
+   },
+   "padding": {
+    "unit": "px",
+    "top": "10",
+    "right": "10",
+    "bottom": "10",
+    "left": "10",
+    "isLinked": true
+   }
+  },
+  "elements": [
+   {
+    "id": "c1c3bfa",
+    "elType": "widget",
+    "settings": {
+     "title": "Adicione o texto do seu título aqui",
+     "typography_typography": "custom",
+     "typography_font_weight": "600",
+     "title_color": "#000000",
+     "__dynamic__": {
+      "title": "[elementor-tag id=\"tt0e804\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22subtitulo%22%2C%22custom_key%22%3A%22subtitulo%22%7D\"]"
+     },
+     "__globals__": {
+      "title_color": "globals/colors?id=primary"
+     }
+    },
+    "elements": [],
+    "widgetType": "heading"
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "ttpreco1",
+  "elType": "container",
+  "settings": {
+   "flex_direction": "column",
+   "margin": {
+    "unit": "px",
+    "top": "0",
+    "right": "10",
+    "bottom": "0",
+    "left": "10",
+    "isLinked": false
+   },
+   "padding": {
+    "unit": "px",
+    "top": "0",
+    "right": "10",
+    "bottom": "0",
+    "left": "10",
+    "isLinked": false
+   }
+  },
+  "elements": [
+   {
+    "id": "ttpreco2",
+    "elType": "widget",
+    "widgetType": "text-editor",
+    "settings": {
+     "__dynamic__": {
+      "editor": "[elementor-tag id=\"ttc7b32\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22preco_de_referencia%22%2C%22custom_key%22%3A%22preco_de_referencia%22%7D\"]"
+     },
+     "typography_typography": "custom",
+     "typography_font_weight": "600",
+     "__globals__": {
+      "text_color": "globals/colors?id=primary"
+     }
+    },
+    "elements": []
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "9fb844e",
+  "elType": "container",
+  "settings": {
+   "flex_direction": "column"
+  },
+  "elements": [
+   {
+    "id": "e9a13f6",
+    "elType": "widget",
+    "settings": {
+     "_padding": {
+      "unit": "px",
+      "top": "10",
+      "right": "10",
+      "bottom": "10",
+      "left": "10",
+      "isLinked": true
+     },
+     "__dynamic__": {
+      "editor": "[elementor-tag id=\"tta5e4d\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22texto_de_apresentacao%22%2C%22custom_key%22%3A%22texto_de_apresentacao%22%7D\"]"
+     }
+    },
+    "elements": [],
+    "widgetType": "text-editor"
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "0c1af54",
+  "elType": "container",
+  "settings": [],
+  "elements": [
+   {
+    "id": "e64c2ab",
+    "elType": "widget",
+    "settings": {
+     "__dynamic__": {
+      "editor": "[elementor-tag id=\"tt0938f\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22galeria%22%2C%22custom_key%22%3A%22galeria%22%7D\"]"
+     }
+    },
+    "elements": [],
+    "widgetType": "text-editor"
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "c61cb1c",
+  "elType": "container",
+  "settings": {
+   "margin": {
+    "unit": "px",
+    "top": "20",
+    "right": "10",
+    "bottom": "50",
+    "left": "10",
+    "isLinked": false
+   }
+  },
+  "elements": [
+   {
+    "id": "6dfa697",
+    "elType": "widget",
+    "widgetType": "nested-tabs",
+    "settings": {
+     "tabs": [
+      {
+       "tab_title": "Programação",
+       "_id": "a29ca66"
+      },
+      {
+       "tab_title": "Hospedagem",
+       "_id": "3724236"
+      },
+      {
+       "tab_title": "Inclui",
+       "_id": "bbb4106"
+      },
+      {
+       "_id": "3adb8be",
+       "tab_title": "Não Inclui"
+      },
+      {
+       "_id": "36b01ec",
+       "tab_title": "Pagamento"
+      },
+      {
+       "_id": "acc70f2",
+       "tab_title": "Cancelamento"
+      },
+      {
+       "_id": "6e6e53a",
+       "tab_title": "Documentação"
+      }
+     ],
+     "tabs_title_background_color_background": "classic",
+     "tabs_title_background_color_color": "#E7E7E7",
+     "tabs_title_background_color_active_color": "#757575",
+     "title_typography_typography": "custom",
+     "title_typography_font_size": {
+      "unit": "px",
+      "size": 13,
+      "sizes": []
+     },
+     "title_typography_font_weight": "500",
+     "tabs_title_background_color_hover_color": "#9B9B9B",
+     "__globals__": {
+      "tabs_title_background_color_active_color": "globals/colors?id=primary",
+      "tabs_title_background_color_hover_color": "globals/colors?id=accent"
+     }
+    },
+    "elements": [
+     {
+      "id": "bd01d7e",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 1",
+       "content_width": "full"
+      },
+      "elements": [
+       {
+        "id": "b1ba84f",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column"
+        },
+        "elements": [
+         {
+          "id": "20bf738",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tt693d6\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22programacao%22%2C%22custom_key%22%3A%22programacao%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "109fc12",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 2",
+       "content_width": "full"
+      },
+      "elements": [
+       {
+        "id": "d834f3f",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column"
+        },
+        "elements": [
+         {
+          "id": "956259f",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tt73568\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22hospedagem%22%2C%22custom_key%22%3A%22hospedagem%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "417ee35",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 3",
+       "content_width": "full"
+      },
+      "elements": [
+       {
+        "id": "7b2b89f",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column"
+        },
+        "elements": [
+         {
+          "id": "60ce7e0",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"ttabbf0\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22inclui%22%2C%22custom_key%22%3A%22inclui%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "9cc6a2e",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 4"
+      },
+      "elements": [
+       {
+        "id": "d6b1686",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column",
+         "content_width": "full"
+        },
+        "elements": [
+         {
+          "id": "70e4fd1",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tt133c6\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22nao_inclui%22%2C%22custom_key%22%3A%22nao_inclui%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "47b10b3",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 5"
+      },
+      "elements": [
+       {
+        "id": "0ba01c1",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column",
+         "content_width": "full"
+        },
+        "elements": [
+         {
+          "id": "0e96be2",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tt7861e\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22pagamento%22%2C%22custom_key%22%3A%22pagamento%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "90019f1",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 6"
+      },
+      "elements": [
+       {
+        "id": "3d11077",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column",
+         "content_width": "full"
+        },
+        "elements": [
+         {
+          "id": "1ff3c24",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tt341b5\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22cancelamento%22%2C%22custom_key%22%3A%22cancelamento%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     },
+     {
+      "id": "523559f",
+      "elType": "container",
+      "settings": {
+       "_title": "Aba Nº 7"
+      },
+      "elements": [
+       {
+        "id": "688d854",
+        "elType": "container",
+        "settings": {
+         "flex_direction": "column",
+         "content_width": "full"
+        },
+        "elements": [
+         {
+          "id": "a32b2c0",
+          "elType": "widget",
+          "settings": {
+           "__dynamic__": {
+            "editor": "[elementor-tag id=\"tte3ec3\" name=\"post-custom-field\" settings=\"%7B%22key%22%3A%22documentacao%22%2C%22custom_key%22%3A%22documentacao%22%7D\"]"
+           }
+          },
+          "elements": [],
+          "widgetType": "text-editor"
+         }
+        ],
+        "isInner": true
+       }
+      ],
+      "isInner": true,
+      "isLocked": true
+     }
+    ]
+   }
+  ],
+  "isInner": false
+ },
+ {
+  "id": "609f451",
+  "elType": "container",
+  "settings": {
+   "flex_direction": "column",
+   "min_height": {
+    "unit": "px",
+    "size": 83,
+    "sizes": []
+   }
+  },
+  "elements": [
+   {
+    "id": "7cd3c67",
+    "elType": "widget",
+    "settings": {
+     "text": "Divisor"
+    },
+    "elements": [],
+    "widgetType": "divider"
+   }
+  ],
+  "isInner": false
+ }
+]

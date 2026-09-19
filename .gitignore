@@ -1,0 +1,6 @@
+dist/
+*.zip
+
+# Fora do escopo do plugin: cópias das Edge Functions e o DDL do Supabase.
+edge/
+prod-roteiros-lazer.sql

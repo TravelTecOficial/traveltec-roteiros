@@ -1,0 +1,31 @@
+/* Galeria do roteiro: faixa duplicada + translateX(-50%) = volta contínua, sem salto.
+   O HTML do roteiro vem com um <style> que o WordPress descarta ao gravar o campo
+   (wp_kses tira a tag), então as regras vivem aqui. Sem isso sobra a rolagem manual. */
+
+.rt-galeria {
+	overflow-x: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.rt-galeria {
+		overflow: hidden;
+	}
+
+	.rt-galeria-track {
+		animation: rt-scroll var(--rt-duracao, 40s) linear infinite;
+	}
+
+	.rt-galeria:hover .rt-galeria-track {
+		animation-play-state: paused;
+	}
+}
+
+@keyframes rt-scroll {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-50%);
+	}
+}
