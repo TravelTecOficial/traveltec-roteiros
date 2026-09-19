@@ -22,3 +22,5 @@ Cores e fontes vêm do Kit do Elementor do site.
 1.3.0: atualização automática. O site consulta as releases do repositório
 github.com/TravelTecOficial/traveltec-roteiros e mostra "Atualizar agora" na tela de Plugins.
 Repositório privado: define( 'TT_ROTEIROS_GITHUB_TOKEN', '...' ) no wp-config.php.
+
+1.3.1: a aba do navegador em /roteiros/ deixa de ser "Roteiros Archive".

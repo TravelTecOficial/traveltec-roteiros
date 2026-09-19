@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TravelTec Roteiros
  * Description: Sistema de roteiros do site: tipo de conteúdo "Roteiros", campos, recebimento pela API (n8n / Cliente Ideal) e as páginas do Elementor (galeria, card e roteiro individual). Sem ACF nem CPT UI.
- * Version:     1.3.0
+ * Version:     1.3.1
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TT_ROTEIROS_VERSION', '1.3.0' );
+define( 'TT_ROTEIROS_VERSION', '1.3.1' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
@@ -55,6 +55,10 @@ function tt_roteiros_registrar_tipo() {
 				'add_new_item'  => 'Adicionar novo roteiro',
 				'edit_item'     => 'Editar roteiro',
 				'all_items'     => 'Todos os roteiros',
+				'search_items'  => 'Buscar roteiros',
+				'not_found'     => 'Nenhum roteiro encontrado.',
+				// Sem isto a aba do navegador em /roteiros/ fica "Roteiros Archive".
+				'archives'      => 'Roteiros',
 			),
 			'public'       => true,
 			'has_archive'  => 'roteiros', // /roteiros/ lista os roteiros; /roteiros/<slug>/ abre um
