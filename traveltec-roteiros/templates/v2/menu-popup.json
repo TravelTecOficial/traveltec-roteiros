@@ -1,0 +1,194 @@
+{
+ "chave": "menu-popup",
+ "tipo": "elementor_library",
+ "titulo": "Menu (celular)",
+ "slug": null,
+ "condicoes": [
+  "include/general"
+ ],
+ "template_type": "popup",
+ "page_template": "",
+ "topo_transparente": false,
+ "data": [
+  {
+   "id": "c0012ab",
+   "elType": "container",
+   "settings": {
+    "flex_direction": "column"
+   },
+   "elements": [
+    {
+     "id": "bb81488",
+     "elType": "widget",
+     "settings": {
+      "width": {
+       "unit": "%",
+       "size": 18,
+       "sizes": []
+      },
+      "__dynamic__": {
+       "image": "[elementor-tag id=\"\" name=\"site-logo\" settings=\"%7B%7D\"]"
+      }
+     },
+     "elements": [],
+     "widgetType": "theme-site-logo"
+    },
+    {
+     "id": "d632adb",
+     "elType": "widget",
+     "settings": {
+      "title": "%tt:nome%",
+      "align": "center",
+      "typography_typography": "custom",
+      "typography_font_family": "Montserrat",
+      "typography_font_size": {
+       "unit": "px",
+       "size": 20,
+       "sizes": []
+      },
+      "typography_font_size_mobile": {
+       "unit": "px",
+       "size": 22,
+       "sizes": []
+      },
+      "typography_font_weight": "600",
+      "text_stroke_text_stroke_type": "yes",
+      "text_shadow_text_shadow_type": "yes",
+      "text_shadow_text_shadow": {
+       "horizontal": 0,
+       "vertical": 0,
+       "blur": 1,
+       "color": "rgba(0,0,0,0.3)"
+      },
+      "title_color": "#FF870B"
+     },
+     "elements": [],
+     "widgetType": "heading"
+    },
+    {
+     "id": "674a3d5",
+     "elType": "widget",
+     "settings": {
+      "text": "Divisor"
+     },
+     "elements": [],
+     "widgetType": "divider"
+    },
+    {
+     "id": "7c82ad4",
+     "elType": "widget",
+     "settings": {
+      "menu_name": "Menu",
+      "menu": "{{MENU:principal}}",
+      "layout": "vertical",
+      "align_items": "center",
+      "text_align": "center",
+      "toggle": ""
+     },
+     "elements": [],
+     "widgetType": "nav-menu"
+    },
+    {
+     "id": "ffcfe91",
+     "elType": "widget",
+     "settings": {
+      "social_icon_list": [
+       {
+        "social_icon": {
+         "value": "fab fa-instagram",
+         "library": "fa-brands"
+        },
+        "_id": "ttso0",
+        "link": {
+         "url": "https://tt.token/instagram_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-facebook",
+         "library": "fa-brands"
+        },
+        "_id": "ttso1",
+        "link": {
+         "url": "https://tt.token/facebook_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-youtube",
+         "library": "fa-brands"
+        },
+        "_id": "ttso2",
+        "link": {
+         "url": "https://tt.token/youtube_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-linkedin",
+         "library": "fa-brands"
+        },
+        "_id": "ttso3",
+        "link": {
+         "url": "https://tt.token/linkedin_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-tiktok",
+         "library": "fa-brands"
+        },
+        "_id": "ttso4",
+        "link": {
+         "url": "https://tt.token/tiktok_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       }
+      ],
+      "icon_color": "custom",
+      "icon_primary_color": "#E98300",
+      "icon_size": {
+       "unit": "px",
+       "size": 17,
+       "sizes": []
+      }
+     },
+     "elements": [],
+     "widgetType": "social-icons"
+    },
+    {
+     "id": "d5532b2",
+     "elType": "widget",
+     "settings": {
+      "text": "Divisor"
+     },
+     "elements": [],
+     "widgetType": "divider"
+    }
+   ],
+   "isInner": false
+  }
+ ],
+ "page_settings": {
+  "width": {
+   "unit": "px",
+   "size": 375,
+   "sizes": []
+  },
+  "height_type": "fit_to_screen"
+ }
+}

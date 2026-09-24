@@ -29,6 +29,7 @@ DOCS = [
     ("card", "card", "elementor_library", "Roteiros — card", None, []),
     ("lista", "lista", "elementor_library", "Roteiros — lista (/roteiros/)", None, ["include/archive/roteiros_archive"]),
     ("single", "single", "elementor_library", "Roteiros — página do roteiro", None, ["include/singular/roteiros"]),
+    ("menu-popup", "menu-popup", "elementor_library", "Menu (celular)", None, ["include/general"]),
     ("header", "header", "elementor_library", "Cabeçalho", None, ["include/general"]),
     ("footer", "footer", "elementor_library", "Rodapé", None, ["include/general"]),
     ("blog-arquivo", "blog-arquivo", "elementor_library", "Blog — arquivo", None, ["include/archive"]),
@@ -122,6 +123,8 @@ def trocar_texto(s):
     s = re.sub(r"rgba\(\s*233\s*,\s*131\s*,\s*0\s*,", "rgba(233,131,0,", s)
     s = re.sub(r'<div class="rt-obg-redes">.*?</div>', lambda m: redes_html(), s, flags=re.S)
     s = s.replace(":is(body.home,body.single-roteiros,body.page-id-7)", "body.tt-topo-transparente")
+    # o botão de menu do cabeçalho (celular) abre o popup do menu
+    s = s.replace("%22popup%22%3A%221078%22", "%22popup%22%3A%22{{DOC:menu-popup}}%22")
     return s
 
 
@@ -142,7 +145,7 @@ def tratar(no, chave):
             st.setdefault("__dynamic__", {})["image"] = '[elementor-tag id="" name="site-logo" settings="%7B%7D"]'
 
         if wt == "nav-menu" and "menu" in st:
-            st["menu"] = "{{MENU:principal}}" if chave == "header" else "{{MENU:rodape}}"
+            st["menu"] = "{{MENU:principal}}" if chave in ("header", "menu-popup") else "{{MENU:rodape}}"
         if wt == "jet-form-builder-form" and "form_id" in st:
             st["form_id"] = {"1025": "{{FORM:cotacao}}", "256": "{{FORM:contato}}", "943": "{{FORM:newsletter}}"}[str(st["form_id"])]
         if wt == "loop-grid" and str(st.get("template_id")) == "5357":

@@ -1,0 +1,24 @@
+{
+ "id": 1078,
+ "type": "elementor_library",
+ "title": "Menu",
+ "slug": "menu",
+ "template": "",
+ "status": "publish",
+ "meta": {
+  "_elementor_edit_mode": "builder",
+  "_elementor_template_type": "popup",
+  "_elementor_data": "[{\"id\":\"c0012ab\",\"elType\":\"container\",\"settings\":{\"flex_direction\":\"column\"},\"elements\":[{\"id\":\"bb81488\",\"elType\":\"widget\",\"settings\":{\"image\":{\"url\":\"https:\\/\\/redeturistica.com.br\\/wp-content\\/uploads\\/2025\\/03\\/logotipo-1.png\",\"id\":884,\"size\":\"\",\"alt\":\"\",\"source\":\"library\"},\"width\":{\"unit\":\"%\",\"size\":18,\"sizes\":[]}},\"elements\":[],\"widgetType\":\"image\"},{\"id\":\"d632adb\",\"elType\":\"widget\",\"settings\":{\"title\":\"Rede Tur\\u00edstica\",\"align\":\"center\",\"typography_typography\":\"custom\",\"typography_font_family\":\"Montserrat\",\"typography_font_size\":{\"unit\":\"px\",\"size\":20,\"sizes\":[]},\"typography_font_size_mobile\":{\"unit\":\"px\",\"size\":22,\"sizes\":[]},\"typography_font_weight\":\"600\",\"text_stroke_text_stroke_type\":\"yes\",\"text_shadow_text_shadow_type\":\"yes\",\"text_shadow_text_shadow\":{\"horizontal\":0,\"vertical\":0,\"blur\":1,\"color\":\"rgba(0,0,0,0.3)\"},\"title_color\":\"#FF870B\"},\"elements\":[],\"widgetType\":\"heading\"},{\"id\":\"674a3d5\",\"elType\":\"widget\",\"settings\":{\"text\":\"Divisor\"},\"elements\":[],\"widgetType\":\"divider\"},{\"id\":\"7c82ad4\",\"elType\":\"widget\",\"settings\":{\"menu_name\":\"Menu\",\"menu\":\"primary\",\"layout\":\"vertical\",\"align_items\":\"center\",\"text_align\":\"center\",\"toggle\":\"\"},\"elements\":[],\"widgetType\":\"nav-menu\"},{\"id\":\"ffcfe91\",\"elType\":\"widget\",\"settings\":{\"social_icon_list\":[{\"social_icon\":{\"value\":\"fab fa-facebook\",\"library\":\"fa-brands\"},\"_id\":\"c8d3080\",\"link\":{\"url\":\"https:\\/\\/www.facebook.com\\/profile.php?id=61567180525605\",\"is_external\":\"true\",\"nofollow\":\"\",\"custom_attributes\":\"\"}},{\"social_icon\":{\"value\":\"fab fa-instagram\",\"library\":\"fa-brands\"},\"_id\":\"db7a02c\",\"link\":{\"url\":\"https:\\/\\/www.instagram.com\\/rede_turistica\\/\",\"is_external\":\"true\",\"nofollow\":\"\",\"custom_attributes\":\"\"}},{\"social_icon\":{\"value\":\"fab fa-youtube\",\"library\":\"fa-brands\"},\"_id\":\"52738c8\",\"link\":{\"url\":\"https:\\/\\/www.youtube.com\\/@RedeTuristica\",\"is_external\":\"true\",\"nofollow\":\"\",\"custom_attributes\":\"\"}}],\"icon_color\":\"custom\",\"icon_primary_color\":\"#F09308\",\"icon_size\":{\"unit\":\"px\",\"size\":17,\"sizes\":[]}},\"elements\":[],\"widgetType\":\"social-icons\"},{\"id\":\"d5532b2\",\"elType\":\"widget\",\"settings\":{\"text\":\"Divisor\"},\"elements\":[],\"widgetType\":\"divider\"}],\"isInner\":false}]",
+  "_elementor_page_settings": {
+   "width": {
+    "unit": "px",
+    "size": 375,
+    "sizes": []
+   },
+   "height_type": "fit_to_screen"
+  },
+  "_elementor_conditions": [
+   "include/general"
+  ]
+ }
+}

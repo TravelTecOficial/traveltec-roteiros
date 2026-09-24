@@ -19,6 +19,12 @@
    "slug": null
   },
   {
+   "chave": "menu-popup",
+   "tipo": "elementor_library",
+   "titulo": "Menu (celular)",
+   "slug": null
+  },
+  {
    "chave": "header",
    "tipo": "elementor_library",
    "titulo": "Cabeçalho",

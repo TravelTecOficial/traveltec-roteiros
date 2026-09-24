@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Voucher Tec - Travel Tec
  * Description: Site padrão das agências Travel Tec: roteiros (tipo de conteúdo, campos, API do n8n / Cliente Ideal), cabeçalho, rodapé, blog, Sobre, Contato, Cotação, páginas de obrigado, formulários e captação de leads (UTMs + webhook). Dados, cores e fontes da agência aplicados de uma vez pelo painel ou pela API.
- * Version:     2.0.3
+ * Version:     2.0.4
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // O slug continua traveltec-roteiros: é assim que os sites da 1.x recebem esta versão pela atualização automática.
-define( 'TT_ROTEIROS_VERSION', '2.0.3' );
+define( 'TT_ROTEIROS_VERSION', '2.0.4' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
 // Última versão em que os modelos do Elementor mudaram.
-define( 'TT_VOUCHER_VERSAO_MODELOS', '2.0.2' );
+define( 'TT_VOUCHER_VERSAO_MODELOS', '2.0.4' );
 // Option da 1.x (IDs dos 3 modelos de roteiros) — só serve para reconhecer sites antigos.
 define( 'TT_ROTEIROS_OPT', 'tt_roteiros_modelos' );
 

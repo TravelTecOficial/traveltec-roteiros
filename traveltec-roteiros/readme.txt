@@ -54,3 +54,6 @@ Sites da 1.x atualizam só o código: nada é instalado sem clicar em "Instalar 
 
 2.0.3: reinstalar uma peça depois de aplicar os dados já grava com as cores e fontes do site
 (antes voltava com a paleta da referência).
+
+2.0.4: inclui o popup "Menu (celular)" que o botão de menu do cabeçalho abre — sem ele, num site
+limpo, o menu não abria no celular.
