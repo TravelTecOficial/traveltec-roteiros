@@ -86,3 +86,5 @@ descobre a última versão pela página de releases — a atualização aparece 
 
 2.0.13: as páginas do plugin usam as fontes da aba Identidade mesmo quando o Kit do site tem outras (sites com
 o layout antigo). Ex.: DSelection, em que o texto do Kit é Cinzel, só maiúsculas.
+
+2.0.14: links dentro das páginas do plugin seguem a fonte do texto (o Kit pode ter fonte própria para links).

@@ -235,6 +235,10 @@ add_action( 'wp_head', function () {
 		. '--e-global-typography-text-font-family:' . $fam( $e['fonte_textos'] ) . ';'
 		. '--e-global-typography-accent-font-family:' . $fam( $e['fonte_textos'] ) . ';'
 		. 'font-family:' . $fam( $e['fonte_textos'] ) . ',sans-serif}'
+		// o Kit pode ter fonte própria para links (.elementor-kit-N a): o link segue o texto em volta
+		. implode( ',', array_map( function ( $s ) {
+			return $s . ' a:not(.elementor-button)';
+		}, explode( ',', $sel ) ) ) . '{font-family:inherit}'
 		. '</style>' . "\n";
 }, 20 );
 

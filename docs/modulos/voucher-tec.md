@@ -39,6 +39,7 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   Ajimex, na Hostinger, a 2.0.11 não aparecia). Sites presos numa versão anterior: enviar o zip uma vez à mão.
 - [x] 2.0.13: fontes da paleta dentro dos documentos do plugin (variáveis globais de tipografia redefinidas só
   neles, `wp_head` #tt-voucher-fontes-docs). No DSelection o Kit tem Cinzel no texto e as páginas novas saíam em maiúsculas.
+- [x] 2.0.14: links nos documentos do plugin com `font-family:inherit` (o Kit do DSelection tem Cinzel nos links).
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e
