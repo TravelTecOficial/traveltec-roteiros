@@ -75,3 +75,6 @@ assume também o lugar de um "Single Post" antigo. Quem já instalou uma parte: 
 
 2.0.9: títulos dos cards do blog no tamanho do modelo mesmo em sites com tipografia global própria (antes pegavam
 o tamanho de título do Kit e ficavam enormes).
+
+2.0.10: cabeçalho transparente também nos posts do blog (sobre a foto de capa), como nos roteiros; o fundo
+aparece ao rolar a página.

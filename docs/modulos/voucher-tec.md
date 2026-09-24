@@ -31,6 +31,10 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   `url_sobre`) resolvidos para a página que existir no site; `liberar_condicoes` trata single/single-post/single-page
   como a mesma disputa. Achado no Ajimex (cotação em /cotacao-de-viagem/, blog em /experiencias/).
 - [x] 2.0.9: título do card do blog não herda mais o tamanho de título global do Kit (Ajimex: títulos enormes).
+- [x] 2.0.10: posts do blog (com o blog-post do plugin) ganham a classe `tt-topo-transparente` — pedido do dono
+  no Ajimex ("faz como nos roteiros"). No Ajimex o cabeçalho é o antigo #48: o CSS do topo transparente foi
+  gravado nele (container cc5b294) e a assinatura do rodapé #50 virou uma linha discreta. Backup em
+  `Ajimex/backups/elementor-48|50-2026-09-24.json`.
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e

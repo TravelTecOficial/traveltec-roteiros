@@ -239,11 +239,13 @@ add_shortcode( 'tt', function ( $atts ) {
 } );
 
 /**
- * Cabeçalho transparente sobre o topo da página: roteiros, a home e as páginas marcadas com
- * o meta _tt_topo_transparente (a Sobre já vem marcada). O CSS mora no modelo do cabeçalho.
+ * Cabeçalho transparente sobre o topo da página: roteiros, posts do blog (com o modelo do plugin, que abre com a
+ * foto de capa), a home e as páginas marcadas com o meta _tt_topo_transparente (a Sobre já vem marcada).
+ * O CSS mora no modelo do cabeçalho.
  */
 add_filter( 'body_class', function ( $classes ) {
 	$transparente = is_singular( 'roteiros' )
+		|| ( is_singular( 'post' ) && ! empty( tt_voucher_ids()['docs']['blog-post'] ) )
 		|| ( is_front_page() && get_option( 'tt_voucher_home_transparente', '1' ) )
 		|| ( is_singular() && get_post_meta( get_queried_object_id(), '_tt_topo_transparente', true ) );
 	if ( $transparente ) {
