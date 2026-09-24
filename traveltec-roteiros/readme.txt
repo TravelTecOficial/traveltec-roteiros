@@ -65,3 +65,6 @@ as fontes do Google e o CSS dos ícones vazios só entram depois de "Instalar si
 Cada aba mostra as suas peças (Editar no Elementor / Ver), instala só aquela parte e edita os dados que ela usa.
 Instalar uma parte não mexe em mais nada: cores e fontes globais do Elementor só na instalação completa,
 menus só com cabeçalho/rodapé, formulários só os da parte — dá para trocar um site no ar aos poucos.
+
+2.0.7: salvar cores e fontes num site com o layout antigo muda só as peças do plugin; as cores e fontes
+globais do Elementor (Kit) só mudam depois que o cabeçalho do plugin estiver instalado.

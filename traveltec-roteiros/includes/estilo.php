@@ -123,7 +123,11 @@ function tt_voucher_trocar_paleta( $txt, $de, $para ) {
 	return $fontes ? strtr( $txt, $fontes ) : $txt;
 }
 
-/** Aplica a paleta nova em todos os documentos do plugin e no Kit. Devolve quantos documentos mudaram. */
+/**
+ * Aplica a paleta nova em todos os documentos do plugin e, se o cabeçalho do plugin estiver instalado, no Kit.
+ * Num site com o layout antigo o Kit fica como está: as cores globais dele valem para as páginas antigas.
+ * Devolve quantos documentos mudaram.
+ */
 function tt_voucher_aplicar_estilo( $novo ) {
 	$atual = tt_voucher_estilo();
 	$novo  = array_merge( $atual, $novo );
@@ -149,7 +153,9 @@ function tt_voucher_aplicar_estilo( $novo ) {
 		}
 		update_option( TT_VOUCHER_OPT_ESTILO, $novo );
 	}
-	tt_voucher_estilo_no_kit( $novo );
+	if ( ! empty( tt_voucher_ids()['docs']['header'] ) ) {
+		tt_voucher_estilo_no_kit( $novo );
+	}
 	tt_voucher_limpar_cache();
 	return $mudou;
 }
