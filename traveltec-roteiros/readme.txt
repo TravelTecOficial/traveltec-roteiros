@@ -1,8 +1,11 @@
-=== TravelTec Roteiros ===
-Requer: WordPress 6+, Elementor + Elementor Pro (Theme Builder e Loop Grid), PHP 7.4+.
+=== Voucher Tec - Travel Tec ===
+(slug traveltec-roteiros; até a 1.3.2 se chamava TravelTec Roteiros)
+Requer: WordPress 6+, tema Hello Elementor, Elementor + Elementor Pro / PRO Elements, JetFormBuilder, PHP 7.4+.
 
 Instalação: Plugins > Adicionar novo > Enviar plugin > traveltec-roteiros.zip > Ativar.
-Ao ativar (com Elementor Pro ativo) os modelos são instalados sozinhos. Senão: Roteiros > Modelos do Elementor > Instalar modelos.
+Em site novo, ao ativar (com Elementor Pro ativo) o site padrão é instalado sozinho. Senão: Voucher Tec > Instalar site padrão
+ou POST /wp-json/voucher-tec/v1/instalar. Dados da agência, cores e fontes: Voucher Tec > Dados da agência ou
+POST /wp-json/voucher-tec/v1/aplicar (linha da tabela companies do Cliente Ideal). Guia completo: docs/GUIA-MCP.md.
 
 O que instala
 - Tipo de conteúdo "Roteiros" (slug /roteiros/) com os campos do fluxo n8n "Roteiros Lazer - Publicar Pagina":
@@ -26,3 +29,25 @@ Repositório privado: define( 'TT_ROTEIROS_GITHUB_TOKEN', '...' ) no wp-config.p
 1.3.1: rótulos do tipo de conteúdo (busca e lista vazia).
 
 1.3.2: a aba do navegador em /roteiros/ deixa de ser "Roteiros Archive" — quem escrevia isso era o Rank Math.
+
+2.0.0 (Voucher Tec): o plugin passa a instalar o site padrão inteiro, no layout da Rede Turística
+- cabeçalho (transparente sobre o topo), rodapé, roteiros (card com movimento, lista, página com galeria e abas),
+  blog (lista e post), Sobre, Contato, Cotação, 3 páginas de obrigado, menus e os formulários Cotação, Contato e
+  Newsletter (JetFormBuilder, AJAX);
+- dados da agência com os campos da tabela companies do Cliente Ideal, exibidos por marcadores (%tt:campo%);
+- cores e fontes trocadas de uma vez em todas as páginas e no Kit do Elementor;
+- captação de leads: UTMs e ids de clique + envio ao webhook recebe-forms (n8n) com o company_id;
+- API REST voucher-tec/v1 (status, instalar, aplicar) e painel "Voucher Tec".
+Sites da 1.x atualizam só o código: nada é instalado sem clicar em "Instalar site padrão".
+
+2.0.1 (teste no clone da Rede com os dados da Mergulhando na Viagem):
+- logo do rodapé ligado ao logo do site; nome da agência no copyright do rodapé;
+- menus do plugin refeitos a cada instalação, com as páginas que existirem;
+- Instagram/TikTok/YouTube cadastrados só com o @perfil viram URL completa;
+- a secundária da marca só vira a cor dos textos se for escura (senão vai só para o Kit);
+- a sinopse do Cliente Ideal (texto interno) nunca é usada no site.
+
+2.0.2 (modelos da Rede Turística v2.0, fechada em 24/09/2026):
+- post do blog no padrão da casa (capa, lateral com busca e categorias, chamada final com botão);
+- logo do cabeçalho com altura limitada (logos retangulares não crescem no tablet/celular);
+- primeira versão publicada no GitHub com atualização automática para os sites.

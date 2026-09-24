@@ -1,18 +1,23 @@
-# TravelTec Roteiros
+# Voucher Tec - Travel Tec
 
-Plugin WordPress que instala o sistema de roteiros nos sites dos clientes: o tipo de
-conteúdo **Roteiros** com os campos que o fluxo n8n envia, o recebimento pela API REST
-e os três modelos do Elementor (lista em `/roteiros/`, card e página do roteiro).
+(slug `traveltec-roteiros` — até a 1.3.2 se chamava TravelTec Roteiros)
 
-Não depende de ACF nem de CPT UI. Exige **Elementor + Elementor Pro** (ou PRO Elements).
-Cores e fontes vêm do Kit do Elementor de cada site, então o visual sai com a marca do cliente.
+Plugin WordPress que instala o **site padrão das agências** no layout da Rede Turística (site de
+referência): roteiros (tipo de conteúdo, campos, API do n8n), cabeçalho, rodapé, blog, Sobre, Contato,
+Cotação, páginas de obrigado, menus, formulários (JetFormBuilder) e a captação de leads (UTMs + webhook
+`recebe-forms`). Dados, cores e fontes da agência são aplicados de uma vez, com os campos da tabela
+`companies` do Cliente Ideal.
+
+Exige Hello Elementor, **Elementor + Elementor Pro** (ou PRO Elements) e **JetFormBuilder**.
+Guia para o MCP montar e configurar um site: [`docs/GUIA-MCP.md`](docs/GUIA-MCP.md).
+Estado do módulo: [`docs/modulos/voucher-tec.md`](docs/modulos/voucher-tec.md).
 
 ## Instalar num site
 
 1. Plugins › Adicionar novo › Enviar plugin › `traveltec-roteiros.zip` › Ativar.
-2. Roteiros › Modelos do Elementor › **Instalar modelos**.
-
-O passo 2 é o que regrava os links permanentes; sem ele `/roteiros/` dá 404.
+   Em site novo com Elementor Pro ativo, o site padrão já é instalado na ativação.
+2. Senão: **Voucher Tec › Instalar site padrão** (ou `POST /wp-json/voucher-tec/v1/instalar`).
+3. **Voucher Tec › Dados da agência** (ou `POST /wp-json/voucher-tec/v1/aplicar` com a linha de `companies`).
 
 ## Atualizar
 
@@ -26,9 +31,8 @@ Se o repositório for privado, cada site precisa de um token de leitura no `wp-c
 define( 'TT_ROTEIROS_GITHUB_TOKEN', 'ghp_...' );
 ```
 
-Atualizar o plugin troca o código, não os modelos do Elementor — isso apagaria o que o
-cliente tiver editado neles. Quando uma versão muda os modelos, o painel avisa e o
-botão *Reinstalar modelos* aplica o layout novo.
+Atualizar o plugin troca o código, não as páginas e modelos do Elementor — isso apagaria o
+que foi ajustado neles. Sites da 1.x (como a Rede Turística) recebem a 2.0 sem nada instalado.
 
 ## Publicar uma versão
 
@@ -47,7 +51,11 @@ com o nome do repositório e da tag, e o WordPress instalaria como um plugin nov
 | --- | --- |
 | `traveltec-roteiros/` | o plugin |
 | `traveltec-roteiros/includes/atualizador.php` | atualização pelas releases do GitHub |
-| `traveltec-roteiros/templates/*.json` | os modelos do Elementor, prontos para gravar |
-| `src/*.json` | modelos originais extraídos do site de referência |
-| `build_templates.py` | gera `templates/` a partir de `src/` |
+| `traveltec-roteiros/includes/` | dados, estilo, instalador, captação, API e painel |
+| `traveltec-roteiros/templates/v2/*.json` | páginas, modelos e formulários, com marcadores |
+| `traveltec-roteiros/assets/` | `captacao.js`, `galeria.css`, `img/` (fotos da Sobre e assinatura) |
+| `src/rede/*.json` | exportação da Rede Turística (fonte dos modelos) |
+| `build_v2.py` | gera `templates/v2/` a partir de `src/rede/` |
+| `baixar_imagens.py` | copia e comprime as imagens usadas nos modelos |
 | `empacotar.py` | gera `dist/traveltec-roteiros.zip` |
+| `src/*.json`, `build_templates.py` | 1.x (histórico) |

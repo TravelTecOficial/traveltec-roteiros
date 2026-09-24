@@ -1,0 +1,97 @@
+{
+ "docs": [
+  {
+   "chave": "card",
+   "tipo": "elementor_library",
+   "titulo": "Roteiros — card",
+   "slug": null
+  },
+  {
+   "chave": "lista",
+   "tipo": "elementor_library",
+   "titulo": "Roteiros — lista (/roteiros/)",
+   "slug": null
+  },
+  {
+   "chave": "single",
+   "tipo": "elementor_library",
+   "titulo": "Roteiros — página do roteiro",
+   "slug": null
+  },
+  {
+   "chave": "header",
+   "tipo": "elementor_library",
+   "titulo": "Cabeçalho",
+   "slug": null
+  },
+  {
+   "chave": "footer",
+   "tipo": "elementor_library",
+   "titulo": "Rodapé",
+   "slug": null
+  },
+  {
+   "chave": "blog-arquivo",
+   "tipo": "elementor_library",
+   "titulo": "Blog — arquivo",
+   "slug": null
+  },
+  {
+   "chave": "blog-post",
+   "tipo": "elementor_library",
+   "titulo": "Blog — post",
+   "slug": null
+  },
+  {
+   "chave": "sobre",
+   "tipo": "page",
+   "titulo": "Sobre",
+   "slug": "sobre"
+  },
+  {
+   "chave": "contato",
+   "tipo": "page",
+   "titulo": "Contato",
+   "slug": "contato"
+  },
+  {
+   "chave": "cotacao",
+   "tipo": "page",
+   "titulo": "Cotação de viagens",
+   "slug": "cotacao-de-viagens"
+  },
+  {
+   "chave": "obrigado-cotacao",
+   "tipo": "page",
+   "titulo": "Obrigado pela cotação",
+   "slug": "obrigado-cotacao"
+  },
+  {
+   "chave": "obrigado-contato",
+   "tipo": "page",
+   "titulo": "Obrigado pelo contato",
+   "slug": "obrigado-contato"
+  },
+  {
+   "chave": "obrigado-newsletter",
+   "tipo": "page",
+   "titulo": "Obrigado por assinar",
+   "slug": "obrigado-newsletters"
+  }
+ ],
+ "forms": [
+  "cotacao",
+  "contato",
+  "newsletter"
+ ],
+ "imagens": [
+  "parallax-como-funciona.jpg",
+  "photo-1480480565647-1c4385c7c0bf.jpg",
+  "photo-1526481280693-3bfa7568e0f3.jpg",
+  "photo-1535063406830-27dfae54262a.jpg",
+  "photo-1559417050-039d66224d3d.jpg",
+  "photo-1599576838688-8a6c11263108.jpg",
+  "photo-1615811648503-479d06197ff3.jpg",
+  "traveltec-assinatura.png"
+ ]
+}

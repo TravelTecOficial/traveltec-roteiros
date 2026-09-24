@@ -1,0 +1,66 @@
+{
+ "chave": "obrigado-newsletter",
+ "tipo": "page",
+ "titulo": "Obrigado por assinar",
+ "slug": "obrigado-newsletters",
+ "condicoes": [],
+ "template_type": "wp-page",
+ "page_template": "elementor_header_footer",
+ "topo_transparente": false,
+ "data": [
+  {
+   "id": "obnew1",
+   "elType": "container",
+   "settings": {
+    "content_width": "boxed",
+    "boxed_width": {
+     "unit": "px",
+     "size": 860,
+     "sizes": []
+    },
+    "flex_direction": "column",
+    "html_tag": "section",
+    "padding": {
+     "unit": "px",
+     "top": "70",
+     "right": "20",
+     "bottom": "50",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "40",
+     "right": "16",
+     "bottom": "36",
+     "left": "16",
+     "isLinked": false
+    },
+    "css_classes": "rt-obg-sec",
+    "margin": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": false
+    }
+   },
+   "elements": [
+    {
+     "id": "obnewh",
+     "elType": "widget",
+     "settings": {
+      "html": "<div class=\"rt-obg\">\n  <div class=\"rt-obg-ok\"><svg viewBox=\"0 0 52 52\" aria-hidden=\"true\"><circle class=\"rt-obg-c\" cx=\"26\" cy=\"26\" r=\"24\" fill=\"none\"/><path class=\"rt-obg-v\" fill=\"none\" d=\"M15 27l7 7 15-16\"/></svg></div>\n  <p class=\"eyebrow\">Inscrição confirmada</p>\n  <h1>Bem-vindo à nossa newsletter!</h1>\n  <p class=\"rt-obg-lead\">A partir de agora você recebe inspirações de viagem, roteiros exclusivos e dicas de destinos direto no seu e-mail.</p>\n  <div class=\"rt-obg-insp\"><p class=\"eyebrow\">Enquanto isso, inspire-se</p><div class=\"rt-obg-cards\"><a class=\"rt-obg-card\" href=\"/roteiros/\"><strong>Roteiros</strong><span>Viagens prontas para você se inspirar.</span><em>Explorar →</em></a><a class=\"rt-obg-card\" href=\"/blog/\"><strong>Blog</strong><span>Dicas, destinos e novidades do mundo das viagens.</span><em>Explorar →</em></a><a class=\"rt-obg-card\" href=\"/cotacao-de-viagens/\"><strong>Cotação</strong><span>Conte a viagem dos sonhos e a gente monta.</span><em>Explorar →</em></a></div></div>\n  <div class=\"rt-obg-btns\"><a class=\"rt-obg-btn\" href=\"/roteiros/\">Ver roteiros</a><a class=\"rt-obg-btn\" href=\"/\">Voltar ao início</a></div>\n  <div class=\"rt-obg-redes\"><span>Siga a %tt:nome%</span><a href=\"https://tt.token/instagram_url\" target=\"_blank\" rel=\"noopener\" aria-label=\"Instagram\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"17.5\" cy=\"6.5\" r=\"1.2\" fill=\"currentColor\"/></svg></a><a href=\"https://tt.token/facebook_url\" target=\"_blank\" rel=\"noopener\" aria-label=\"Facebook\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8.5c0-.3.2-.5.5-.5Z\"/></svg></a><a href=\"https://tt.token/youtube_url\" target=\"_blank\" rel=\"noopener\" aria-label=\"YouTube\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8ZM10 15V9l5.2 3Z\"/></svg></a><a href=\"https://tt.token/linkedin_url\" target=\"_blank\" rel=\"noopener\" aria-label=\"LinkedIn\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3.3 9h3.4v11.5H3.3V9Zm5.6 0h3.3v1.6c.5-.9 1.7-1.9 3.5-1.9 3.7 0 4.4 2.4 4.4 5.6v6.2h-3.4v-5.5c0-1.3 0-3-1.9-3s-2.2 1.4-2.2 2.9v5.6H8.9V9Z\"/></svg></a><a href=\"https://tt.token/tiktok_url\" target=\"_blank\" rel=\"noopener\" aria-label=\"TikTok\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M16.6 3c.4 2.2 1.8 3.6 4 3.8v3.3a7.5 7.5 0 0 1-4-1.2v6.3A6.2 6.2 0 1 1 10.4 9v3.4a2.9 2.9 0 1 0 2.9 2.9V3h3.3Z\"/></svg></a></div>\n</div>"
+     },
+     "elements": [],
+     "widgetType": "html"
+    }
+   ],
+   "isInner": false
+  }
+ ],
+ "page_settings": {
+  "custom_css": "body{background:#F6F6F6}\n.rt-obg{background:#FFFFFF;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.07);padding:56px 56px 44px;text-align:center}\n@media (max-width:767px){.rt-obg{padding:40px 22px 32px}}\n.rt-obg .eyebrow{font-family:Roboto,sans-serif;font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:#C56F00;margin:0}\n.rt-obg h1{font-family:Montserrat,sans-serif;font-weight:400;font-size:clamp(30px,4.4vw,46px);line-height:1.12;color:#3C3D3D;margin:16px auto 16px;max-width:640px}\n.rt-obg-lead{font-size:17px;line-height:1.65;color:#666;max-width:560px;margin:0 auto}\n.rt-obg-ok{width:84px;height:84px;margin:0 auto 22px}\n.rt-obg-ok svg{width:100%;height:100%}\n.rt-obg-c{stroke:#E98300;stroke-width:3;stroke-dasharray:151;stroke-dashoffset:151;animation:rt-obg-c .7s cubic-bezier(.65,0,.45,1) forwards}\n.rt-obg-v{stroke:#E98300;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:36;stroke-dashoffset:36;animation:rt-obg-c .4s .6s cubic-bezier(.65,0,.45,1) forwards}\n@keyframes rt-obg-c{to{stroke-dashoffset:0}}\n.rt-obg-passos,.rt-obg-insp{margin:40px 0 0;padding-top:34px;border-top:1px solid #EEE}\n.rt-obg-passos ol{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;text-align:left}\n@media (max-width:767px){.rt-obg-passos ol{grid-template-columns:1fr}}\n.rt-obg-passos li{display:flex;gap:14px;align-items:flex-start}\n.rt-obg-passos li span{flex:0 0 34px;height:34px;border-radius:50%;background:#FFF1E0;color:#E98300;font-family:Montserrat,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}\n.rt-obg-passos strong{display:block;font-family:Montserrat,sans-serif;font-size:15px;color:#3C3D3D;margin-bottom:4px}\n.rt-obg-passos p{margin:0;font-size:14px;line-height:1.5;color:#777}\n.rt-obg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;text-align:left}\n@media (max-width:767px){.rt-obg-cards{grid-template-columns:1fr}}\n.rt-obg-card{position:relative;display:flex;flex-direction:column;gap:6px;background:#FAFAFA;border-radius:10px;padding:22px 20px;color:#3C3D3D;text-decoration:none;overflow:hidden;transition:transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s}\n.rt-obg-card::before{content:\"\";position:absolute;top:0;left:0;right:0;height:3px;background:#E98300;transform:scaleX(0);transform-origin:0 50%;transition:transform .5s cubic-bezier(.22,.61,.36,1)}\n.rt-obg-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.1);color:#3C3D3D}\n.rt-obg-card:hover::before{transform:scaleX(1)}\n.rt-obg-card strong{font-family:Montserrat,sans-serif;font-size:17px}\n.rt-obg-card span{font-size:14px;color:#777;line-height:1.5}\n.rt-obg-card em{font-style:normal;margin-top:6px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#C56F00}\n.rt-obg-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:38px}\n.rt-obg-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:8px;border:1px solid #D9D9D9;background:#FFFFFF;color:#3C3D3D;font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s,border-color .25s,transform .25s}\n.rt-obg-btn:hover{border-color:#E98300;color:#E98300;transform:translateY(-2px)}\n.rt-obg-btn svg{width:20px;height:20px}\n.rt-obg-btn--zap{background:#25D366;border-color:#25D366;color:#FFFFFF}\n.rt-obg-btn--zap:hover{background:#1DA851;border-color:#1DA851;color:#FFFFFF}\n.rt-obg-redes{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:30px;font-size:13px;color:#8A8A8A}\n.rt-obg-redes span{margin-right:6px}\n.rt-obg-redes a{width:38px;height:38px;border-radius:50%;background:#FFF1E0;color:#E98300;display:flex;align-items:center;justify-content:center;transition:background .25s,color .25s}\n.rt-obg-redes a:hover{background:#E98300;color:#FFFFFF}\n.rt-obg-redes svg{width:18px;height:18px}\n.elementor-widget-html:has(.rt-obg){width:100%}\n/* newsletter */\n.rt-obg-news{padding-bottom:80px!important}\n@media (max-width:767px){.rt-obg-news{padding-bottom:56px!important}}\n.rt-obg-news>.e-con-inner{background:#3C3D3D;border-radius:14px;padding:40px 48px!important;gap:18px}\n@media (max-width:767px){.rt-obg-news>.e-con-inner{padding:30px 22px!important}}\n.rt-obg-news-in{text-align:center}\n.rt-obg-news-in .eyebrow{font-family:Roboto,sans-serif;font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:#FFB700;margin:0}\n.rt-obg-news-in h2{font-family:Montserrat,sans-serif;font-weight:400;font-size:28px;color:#FFFFFF;margin:10px 0 6px}\n.rt-obg-news-in p:last-child{color:#CFCFCF;margin:0}\n.rt-obg-news .elementor-widget-html,.rt-obg-news .elementor-widget-jet-form-builder-form{width:100%}\n.rt-obg-news .wp-block-columns{display:flex;flex-wrap:wrap;gap:12px;margin:0;align-items:flex-start}\n.rt-obg-news .wp-block-column{flex:1 1 200px!important;margin:0!important}\n.rt-obg-news .wp-block-column:last-child{flex:0 0 auto!important}\n.rt-obg-news .jet-form-builder-row{margin:0}\n.rt-obg-news .jet-form-builder__label{display:none}\n.rt-obg-news .jet-form-builder__field.text-field{width:100%;min-height:52px;padding:12px 16px;border:0;border-radius:8px;background:#FFFFFF;font-size:15px;color:#3C3D3D}\n.rt-obg-news .jet-form-builder__action-button{min-height:52px;padding:12px 34px;border:0;border-radius:8px;background:#E98300;color:#FFFFFF;font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .25s}\n.rt-obg-news .jet-form-builder__action-button:hover{background:#FFB700;color:#000}\n.rt-obg-news .jet-form-builder-messages-wrap{color:#FFFFFF}\n.rt-obg-news p:empty{display:none}\n@media (max-width:767px){.rt-obg-news .wp-block-column:last-child{flex:1 1 100%!important}.rt-obg-news .jet-form-builder__action-button{width:100%}}\n.page .entry-title,.page-header{display:none}"
+ }
+}

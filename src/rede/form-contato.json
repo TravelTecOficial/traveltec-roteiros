@@ -1,0 +1,14 @@
+{
+ "id": 256,
+ "title": "Contato",
+ "content": "<!-- wp:jet-forms/text-field {\"label\":\"Nome:\",\"name\":\"nome\"} /-->\n\n<!-- wp:jet-forms/text-field {\"field_type\":\"email\",\"label\":\"E-mail:\",\"name\":\"email\"} /-->\n\n<!-- wp:jet-forms/text-field {\"field_type\":\"tel\",\"label\":\"Celular:\",\"name\":\"celular\"} /-->\n\n<!-- wp:jet-forms/textarea-field {\"label\":\"Mensagem:\",\"name\":\"mensagem\"} /-->\n\n<!-- wp:jet-forms/submit-field {\"label\":\"Enviar sua mensagem\"} /-->",
+ "meta": {
+  "_jf_args": "{\"load_nonce\": \"hide\", \"submit_type\": \"ajax\"}",
+  "_jf_messages": "{\"success\":\"Form successfully submitted.\",\"failed\":\"Submit failed.\",\"validation_failed\":\"Validation error\",\"captcha_failed\":\"Captcha validation failed\",\"invalid_email\":\"Entered an invalid email\",\"empty_field\":\"Required field is empty\",\"internal_error\":\"Internal server error\",\"upload_max_files\":\"Media Specific: Max files limit\",\"upload_max_size\":\"Media Specific: Max size reached\",\"upload_mime_types\":\"Media Specific: File type error\"}",
+  "_jf_preset": "{}",
+  "_jf_recaptcha": "{}",
+  "_jf_actions": "[{\"id\": 6619, \"settings\": {\"send_email\": {\"mail_to\": \"custom\", \"custom_email\": \"sac@traveltec.com.br\", \"reply_to\": \"custom\", \"reply_to_email\": \"contato@redeturistica.com.br\", \"from_name\": \"\", \"subject\": \"%nome% entrou em contato pela Rede Turística\", \"content_type\": \"text/html\", \"content\": \"<br><br>%nome%\\n<br><br>%email%\\n<br><br>%celular%\\n<br><br>%mensagem%\"}}, \"type\": \"send_email\", \"conditions\": [], \"events\": [], \"index\": 0, \"chosen\": false, \"selected\": false}, {\"id\": 1381, \"settings\": {\"redirect_to_page\": {\"redirect_type\": \"static_page\", \"redirect_page\": 5411, \"redirect_url\": \"\"}}, \"type\": \"redirect_to_page\", \"conditions\": [], \"events\": [], \"index\": 1}]",
+  "_jf_validation": "{}",
+  "footnotes": ""
+ }
+}

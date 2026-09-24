@@ -42,7 +42,7 @@ function tt_roteiros_release( $forcar = false ) {
 
 	$cabecalhos = array(
 		'Accept'     => 'application/vnd.github+json',
-		'User-Agent' => 'TravelTec-Roteiros/' . TT_ROTEIROS_VERSION,
+		'User-Agent' => 'Voucher-Tec/' . TT_ROTEIROS_VERSION,
 	);
 	if ( tt_roteiros_token() ) {
 		$cabecalhos['Authorization'] = 'Bearer ' . tt_roteiros_token();
@@ -140,13 +140,13 @@ add_filter( 'plugins_api', function ( $resultado, $acao, $args ) {
 		return $resultado;
 	}
 	$ficha                = tt_roteiros_ficha( $release );
-	$ficha->name          = 'TravelTec Roteiros';
+	$ficha->name          = 'Voucher Tec - Travel Tec';
 	$ficha->author        = 'TravelTec';
 	$ficha->homepage      = $ficha->url;
 	$ficha->download_link = $release['zip'];
 	$ficha->last_updated  = $release['data'];
 	$ficha->sections      = array(
-		'description' => 'Sistema de roteiros: tipo de conteúdo, campos, recebimento pela API e as páginas do Elementor.',
+		'description' => 'Site padrão das agências Travel Tec: roteiros, cabeçalho, rodapé, blog, páginas, formulários e captação de leads.',
 		'changelog'   => wpautop( esc_html( $release['notas'] ) ),
 	);
 	return $ficha;
@@ -158,21 +158,3 @@ add_action( 'upgrader_process_complete', function ( $upgrader, $extra ) {
 		delete_site_transient( TT_ROTEIROS_CACHE );
 	}
 }, 10, 2 );
-
-/**
- * Atualizar o plugin troca o código, mas não regrava os modelos do Elementor —
- * isso apagaria o que o cliente editou neles. Quando a versão dos modelos instalados
- * ficar para trás, avisa com o link da tela de reinstalar.
- */
-add_action( 'admin_notices', function () {
-	if ( ! current_user_can( 'manage_options' ) || ! get_option( TT_ROTEIROS_OPT ) ) {
-		return;
-	}
-	$instalada = (string) get_option( 'tt_roteiros_versao_modelos', '' );
-	if ( '' === $instalada || version_compare( $instalada, TT_ROTEIROS_VERSAO_MODELOS, '>=' ) ) {
-		return;
-	}
-	$url = admin_url( 'edit.php?post_type=roteiros&page=tt-roteiros-modelos' );
-	echo '<div class="notice notice-warning"><p><strong>TravelTec Roteiros ' . esc_html( TT_ROTEIROS_VERSION ) . ':</strong> os modelos do Elementor ainda são da versão '
-		. esc_html( $instalada ) . '. <a href="' . esc_url( $url ) . '">Reinstalar modelos</a> para usar o layout novo.</p></div>';
-} );

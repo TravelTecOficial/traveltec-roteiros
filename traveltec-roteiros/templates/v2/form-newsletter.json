@@ -1,0 +1,8 @@
+{
+ "chave": "newsletter",
+ "titulo": "Newsletter",
+ "content": "<!-- wp:columns -->\n<div class=\"wp-block-columns\"><!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/text-field {\"name\":\"nome\",\"placeholder\":\"Seu nome\",\"required\":true} /--></div>\n<!-- /wp:column -->\n\n<!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/text-field {\"field_type\":\"email\",\"name\":\"email\",\"placeholder\":\"Seu melhor e-mail\",\"required\":true} /--></div>\n<!-- /wp:column -->\n\n<!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/submit-field {\"label\":\"Assinar\"} /--></div>\n<!-- /wp:column --></div>\n<!-- /wp:columns -->",
+ "args": "{\"load_nonce\": \"hide\", \"submit_type\": \"ajax\"}",
+ "messages": "{\"success\":\"Form successfully submitted.\",\"failed\":\"Submit failed.\",\"validation_failed\":\"Validation error\",\"captcha_failed\":\"Captcha validation failed\",\"invalid_email\":\"Entered an invalid email\",\"empty_field\":\"Required field is empty\",\"internal_error\":\"Internal server error\",\"upload_max_files\":\"Media Specific: Max files limit\",\"upload_max_size\":\"Media Specific: Max size reached\",\"upload_mime_types\":\"Media Specific: File type error\"}",
+ "validation": "{}"
+}

@@ -1,0 +1,226 @@
+{
+ "chave": "contato",
+ "tipo": "page",
+ "titulo": "Contato",
+ "slug": "contato",
+ "condicoes": [],
+ "template_type": "wp-page",
+ "page_template": "elementor_header_footer",
+ "topo_transparente": false,
+ "data": [
+  {
+   "id": "cthead",
+   "elType": "container",
+   "settings": {
+    "content_width": "full",
+    "flex_direction": "column",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": false
+    },
+    "html_tag": "section",
+    "css_classes": "blog-head"
+   },
+   "elements": [
+    {
+     "id": "cthhtml",
+     "elType": "widget",
+     "settings": {
+      "html": "<div class=\"blog-head-in\">\n  <p class=\"eyebrow\">Contato</p>\n  <h1>Fale com a %tt:nome%</h1>\n  <p>Estamos por aqui para te atender. Escolha o canal que for melhor para você: a gente responde rapidinho.</p>\n</div>"
+     },
+     "elements": [],
+     "widgetType": "html"
+    }
+   ],
+   "isInner": false
+  },
+  {
+   "id": "ctcan",
+   "elType": "container",
+   "settings": {
+    "content_width": "boxed",
+    "boxed_width": {
+     "unit": "px",
+     "size": 1140,
+     "sizes": []
+    },
+    "flex_direction": "column",
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "20",
+     "bottom": "70",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "0",
+     "right": "16",
+     "bottom": "50",
+     "left": "16",
+     "isLinked": false
+    }
+   },
+   "elements": [
+    {
+     "id": "ctcanh",
+     "elType": "widget",
+     "settings": {
+      "html": "<div class=\"rt-canais\">\n  <a class=\"rt-canal rt-canal--zap\" href=\"https://wa.me/%tt:whatsapp_digitos%?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20%tt:nome_url%.\" target=\"_blank\" rel=\"noopener\">\n    <span class=\"rt-canal-ic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4a.5.5 0 0 0 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z\"/></svg></span><strong>WhatsApp</strong><span class=\"rt-canal-dado\">%tt:whatsapp%</span><span class=\"rt-canal-cta\">Chamar agora →</span></a>\n  <a class=\"rt-canal\" href=\"tel:+%tt:telefone_digitos%\">\n    <span class=\"rt-canal-ic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" d=\"M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z\"/></svg></span><strong>Telefone</strong><span class=\"rt-canal-dado\">%tt:telefone%</span><span class=\"rt-canal-cta\">Ligar →</span></a>\n  <a class=\"rt-canal\" href=\"mailto:%tt:email_atendimento%\">\n    <span class=\"rt-canal-ic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><path d=\"m3.5 6.5 8.5 7 8.5-7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/></svg></span><strong>E-mail</strong><span class=\"rt-canal-dado\">%tt:email_atendimento%</span><span class=\"rt-canal-cta\">Escrever →</span></a>\n  <button type=\"button\" class=\"rt-canal\" onclick=\"var b=document.querySelector('.ci-chat__launcher');if(b){b.click();}else{location.href='/cotacao-de-viagens/';}\">\n    <span class=\"rt-canal-ic\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" d=\"M4 5h16v11H9l-5 4V5Z\"/><path d=\"M8 10h.01M12 10h.01M16 10h.01\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg></span><strong>Assistente 24h</strong><span class=\"rt-canal-dado\">Tire dúvidas a qualquer hora</span><span class=\"rt-canal-cta\">Abrir conversa →</span></button>\n</div>"
+     },
+     "elements": [],
+     "widgetType": "html"
+    }
+   ],
+   "isInner": false
+  },
+  {
+   "id": "ctcorp",
+   "elType": "container",
+   "settings": {
+    "content_width": "boxed",
+    "boxed_width": {
+     "unit": "px",
+     "size": 1140,
+     "sizes": []
+    },
+    "flex_direction": "row",
+    "flex_direction_mobile": "column",
+    "flex_justify_content": "space-between",
+    "flex_align_items": "stretch",
+    "flex_gap": {
+     "unit": "px",
+     "size": 30,
+     "column": "30",
+     "row": "30",
+     "isLinked": true
+    },
+    "padding": {
+     "unit": "px",
+     "top": "0",
+     "right": "20",
+     "bottom": "90",
+     "left": "20",
+     "isLinked": false
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "0",
+     "right": "16",
+     "bottom": "60",
+     "left": "16",
+     "isLinked": false
+    },
+    "css_classes": "rt-cot"
+   },
+   "elements": [
+    {
+     "id": "ctform",
+     "elType": "container",
+     "settings": {
+      "content_width": "full",
+      "width": {
+       "unit": "%",
+       "size": 58
+      },
+      "width_mobile": {
+       "unit": "%",
+       "size": 100
+      },
+      "flex_direction": "column",
+      "padding": {
+       "unit": "px",
+       "top": "40",
+       "right": "44",
+       "bottom": "44",
+       "left": "44",
+       "isLinked": false
+      },
+      "padding_mobile": {
+       "unit": "px",
+       "top": "28",
+       "right": "20",
+       "bottom": "30",
+       "left": "20",
+       "isLinked": false
+      },
+      "background_background": "classic",
+      "background_color": "#FFFFFF",
+      "css_classes": "rt-cot-card"
+     },
+     "elements": [
+      {
+       "id": "ctfi",
+       "elType": "widget",
+       "settings": {
+        "html": "<div class=\"rt-form-intro\"><p class=\"eyebrow\">Mensagem</p><h2>Envie sua mensagem</h2><p>Preencha os campos abaixo e retornamos o quanto antes.</p></div>"
+       },
+       "elements": [],
+       "widgetType": "html"
+      },
+      {
+       "id": "945611c",
+       "elType": "widget",
+       "settings": {
+        "form_id": "{{FORM:contato}}",
+        "_element_id": "Form_Contato",
+        "submit_type": "ajax"
+       },
+       "elements": [],
+       "widgetType": "jet-form-builder-form"
+      }
+     ],
+     "isInner": true
+    },
+    {
+     "id": "ctlado",
+     "elType": "container",
+     "settings": {
+      "content_width": "full",
+      "width": {
+       "unit": "%",
+       "size": 40
+      },
+      "width_mobile": {
+       "unit": "%",
+       "size": 100
+      },
+      "flex_direction": "column",
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": false
+      }
+     },
+     "elements": [
+      {
+       "id": "ctonde",
+       "elType": "widget",
+       "settings": {
+        "html": "<div class=\"rt-onde\">\n  <h3>Onde estamos</h3>\n  <p>%tt:endereco%</p>\n  <div class=\"rt-mapa\"><iframe title=\"Mapa: %tt:nome%\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"\n    src=\"https://www.google.com/maps?q=%tt:mapa_q%&amp;output=embed\"></iframe></div>\n  <a class=\"rt-rota\" href=\"https://www.google.com/maps/dir/?api=1&amp;destination=%tt:mapa_q%\" target=\"_blank\" rel=\"noopener\">Como chegar →</a>\n  <div class=\"rt-horario\"><strong>Atendimento</strong><span>%tt:horario_funcionamento%</span></div>\n</div>"
+       },
+       "elements": [],
+       "widgetType": "html"
+      }
+     ],
+     "isInner": true
+    }
+   ],
+   "isInner": false
+  }
+ ],
+ "page_settings": {
+  "custom_css": "/* cores e fontes do site (padrão Voucher Tec) */\n:root{\n  --blog-fundo:#FFFFFF;\n  --blog-fundo-2:#F4F4F4;\n  --blog-texto:#3C3D3D;\n  --blog-texto-suave:#666666;\n  --blog-titulo:#3C3D3D;\n  --blog-acento:#E98300;\n  --blog-acento-texto:#C56F00;\n  --blog-fio:#E6E6E6;\n  --blog-display:\"Montserrat\",\"Segoe UI\",sans-serif;\n  --blog-ui:\"Roboto\",\"Segoe UI\",sans-serif;\n  --blog-nav-h:0px;\n  --blog-pad:max(16px,calc((100vw - 1140px) / 2));\n  --blog-ease:cubic-bezier(.22,.61,.36,1);\n  --blog-foto-filtro:none;\n  --blog-capa-fundo:#3C3D3D;\n  --blog-capa-filtro:brightness(.9);\n  --blog-capa-scrim:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,rgba(0,0,0,.15) 74%,rgba(0,0,0,.45) 100%);\n  --blog-capa-texto:#FFFFFF;\n  --blog-capa-texto-suave:rgba(255,255,255,.75);\n}\n.blog-head .eyebrow{font-family:var(--blog-ui);font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;margin:0}\n.blog-head-in{max-width:calc(760px + var(--blog-pad))}\n.blog-head{background:var(--blog-fundo);color:var(--blog-texto);padding:0}\n.blog-head-in{padding:calc(var(--blog-nav-h) + clamp(52px,7vw,96px)) var(--blog-pad) clamp(34px,4.5vw,56px);max-width:760px}\n.blog-head h1{font-family:var(--blog-display);font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.08;color:var(--blog-titulo);margin:20px 0 16px}\n.blog-head-in > p:not(.eyebrow){color:var(--blog-texto-suave);max-width:52ch;font-size:16.5px;line-height:1.6;margin:0}\n.blog-head .eyebrow,.blog-cta .eyebrow{color:var(--blog-acento-texto)}\n.blog-head-in{padding-left:var(--blog-pad)!important;padding-right:var(--blog-pad)!important;max-width:calc(760px + var(--blog-pad))}\n@media (max-width:767px){.blog-head-in{padding-top:40px}}\n.blog-head{background:transparent}\n/* card do formulário */\n.rt-cot-card{border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.07)}\n.rt-cot .jet-form-builder h2.wp-block-heading{font-family:Montserrat,sans-serif;font-size:24px;font-weight:600;color:#3C3D3D;margin:0 0 20px}\n.rt-cot .jet-form-builder h4.wp-block-heading{font-family:Montserrat,sans-serif;font-size:17px!important;font-weight:600;color:#E98300;margin:36px 0 16px;padding-top:28px;border-top:1px solid #EEEEEE;text-transform:uppercase;letter-spacing:.06em}\n.rt-cot .jet-form-builder-row{margin-bottom:18px}\n.rt-cot .jet-form-builder__label-text{font-family:Roboto,sans-serif;font-size:15px;font-weight:500;color:#3C3D3D}\n.rt-cot .jet-form-builder__required{color:#E98300}\n.rt-cot .jet-form-builder__desc{font-size:13px;color:#8A8A8A;margin-top:6px}\n.rt-cot .jet-form-builder__field.text-field,.rt-cot .jet-form-builder__field.select-field,.rt-cot .jet-form-builder__field.date-field,.rt-cot .jet-form-builder__field.textarea-field{width:100%;min-height:50px;padding:12px 14px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:15px;color:#3C3D3D;box-shadow:none;transition:border-color .2s,box-shadow .2s}\n.rt-cot .jet-form-builder__field.textarea-field{min-height:120px}\n.rt-cot .jet-form-builder__field:focus{border-color:#E98300;box-shadow:0 0 0 3px rgba(233,131,0,.15);outline:0}\n.rt-cot .checkradio-wrap .jet-form-builder__field-label{display:inline-flex;align-items:center;gap:10px;padding:6px 0;font-size:15px;color:#3C3D3D;cursor:pointer}\n.rt-cot .radio-field{accent-color:#E98300;width:18px;height:18px}\n.rt-cot .jet-form-builder__fields-group.checkradio-wrap{display:flex;flex-wrap:wrap;gap:4px 28px}\n.rt-cot .jet-form-builder__submit{width:100%;margin-top:12px;padding:18px 32px;border:0;border-radius:8px;background:#E98300;color:#FFFFFF;font-family:Montserrat,sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .25s}\n.rt-cot .jet-form-builder__submit:hover{background:#3C3D3D;transform:translateY(-2px)}\n\n.rt-cot .jet-form-builder__field.email-field,.rt-cot .jet-form-builder__field.tel-field{width:100%;min-height:50px;padding:12px 14px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:15px;color:#3C3D3D}\n.rt-cot input,.rt-cot textarea{font-family:inherit}\n.rt-cot form input[type=text],.rt-cot form input[type=email],.rt-cot form input[type=tel],.rt-cot form textarea{width:100%;min-height:50px;padding:12px 14px;border:1px solid #D9D9D9;border-radius:8px;background:#FFFFFF;font-size:15px;color:#3C3D3D;box-shadow:none;transition:border-color .2s,box-shadow .2s}\n.rt-cot form textarea{min-height:140px}\n.rt-cot form input:focus,.rt-cot form textarea:focus{border-color:#E98300;box-shadow:0 0 0 3px rgba(233,131,0,.15);outline:0}\n.rt-cot form button[type=submit]{width:100%;margin-top:8px;padding:18px 32px;border:0;border-radius:8px;background:#E98300;color:#FFFFFF;font-family:Montserrat,sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .25s}\n.rt-cot form button[type=submit]:hover{background:#3C3D3D;transform:translateY(-2px)}\n.rt-form-intro .eyebrow{font-family:Roboto,sans-serif;font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:#C56F00;margin:0}\n.rt-form-intro h2{font-family:Montserrat,sans-serif;font-size:28px;font-weight:300;color:#3C3D3D;margin:12px 0 8px}\n.rt-form-intro p:last-child{color:#777;margin:0 0 24px}\n/* canais */\n.rt-canais{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}\n@media (max-width:1024px){.rt-canais{grid-template-columns:repeat(2,1fr)}}\n@media (max-width:560px){.rt-canais{grid-template-columns:1fr}}\n.rt-canal{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#FFFFFF;border:0;border-radius:10px;padding:28px 26px;box-shadow:0 10px 40px rgba(0,0,0,.06);color:#3C3D3D;text-decoration:none;cursor:pointer;overflow:hidden;font:inherit;transition:transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s}\n.rt-canal::before{content:\"\";position:absolute;top:0;left:0;right:0;height:4px;background:#E98300;transform:scaleX(0);transform-origin:0 50%;transition:transform .5s cubic-bezier(.22,.61,.36,1)}\n.rt-canal:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(0,0,0,.12);color:#3C3D3D;background:#FFFFFF}\n.rt-canal:hover::before{transform:scaleX(1)}\n.rt-canal-ic{width:52px;height:52px;border-radius:50%;background:#FFF1E0;color:#E98300;display:flex;align-items:center;justify-content:center;margin-bottom:10px;transition:background .3s,color .3s}\n.rt-canal-ic svg{width:26px;height:26px}\n.rt-canal:hover .rt-canal-ic{background:#E98300;color:#FFFFFF}\n.rt-canal--zap .rt-canal-ic{background:#E7F9EE;color:#1DA851}\n.rt-canal--zap:hover .rt-canal-ic{background:#25D366;color:#FFFFFF}\n.rt-canal strong{font-family:Montserrat,sans-serif;font-size:18px;font-weight:600}\n.rt-canal-dado{font-size:15px;color:#666;word-break:break-word}\n.rt-canal-cta{margin-top:10px;font-family:Roboto,sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#C56F00}\n/* onde estamos */\n.rt-onde{height:100%;background:#FFFFFF;border-radius:10px;padding:34px 30px;box-shadow:0 10px 40px rgba(0,0,0,.05);display:flex;flex-direction:column}\n.rt-onde h3{font-family:Montserrat,sans-serif;font-size:22px;font-weight:600;color:#3C3D3D;margin:0 0 10px}\n.rt-onde>p{color:#666;margin:0 0 18px;line-height:1.6}\n.rt-mapa{flex:1;min-height:280px;border-radius:8px;overflow:hidden;background:#EEE}\n.rt-mapa iframe{display:block;width:100%;height:100%;min-height:280px;border:0;filter:grayscale(.35)}\n.rt-rota{display:inline-block;margin:16px 0 22px;font-family:Roboto,sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#C56F00;text-decoration:none}\n.rt-rota:hover{color:#E98300}\n.rt-horario{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #EEE;padding-top:18px;font-size:15px;color:#666}\n.rt-horario strong{color:#3C3D3D}\n.elementor-widget-html:has(.rt-canais),.elementor-widget-html:has(.rt-onde){width:100%}\n.elementor-widget-html:has(.rt-onde){height:100%}",
+  "hide_title": "yes",
+  "background_background": "classic",
+  "background_color": "#F6F6F6"
+ }
+}

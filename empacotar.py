@@ -16,7 +16,7 @@ PLUGIN = RAIZ / "traveltec-roteiros"
 DIST = RAIZ / "dist"
 
 # Só o que o plugin precisa em produção; o resto do repositório fica de fora.
-INCLUIR = ["traveltec-roteiros.php", "readme.txt", "includes/*.php", "assets/*", "templates/*.json"]
+INCLUIR = ["traveltec-roteiros.php", "readme.txt", "includes/*.php", "assets/*", "assets/img/*", "templates/v2/*.json"]
 
 
 def versao():

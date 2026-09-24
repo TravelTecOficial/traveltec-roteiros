@@ -1,0 +1,8 @@
+{
+ "chave": "contato",
+ "titulo": "Contato",
+ "content": "<!-- wp:jet-forms/text-field {\"label\":\"Nome:\",\"name\":\"nome\"} /-->\n\n<!-- wp:jet-forms/text-field {\"field_type\":\"email\",\"label\":\"E-mail:\",\"name\":\"email\"} /-->\n\n<!-- wp:jet-forms/text-field {\"field_type\":\"tel\",\"label\":\"Celular:\",\"name\":\"celular\"} /-->\n\n<!-- wp:jet-forms/textarea-field {\"label\":\"Mensagem:\",\"name\":\"mensagem\"} /-->\n\n<!-- wp:jet-forms/submit-field {\"label\":\"Enviar sua mensagem\"} /-->",
+ "args": "{\"load_nonce\": \"hide\", \"submit_type\": \"ajax\"}",
+ "messages": "{\"success\":\"Form successfully submitted.\",\"failed\":\"Submit failed.\",\"validation_failed\":\"Validation error\",\"captcha_failed\":\"Captcha validation failed\",\"invalid_email\":\"Entered an invalid email\",\"empty_field\":\"Required field is empty\",\"internal_error\":\"Internal server error\",\"upload_max_files\":\"Media Specific: Max files limit\",\"upload_max_size\":\"Media Specific: Max size reached\",\"upload_mime_types\":\"Media Specific: File type error\"}",
+ "validation": "{}"
+}

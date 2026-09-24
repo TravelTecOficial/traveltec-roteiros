@@ -1,0 +1,14 @@
+{
+ "id": 943,
+ "title": "Newsletters",
+ "content": "<!-- wp:columns -->\n<div class=\"wp-block-columns\"><!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/text-field {\"name\":\"nome\",\"placeholder\":\"Seu nome\",\"required\":true} /--></div>\n<!-- /wp:column -->\n\n<!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/text-field {\"field_type\":\"email\",\"name\":\"email\",\"placeholder\":\"Seu melhor e-mail\",\"required\":true} /--></div>\n<!-- /wp:column -->\n\n<!-- wp:column -->\n<div class=\"wp-block-column\"><!-- wp:jet-forms/submit-field {\"label\":\"Assinar\"} /--></div>\n<!-- /wp:column --></div>\n<!-- /wp:columns -->",
+ "meta": {
+  "_jf_args": "{\"load_nonce\": \"hide\", \"submit_type\": \"ajax\"}",
+  "_jf_messages": "{\"success\":\"Form successfully submitted.\",\"failed\":\"Submit failed.\",\"validation_failed\":\"Validation error\",\"captcha_failed\":\"Captcha validation failed\",\"invalid_email\":\"Entered an invalid email\",\"empty_field\":\"Required field is empty\",\"internal_error\":\"Internal server error\",\"upload_max_files\":\"Media Specific: Max files limit\",\"upload_max_size\":\"Media Specific: Max size reached\",\"upload_mime_types\":\"Media Specific: File type error\"}",
+  "_jf_preset": "{}",
+  "_jf_recaptcha": "{}",
+  "_jf_actions": "[{\"id\": 4901, \"settings\": {\"send_email\": {\"mail_to\": \"custom\", \"custom_email\": \"contato@redeturistica.com.br\", \"subject\": \"%nome% assinou a newsletter\", \"from_name\": \"Rede Turística\", \"content_type\": \"text/html\", \"content\": \"NOVA INSCRIÇÃO NA NEWSLETTER<br><br>Nome: %nome%<br>E-mail: %email%\", \"reply_to\": \"form\", \"reply_to_from_field\": \"email\"}}, \"type\": \"send_email\", \"conditions\": [], \"events\": [], \"index\": 0}, {\"id\": 4174, \"settings\": {\"redirect_to_page\": {\"redirect_type\": \"static_page\", \"redirect_page\": 1051, \"redirect_url\": \"\"}}, \"type\": \"redirect_to_page\", \"conditions\": [], \"events\": [], \"index\": 1}]",
+  "_jf_validation": "{}",
+  "footnotes": ""
+ }
+}

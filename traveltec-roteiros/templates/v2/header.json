@@ -1,0 +1,370 @@
+{
+ "chave": "header",
+ "tipo": "elementor_library",
+ "titulo": "Cabeçalho",
+ "slug": null,
+ "condicoes": [
+  "include/general"
+ ],
+ "template_type": "header",
+ "page_template": "",
+ "topo_transparente": false,
+ "data": [
+  {
+   "id": "20ccf12",
+   "elType": "container",
+   "settings": {
+    "flex_direction": "row",
+    "flex_gap": {
+     "unit": "px",
+     "size": 0,
+     "column": "0",
+     "row": "0"
+    },
+    "content_width": "full",
+    "flex_justify_content": "space-around",
+    "flex_align_items": "center",
+    "border_border": "solid",
+    "border_width": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "1",
+     "left": "0",
+     "isLinked": false
+    },
+    "border_color": "#FFB700",
+    "border_radius": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": false
+    },
+    "margin": {
+     "unit": "em",
+     "top": "0",
+     "right": "0",
+     "bottom": "1",
+     "left": "0",
+     "isLinked": false
+    },
+    "margin_tablet": {
+     "unit": "em",
+     "top": "",
+     "right": "",
+     "bottom": "",
+     "left": "",
+     "isLinked": true
+    },
+    "margin_mobile": {
+     "unit": "em",
+     "top": "",
+     "right": "",
+     "bottom": "",
+     "left": "",
+     "isLinked": true
+    },
+    "padding": {
+     "unit": "px",
+     "top": "10",
+     "right": "10",
+     "bottom": "10",
+     "left": "10",
+     "isLinked": true
+    },
+    "hide_tablet": "hidden-tablet",
+    "hide_mobile": "hidden-mobile",
+    "z_index": 99,
+    "_flex_align_self": "center",
+    "_flex_order": "start",
+    "_flex_size": "shrink"
+   },
+   "elements": [
+    {
+     "id": "adbc901",
+     "elType": "widget",
+     "settings": {
+      "__dynamic__": {
+       "image": "[elementor-tag id=\"\" name=\"site-logo\" settings=\"%7B%7D\"]"
+      },
+      "width": {
+       "unit": "%",
+       "size": 29,
+       "sizes": []
+      },
+      "_element_width": "initial",
+      "_element_custom_width": {
+       "unit": "%",
+       "size": 20.909
+      },
+      "_flex_size": "none"
+     },
+     "elements": [],
+     "widgetType": "theme-site-logo"
+    },
+    {
+     "id": "badce5c",
+     "elType": "widget",
+     "settings": {
+      "menu_name": "Menu",
+      "menu": "{{MENU:principal}}",
+      "color_menu_item_hover": "#000000",
+      "pointer_color_menu_item_hover": "#E98300",
+      "color_menu_item_active": "#000000",
+      "pointer_color_menu_item_active": "#E98300",
+      "_element_width": "initial",
+      "_element_custom_width": {
+       "unit": "%",
+       "size": 44.545
+      },
+      "_flex_size": "none",
+      "_margin": {
+       "unit": "px",
+       "top": "0",
+       "right": "10",
+       "bottom": "0",
+       "left": "19",
+       "isLinked": false
+      },
+      "color_menu_item": "#E98300",
+      "align_items": "start",
+      "pointer_width": {
+       "unit": "px",
+       "size": 0,
+       "sizes": []
+      },
+      "padding_horizontal_menu_item": {
+       "unit": "px",
+       "size": 10,
+       "sizes": []
+      }
+     },
+     "elements": [],
+     "widgetType": "nav-menu"
+    },
+    {
+     "id": "c4fa7ae",
+     "elType": "widget",
+     "settings": {
+      "social_icon_list": [
+       {
+        "social_icon": {
+         "value": "fab fa-instagram",
+         "library": "fa-brands"
+        },
+        "_id": "ttso0",
+        "link": {
+         "url": "https://tt.token/instagram_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-facebook",
+         "library": "fa-brands"
+        },
+        "_id": "ttso1",
+        "link": {
+         "url": "https://tt.token/facebook_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-youtube",
+         "library": "fa-brands"
+        },
+        "_id": "ttso2",
+        "link": {
+         "url": "https://tt.token/youtube_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-linkedin",
+         "library": "fa-brands"
+        },
+        "_id": "ttso3",
+        "link": {
+         "url": "https://tt.token/linkedin_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       {
+        "social_icon": {
+         "value": "fab fa-tiktok",
+         "library": "fa-brands"
+        },
+        "_id": "ttso4",
+        "link": {
+         "url": "https://tt.token/tiktok_url",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       }
+      ],
+      "icon_color": "custom",
+      "icon_primary_color": "#E98300",
+      "icon_size": {
+       "unit": "px",
+       "size": 17,
+       "sizes": []
+      }
+     },
+     "elements": [],
+     "widgetType": "social-icons"
+    }
+   ],
+   "isInner": false
+  },
+  {
+   "id": "85ac2b1",
+   "elType": "container",
+   "settings": {
+    "flex_direction": "row",
+    "flex_gap": {
+     "unit": "px",
+     "size": 0,
+     "column": "0",
+     "row": "0"
+    },
+    "flex_justify_content_mobile": "center",
+    "hide_desktop": "hidden-desktop",
+    "margin_mobile": {
+     "unit": "px",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
+     "isLinked": true
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "8",
+     "right": "16",
+     "bottom": "8",
+     "left": "16",
+     "isLinked": false
+    },
+    "z_index": 99,
+    "z_index_mobile": 99,
+    "flex_align_items_mobile": "center"
+   },
+   "elements": [
+    {
+     "id": "1f38ed9",
+     "elType": "container",
+     "settings": {
+      "flex_direction": "column",
+      "content_width": "full",
+      "width": {
+       "unit": "%",
+       "size": "50"
+      },
+      "width_mobile": {
+       "unit": "%",
+       "size": 50,
+       "sizes": []
+      },
+      "flex_justify_content_mobile": "center",
+      "padding_mobile": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "5ae3854",
+       "elType": "widget",
+       "settings": {
+        "__dynamic__": {
+         "image": "[elementor-tag id=\"\" name=\"site-logo\" settings=\"%7B%7D\"]"
+        },
+        "align_mobile": "left",
+        "width_mobile": {
+         "unit": "%",
+         "size": 37,
+         "sizes": []
+        }
+       },
+       "elements": [],
+       "widgetType": "theme-site-logo"
+      }
+     ],
+     "isInner": true
+    },
+    {
+     "id": "778bd3d",
+     "elType": "container",
+     "settings": {
+      "flex_direction": "column",
+      "content_width": "full",
+      "width": {
+       "unit": "%",
+       "size": "50"
+      },
+      "width_mobile": {
+       "unit": "%",
+       "size": 50,
+       "sizes": []
+      },
+      "flex_justify_content_mobile": "center",
+      "padding_mobile": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": true
+      }
+     },
+     "elements": [
+      {
+       "id": "89569b3",
+       "elType": "widget",
+       "settings": {
+        "selected_icon": {
+         "value": "fas fa-bars",
+         "library": "fa-solid"
+        },
+        "align_mobile": "right",
+        "primary_color": "#3C3D3D",
+        "size_mobile": {
+         "unit": "px",
+         "size": 36,
+         "sizes": []
+        },
+        "__dynamic__": {
+         "link": "[elementor-tag id=\"1985e24\" name=\"popup\" settings=\"%7B%22popup%22%3A%221078%22%7D\"]"
+        }
+       },
+       "elements": [],
+       "widgetType": "icon"
+      }
+     ],
+     "isInner": true
+    }
+   ],
+   "isInner": false
+  }
+ ],
+ "page_settings": {
+  "custom_css": "/* Cabeçalho fixo em todas as páginas. Na home, nas páginas de roteiro e na Sobre (#7): transparente no topo, fundo branco ao rolar (CSS de rolagem, sem JS).\n   Gravado no CSS personalizado do template Header #932. Navegador sem suporte a\n   animation-timeline fica com o cabeçalho sempre branco. */\n.elementor-location-header{position:sticky;top:0;z-index:999;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}\n.admin-bar .elementor-location-header{top:32px}\n@media (max-width:782px){.admin-bar .elementor-location-header{top:46px}}\nbody.tt-topo-transparente .elementor-location-header{position:fixed;left:0;right:0}\nbody.home h1.entry-title{display:none}\n.elementor-location-header .elementor-element-20ccf12{margin-bottom:0}\n@supports (animation-timeline: scroll()){\n  body.tt-topo-transparente .elementor-location-header,\n  body.tt-topo-transparente .elementor-location-header .elementor-element-20ccf12,\n  body.tt-topo-transparente .elementor-location-header .elementor-nav-menu--main .elementor-item,\n  body.tt-topo-transparente .elementor-location-header .elementor-element-89569b3 .elementor-icon i,\n  body.tt-topo-transparente .elementor-location-header .elementor-element-89569b3 .elementor-icon svg{animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root);animation-range:0 120px}\n  body.tt-topo-transparente .elementor-location-header{animation-name:rt-hdr}\n  body.tt-topo-transparente .elementor-location-header .elementor-element-20ccf12{animation-name:rt-hdr-borda}\n  body.tt-topo-transparente .elementor-location-header .elementor-nav-menu--main .elementor-item{animation-name:rt-hdr-menu}\n  body.tt-topo-transparente .elementor-location-header .elementor-element-89569b3 .elementor-icon i,\n  body.tt-topo-transparente .elementor-location-header .elementor-element-89569b3 .elementor-icon svg{animation-name:rt-hdr-icone}\n}\n@keyframes rt-hdr{from{background:rgba(255,255,255,0);box-shadow:0 2px 12px rgba(0,0,0,0)}to{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}}\n@keyframes rt-hdr-borda{from{border-bottom-color:rgba(255,183,0,0)}to{border-bottom-color:#FFB700}}\n@keyframes rt-hdr-menu{from{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}to{color:#E98300;text-shadow:none}}\n@keyframes rt-hdr-icone{from{color:#fff;fill:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}to{color:#3C3D3D;fill:#3C3D3D;filter:none}}\n"
+ }
+}
