@@ -28,7 +28,9 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [x] 2.0.7: aplicar cores/fontes não mexe no Kit enquanto o cabeçalho do plugin não estiver instalado (site no ar
   com layout antigo mantém as cores globais).
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
-  Ajimex (`ajimex.com.br`, 1.3.2, modelos 1.x #174/#175/#193): em andamento. Só atualizar — não clicar em
+  Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
+  aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e
+  formulários intactos. Modelos 1.x #174/#175/#193 guardados. Só atualizar — não clicar em
   "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
