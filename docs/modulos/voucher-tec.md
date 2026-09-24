@@ -49,6 +49,14 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   /quem-somos/, /fale-conosco/, /cotacao-de-viagem/ seguem no ar sem link — decidir redirecionamento 301.
   Falta: teste de envio dos formulários (dono, no fim); cabeçalho/rodapé continuam os antigos (#48/#50). Só atualizar — não clicar em
   "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.
+  DSelection (`dselectiontravel.com.br`, 24/09/2026): 2.0.12; cores do site (#052948/#021632/#B9BFC9, Cinzel/Outfit) e
+  dados do Cliente Ideal (nome "DSelection Travel") aplicados. Dono instalou as 5 abas: roteiros #1161–1163, blog
+  #1167/#1168, contato #1171 (+#1172, forms #1173/#1174), cotação #1177 (+#1178, form #1179), sobre #1183 (sem
+  description/history no Cliente Ideal). Ajustes à mão (backup em `dselections/backups/`): cabeçalho #753 transparente
+  com a classe tt-topo-transparente (CSS do container 1ae6be22), assinatura do rodapé #1008 numa linha, arquivo antigo
+  #1030 sem condição (o post_archive dele ganhava do "todos os arquivos" do #1167 — o plugin não libera condição mais
+  específica), menu Main: Sobre nós → /sobre/ (com "A pessoa por trás da marca" como subitem, para caber), + Cotação
+  e Contato. Falta: teste dos formulários (dono).
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
