@@ -286,7 +286,7 @@
      "id": "blgpstca",
      "elType": "widget",
      "settings": {
-      "html": "<div class=\"blog-cta-in\">\n  <p class=\"eyebrow\">%tt:nome%</p>\n  <h3>Vamos planejar a sua viagem?</h3>\n  <p>Conte para onde quer ir e em que datas. A partir daí montamos a proposta com você.</p>\n  <a href=\"/cotacao-de-viagens/\" target=\"_blank\" rel=\"noopener\" class=\"btn\">Pedir cotação</a>\n</div>"
+      "html": "<div class=\"blog-cta-in\">\n  <p class=\"eyebrow\">%tt:nome%</p>\n  <h3>Vamos planejar a sua viagem?</h3>\n  <p>Conte para onde quer ir e em que datas. A partir daí montamos a proposta com você.</p>\n  <a href=\"https://tt.token/url_cotacao\" target=\"_blank\" rel=\"noopener\" class=\"btn\">Pedir cotação</a>\n</div>"
      },
      "elements": [],
      "widgetType": "html"

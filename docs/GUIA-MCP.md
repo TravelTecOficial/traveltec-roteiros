@@ -112,6 +112,7 @@ Os documentos são Elementor clássico (containers + widgets). IDs em `status.do
 | `%tt:description%`, `%tt:history_html%` | Sobre | textos do Cliente Ideal |
 | `%tt:nome_url%` | mensagens de WhatsApp | nome codificado para URL |
 | `https://tt.token/instagram_url` (e `facebook_url`, `youtube_url`, `linkedin_url`, `tiktok_url`) | ícones sociais | URL; vazio esconde o ícone |
+| `https://tt.token/url_cotacao` (e `url_contato`, `url_sobre`, `url_blog`, `url_roteiros`) | botões e links internos | página do plugin ou a que já existir no site |
 | `[tt dado="campo"]` | qualquer texto | shortcode com o mesmo valor |
 
 Para trocar um dado, use `aplicar` — não edite o texto no widget.

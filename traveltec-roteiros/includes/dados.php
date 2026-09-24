@@ -141,7 +141,7 @@ function tt_voucher_e164( $txt ) {
 /**
  * Valor de um marcador. Além dos campos, há derivados:
  * nome, nome_url, whatsapp, whatsapp_digitos, telefone, telefone_digitos, endereco, mapa_q,
- * history_html, ano, company_id.
+ * history_html, ano, company_id e os endereços url_cotacao, url_contato, url_sobre, url_blog, url_roteiros.
  */
 function tt_voucher_valor( $campo ) {
 	$d = tt_voucher_dados();
@@ -178,8 +178,39 @@ function tt_voucher_valor( $campo ) {
 			return wp_date( 'Y' );
 		case 'company_id':
 			return $d['id'];
+		case 'url_cotacao':
+			return tt_voucher_url_pagina( 'cotacao', array( 'cotacao-de-viagens', 'cotacao-de-viagem', 'cotacao', 'orcamento' ), 'url_contato' );
+		case 'url_contato':
+			return tt_voucher_url_pagina( 'contato', array( 'contato', 'fale-conosco', 'contatos' ), '' );
+		case 'url_sobre':
+			return tt_voucher_url_pagina( 'sobre', array( 'sobre', 'quem-somos', 'sobre-nos' ), '' );
+		case 'url_blog':
+			$blog = (int) get_option( 'page_for_posts' );
+			return $blog ? get_permalink( $blog ) : home_url( '/blog/' );
+		case 'url_roteiros':
+			$url = get_post_type_archive_link( 'roteiros' );
+			return $url ? $url : home_url( '/roteiros/' );
 	}
 	return isset( $d[ $campo ] ) ? (string) $d[ $campo ] : '';
+}
+
+/**
+ * Endereço de uma página do site: a instalada pelo plugin, senão a que já existir com um dos endereços comuns
+ * (sites antigos usam /cotacao-de-viagem/, /fale-conosco/, /quem-somos/...). Sem nenhuma, usa o marcador
+ * $reserva (ou a home).
+ */
+function tt_voucher_url_pagina( $chave, $slugs, $reserva ) {
+	$id = (int) ( tt_voucher_ids()['docs'][ $chave ] ?? 0 );
+	if ( $id && 'publish' === get_post_status( $id ) ) {
+		return get_permalink( $id );
+	}
+	foreach ( $slugs as $slug ) {
+		$p = get_page_by_path( $slug );
+		if ( $p && 'publish' === $p->post_status ) {
+			return get_permalink( $p );
+		}
+	}
+	return $reserva ? tt_voucher_valor( $reserva ) : home_url( '/' );
 }
 
 /** Troca os marcadores de um trecho de HTML. */

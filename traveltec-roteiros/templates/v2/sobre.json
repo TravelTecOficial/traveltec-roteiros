@@ -742,7 +742,7 @@
        "settings": {
         "text": "Pedir cotação",
         "link": {
-         "url": "/cotacao-de-viagens/",
+         "url": "https://tt.token/url_cotacao",
          "is_external": "",
          "nofollow": "",
          "custom_attributes": ""

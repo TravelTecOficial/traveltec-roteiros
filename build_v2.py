@@ -75,6 +75,10 @@ TROCAS = [
     ("Rede Turistica", "%tt:nome%"),
     ("https://redeturistica.com.br/", "/"),
     ("https://redeturistica.com.br", ""),
+    # links internos: cada site tem o seu endereço (/cotacao-de-viagem/, /experiencias/...) — resolvido na exibição
+    ("/cotacao-de-viagens/", "https://tt.token/url_cotacao"),
+    ('href="/roteiros/"', 'href="https://tt.token/url_roteiros"'),
+    ('href="/blog/"', 'href="https://tt.token/url_blog"'),
 ]
 
 REDES = [  # rede, ícone Font Awesome, rótulo

@@ -68,3 +68,7 @@ menus só com cabeçalho/rodapé, formulários só os da parte — dá para troc
 
 2.0.7: salvar cores e fontes num site com o layout antigo muda só as peças do plugin; as cores e fontes
 globais do Elementor (Kit) só mudam depois que o cabeçalho do plugin estiver instalado.
+
+2.0.8: links internos dos modelos (botões de cotação, "Ver roteiros", blog) apontam para a página que existir no
+site — a do plugin ou a que já havia (/cotacao-de-viagem/, /experiencias/, /fale-conosco/...). O post do blog
+assume também o lugar de um "Single Post" antigo. Quem já instalou uma parte: reinstalar para ganhar os links.

@@ -425,7 +425,7 @@
         "text": "Reserve agora",
         "align": "justify",
         "link": {
-         "url": "/cotacao-de-viagens/",
+         "url": "https://tt.token/url_cotacao",
          "is_external": "",
          "nofollow": "",
          "custom_attributes": ""

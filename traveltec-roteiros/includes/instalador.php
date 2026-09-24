@@ -283,9 +283,11 @@ function tt_voucher_liberar_condicoes( $tipo, $condicoes, $meu_id, &$rel ) {
 	if ( ! $condicoes ) {
 		return;
 	}
-	$outros = get_posts( array(
+	// single, single-post e single-page disputam as mesmas páginas (ex.: o "Single Post" de um site antigo).
+	$familia = in_array( $tipo, array( 'single', 'single-post', 'single-page' ), true ) ? array( 'single', 'single-post', 'single-page' ) : array( $tipo );
+	$outros  = get_posts( array(
 		'post_type' => 'elementor_library', 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'exclude' => array( $meu_id ),
-		'meta_query' => array( array( 'key' => '_elementor_template_type', 'value' => $tipo ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+		'meta_query' => array( array( 'key' => '_elementor_template_type', 'value' => $familia, 'compare' => 'IN' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
 	) );
 	$backup = get_option( 'tt_voucher_condicoes_anteriores', array() );
 	foreach ( $outros as $id ) {
