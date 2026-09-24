@@ -51,3 +51,6 @@ Sites da 1.x atualizam só o código: nada é instalado sem clicar em "Instalar 
 - post do blog no padrão da casa (capa, lateral com busca e categorias, chamada final com botão);
 - logo do cabeçalho com altura limitada (logos retangulares não crescem no tablet/celular);
 - primeira versão publicada no GitHub com atualização automática para os sites.
+
+2.0.3: reinstalar uma peça depois de aplicar os dados já grava com as cores e fontes do site
+(antes voltava com a paleta da referência).

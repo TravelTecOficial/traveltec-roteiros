@@ -307,8 +307,12 @@ function tt_voucher_gravar_doc( $doc, &$ids, &$rel, $substituir ) {
 		'_elementor_version'   => defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.0.0',
 	);
 	$marc = tt_voucher_marcadores( $ids );
-	$data = strtr( wp_json_encode( $doc['data'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ), $marc );
-	$ps   = json_decode( strtr( wp_json_encode( $doc['page_settings'] ? $doc['page_settings'] : new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ), $marc ), true );
+	// Os modelos vêm com a paleta de referência; já grava com as cores e fontes atuais do site
+	// (senão reinstalar uma peça depois do "aplicar" traria de volta as cores da referência).
+	$de   = tt_voucher_estilo_padrao();
+	$para = tt_voucher_estilo();
+	$data = tt_voucher_trocar_paleta( strtr( wp_json_encode( $doc['data'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ), $marc ), $de, $para );
+	$ps   = json_decode( tt_voucher_trocar_paleta( strtr( wp_json_encode( $doc['page_settings'] ? $doc['page_settings'] : new stdClass(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ), $marc ), $de, $para ), true );
 	$ps   = is_array( $ps ) ? $ps : array();
 
 	if ( 'page' === $doc['tipo'] ) {
