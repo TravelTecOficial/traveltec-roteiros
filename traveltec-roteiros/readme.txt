@@ -80,3 +80,6 @@ o tamanho de título do Kit e ficavam enormes).
 aparece ao rolar a página.
 
 2.0.11: a capa do post desce o título a altura do cabeçalho transparente (reinstalar Experiências).
+
+2.0.12: quando a API do GitHub recusa (limite de consultas por IP, comum em hospedagem compartilhada), o site
+descobre a última versão pela página de releases — a atualização aparece mesmo assim.

@@ -53,10 +53,13 @@ function tt_roteiros_release( $forcar = false ) {
 		array( 'timeout' => 15, 'headers' => $cabecalhos )
 	);
 
-	// Falhou: guarda vazio por 1h para não bater no GitHub a cada tela do painel.
+	// A API falhou — em hospedagem compartilhada é quase sempre o limite de 60 consultas/hora por IP, dividido
+	// com os outros sites do servidor. Repositório público: descobre a versão pela página (sem limite).
 	if ( is_wp_error( $resposta ) || 200 !== (int) wp_remote_retrieve_response_code( $resposta ) ) {
-		set_site_transient( TT_ROTEIROS_CACHE, array(), HOUR_IN_SECONDS );
-		return array();
+		$release = tt_roteiros_token() ? array() : tt_roteiros_release_pela_pagina();
+		// Sem resposta: guarda vazio por 1h para não bater no GitHub a cada tela do painel.
+		set_site_transient( TT_ROTEIROS_CACHE, $release, $release ? 6 * HOUR_IN_SECONDS : HOUR_IN_SECONDS );
+		return $release;
 	}
 
 	$dados = json_decode( wp_remote_retrieve_body( $resposta ), true );
@@ -81,6 +84,27 @@ function tt_roteiros_release( $forcar = false ) {
 	);
 	set_site_transient( TT_ROTEIROS_CACHE, $release, 6 * HOUR_IN_SECONDS );
 	return $release;
+}
+
+/**
+ * Última versão sem a API: github.com/<repo>/releases/latest redireciona para .../releases/tag/v<versão>,
+ * e o anexo fica em .../releases/download/v<versão>/traveltec-roteiros.zip.
+ */
+function tt_roteiros_release_pela_pagina() {
+	$resposta = wp_remote_head(
+		'https://github.com/' . TT_ROTEIROS_REPO . '/releases/latest',
+		array( 'timeout' => 15, 'redirection' => 0, 'headers' => array( 'User-Agent' => 'Voucher-Tec/' . TT_ROTEIROS_VERSION ) )
+	);
+	$destino = is_wp_error( $resposta ) ? '' : (string) wp_remote_retrieve_header( $resposta, 'location' );
+	if ( ! preg_match( '#/releases/tag/(v?(\d+(?:\.\d+)+))$#', $destino, $m ) ) {
+		return array();
+	}
+	return array(
+		'versao' => $m[2],
+		'zip'    => 'https://github.com/' . TT_ROTEIROS_REPO . '/releases/download/' . $m[1] . '/' . TT_ROTEIROS_ANEXO,
+		'notas'  => '',
+		'data'   => '',
+	);
 }
 
 /** Download do anexo em repositório privado: a API exige token e Accept de arquivo binário. */
