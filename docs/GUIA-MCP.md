@@ -67,7 +67,7 @@ Content-Type: application/json
 Faz de uma vez:
 - grava os dados da agência (campos com o mesmo nome da tabela `companies`);
 - baixa `logo_url` e define como logo do site (cabeçalho e rodapé usam o logo do site);
-- título do site = `nome_fantasia` (ou `name`); descrição = `description`/`sinopse`;
+- título do site = `nome_fantasia` (ou `name`); descrição = `description` (a `sinopse` é texto interno da IA e nunca vai para o site);
 - **cores e fontes**: `cor_primaria`, `cor_secundaria`, `cor_terciaria`, `fonte_titulos`, `fonte_textos`
   trocadas em todas as páginas e modelos do plugin e no Kit do Elementor (a primária gera a versão
   escura e a clara sozinha);
