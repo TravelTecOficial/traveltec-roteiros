@@ -78,3 +78,5 @@ o tamanho de título do Kit e ficavam enormes).
 
 2.0.10: cabeçalho transparente também nos posts do blog (sobre a foto de capa), como nos roteiros; o fundo
 aparece ao rolar a página.
+
+2.0.11: a capa do post desce o título a altura do cabeçalho transparente (reinstalar Experiências).
