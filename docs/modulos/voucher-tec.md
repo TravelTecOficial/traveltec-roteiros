@@ -43,7 +43,11 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   formulários intactos. Modelos 1.x #174/#175/#193 guardados.
   Experiências instalada (arquivo #282, post #283) e Contato (/contato/ #294, obrigado #295, forms contato #296 e
   newsletter #297, captação ligada com o company_id). Dados de contato aplicados do Cliente Ideal. Menu trocado pelo
-  dono. Falta: teste de envio dos formulários (dono, no fim), Cotação e Sobre. Só atualizar — não clicar em
+  dono. Sobre (/sobre/ #301; description/history tirados do site, tagline mantida) e Cotação
+  (/cotacao-de-viagens/ #303, obrigado #304, form #305). Menus Principal/Rodapé e botões de cotação do cabeçalho #48
+  e da home (#27, #166) apontam para as páginas novas (backup em `Ajimex/backups/`). Páginas antigas
+  /quem-somos/, /fale-conosco/, /cotacao-de-viagem/ seguem no ar sem link — decidir redirecionamento 301.
+  Falta: teste de envio dos formulários (dono, no fim); cabeçalho/rodapé continuam os antigos (#48/#50). Só atualizar — não clicar em
   "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
