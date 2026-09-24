@@ -16,12 +16,12 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   (`config.local.json` → `VoucherTecTeste`), com os dados da Mergulhando na Viagem. Instalação, marcadores,
   logo, paleta e captação ligada: OK. Corrigido na 2.0.1: logo do rodapé, copyright, menus, @perfil das redes,
   secundária clara, sinopse fora do site.
-- [ ] Próximo zip (2.0.2): `blog-post` passa a ser o modelo novo da Rede (#5424, padrão da casa); falta limitar
-  a altura do logo retangular no cabeçalho (tablet)
+- [x] **2.0.2 publicada no GitHub** (24/09/2026, release v2.0.2, commit d95ccae): modelos da Rede v2.0 (post #5424),
+  logo do cabeçalho limitado. Daqui em diante os sites atualizam pelo painel (Plugins › Atualizar agora).
 - [ ] **Teste da 2.0.1** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
-- [ ] Release v2.0.0 no GitHub (só depois do teste — a release oferece a atualização a todos os sites 1.x)
+
 
 ## Decisões do dono
 
