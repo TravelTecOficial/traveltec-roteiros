@@ -67,6 +67,12 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   #1030 sem condição (o post_archive dele ganhava do "todos os arquivos" do #1167 — o plugin não libera condição mais
   específica), menu Main: Sobre nós → /sobre/ (com "A pessoa por trás da marca" como subitem, para caber), + Cotação
   e Contato. Falta: teste dos formulários (dono).
+  Zizi Quatti (`ziziquattiviagens.com.br`, pasta/config `GDQExperience`, company GDQ Experience, 24/09/2026): 2.0.14;
+  cores do manual (#1E3F6B/#344152/#FFC845, Archivo/Barlow) e dados aplicados; dono instalou as 5 abas (roteiros
+  #216–218, blog #222/#223, contato #224/#225, cotação #230/#231, sobre #236, forms #226/#227/#232). Mesma base do
+  Ajimex: cabeçalho #48 transparente (CSS no container cc5b294, keyframes só com o início) e links "Solicitar cotação"
+  (#48, #162, home #27, destinos, 404) → /cotacao-de-viagens/ (backup em `GDQExperience/backups/`). Menus e rodapé #50
+  ficam para a 2.0.15 (automático ao atualizar). Sem roteiros publicados.
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
