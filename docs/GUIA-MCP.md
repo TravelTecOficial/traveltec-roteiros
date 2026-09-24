@@ -17,7 +17,7 @@ Plugins › Adicionar novo › Enviar plugin › `traveltec-roteiros.zip` (anexo
 `github.com/TravelTecOficial/traveltec-roteiros`) › Ativar.
 
 - Em site novo (sem instalação anterior) e com Elementor Pro ativo, **ativar já instala o site padrão**.
-- Caso contrário: `POST /wp-json/voucher-tec/v1/instalar` (ou painel **Voucher Tec › Instalar site padrão**).
+- Caso contrário: `POST /wp-json/voucher-tec/v1/instalar` (ou painel **Voucher Tec › Identidade › Instalar o site padrão inteiro**).
 
 ```http
 POST /wp-json/voucher-tec/v1/instalar
@@ -26,7 +26,12 @@ POST /wp-json/voucher-tec/v1/instalar
 
 `substituir: true` usa o layout do plugin também em páginas que já existem com o mesmo endereço
 (`/sobre/`, `/contato/`, `/cotacao-de-viagens/`...). Sem ele, essas páginas voltam em `conflitos`.
-`modulos: ["contato","obrigado-contato"]` instala só as chaves pedidas.
+`modulos: ["contato","obrigado-contato","newsletter"]` instala só as chaves pedidas e não mexe em mais nada: o Kit do
+Elementor (cores/fontes globais) só muda na instalação completa, os menus só com `header`/`footer`/`menu-popup` (ou
+se já foram instalados) e os formulários só os pedidos. As páginas de obrigado usam o formulário `newsletter`.
+Grupos usados pelas abas do painel: identidade `header, menu-popup, footer, newsletter, obrigado-newsletter` ·
+roteiros `card, lista, single` · experiencias `blog-arquivo, blog-post` · contato `contato, obrigado-contato,
+newsletter` · cotacao `cotacao, obrigado-cotacao, newsletter` · sobre `sobre`.
 
 O que é instalado (chaves):
 

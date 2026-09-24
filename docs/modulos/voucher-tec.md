@@ -22,6 +22,9 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [x] 2.0.4: popup do menu do celular (#1078 na Rede) incluído — num site limpo o ☰ não abria nada.
 - [x] 2.0.5: sem o site padrão instalado (sites da 1.x), o plugin não acrescenta nada às páginas — fontes do
   Google e CSS dos ícones vazios só depois de instalar. Pedido para atualizar os 6 sites no ar sem peso extra.
+- [x] 2.0.6: painel em abas (Licença e instruções, Identidade, Roteiros, Experiências, Contato, Cotação, Sobre),
+  pedido pelo dono em 24/09/2026. Cada aba: peças, instalar só a parte e os dados dela. Instalar uma parte não
+  troca mais o Kit, os menus nem os outros formulários (antes trocava — risco para site no ar).
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`, 1.3.2, modelos 1.x #174/#175/#193): em andamento. Só atualizar — não clicar em
   "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.

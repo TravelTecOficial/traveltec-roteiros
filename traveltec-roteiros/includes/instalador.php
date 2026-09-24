@@ -158,8 +158,8 @@ function tt_voucher_acoes_form( $chave, $ids ) {
 	return array();
 }
 
-function tt_voucher_instalar_forms( &$ids, &$rel ) {
-	foreach ( tt_voucher_indice()['forms'] as $chave ) {
+function tt_voucher_instalar_forms( &$ids, &$rel, $so = null ) {
+	foreach ( null === $so ? tt_voucher_indice()['forms'] : $so as $chave ) {
 		$f = tt_voucher_modelo( 'form-' . $chave );
 		if ( ! $f ) {
 			continue;
@@ -366,6 +366,10 @@ function tt_voucher_gravar_doc( $doc, &$ids, &$rel, $substituir ) {
 /**
  * Instala tudo. $opcoes: substituir (bool) — usa o layout do plugin em páginas que já existem
  * com o mesmo endereço; modulos (array|null) — só as chaves pedidas (docs e forms).
+ *
+ * Com modulos, só as peças pedidas mudam — é o que permite trocar um site no ar parte por parte:
+ * formulários só os pedidos, menus só com cabeçalho/rodapé/menu do celular, página do blog só com o
+ * arquivo do blog e o Kit do Elementor (cores e fontes globais) só na instalação completa.
  */
 function tt_voucher_instalar( $opcoes = array() ) {
 	$substituir = ! empty( $opcoes['substituir'] );
@@ -385,7 +389,7 @@ function tt_voucher_instalar( $opcoes = array() ) {
 	tt_voucher_instalar_imagens( $ids, $rel );
 
 	// Página do blog (lista de posts), quando o site usa página inicial estática.
-	if ( ! get_option( 'page_for_posts' ) && 'page' === get_option( 'show_on_front' ) ) {
+	if ( $quer( 'blog-arquivo' ) && ! get_option( 'page_for_posts' ) && 'page' === get_option( 'show_on_front' ) ) {
 		$blog = get_page_by_path( 'blog', OBJECT, 'page' );
 		$blog_id = $blog ? $blog->ID : wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Blog', 'post_name' => 'blog' ) );
 		if ( $blog_id && ! is_wp_error( $blog_id ) ) {
@@ -406,16 +410,20 @@ function tt_voucher_instalar( $opcoes = array() ) {
 			tt_voucher_garantir_pagina( $doc, $ids, $rel, $substituir );
 		}
 	}
-	if ( $dep['jetformbuilder'] ) {
-		tt_voucher_instalar_forms( $ids, $rel );
-	} else {
+	$forms = array_values( array_filter( $indice['forms'], $quer ) );
+	if ( $forms && $dep['jetformbuilder'] ) {
+		tt_voucher_instalar_forms( $ids, $rel, $forms );
+	} elseif ( $forms ) {
 		$rel['avisos'][] = 'JetFormBuilder não está ativo: formulários não instalados.';
 	}
 	tt_voucher_salvar_ids( $ids );
 	if ( $quer( 'card' ) && isset( $docs['card'] ) ) {
 		tt_voucher_gravar_doc( $docs['card'], $ids, $rel, $substituir ); // a lista precisa do ID do card
 	}
-	tt_voucher_instalar_menus( $ids, $rel );
+	// Os menus do plugin só entram com o cabeçalho/rodapé; depois disso são refeitos a cada peça (ganham a página nova).
+	if ( $quer( 'header' ) || $quer( 'footer' ) || $quer( 'menu-popup' ) || ! empty( $ids['menus'] ) ) {
+		tt_voucher_instalar_menus( $ids, $rel );
+	}
 	foreach ( $docs as $chave => $doc ) {
 		if ( $doc && 'card' !== $chave ) {
 			tt_voucher_gravar_doc( $doc, $ids, $rel, $substituir );
@@ -433,11 +441,13 @@ function tt_voucher_instalar( $opcoes = array() ) {
 	} catch ( \Throwable $e ) {
 		$rel['avisos'][] = 'Cache de condições do Elementor: ' . $e->getMessage();
 	}
-	if ( $dep['jetformbuilder'] ) {
+	if ( $forms && $dep['jetformbuilder'] ) {
 		update_option( 'tt_voucher_captacao', 1 );
 	}
 	update_option( 'tt_roteiros_versao_modelos', TT_VOUCHER_VERSAO_MODELOS );
-	tt_voucher_estilo_no_kit( tt_voucher_estilo() );
+	if ( null === $so ) {
+		tt_voucher_estilo_no_kit( tt_voucher_estilo() );
+	}
 	tt_voucher_limpar_cache();
 	flush_rewrite_rules( true );
 	$rel['ids'] = $ids;

@@ -60,3 +60,8 @@ limpo, o menu não abria no celular.
 
 2.0.5: nos sites sem o site padrão instalado (os da 1.x), o plugin não acrescenta nada às páginas —
 as fontes do Google e o CSS dos ícones vazios só entram depois de "Instalar site padrão".
+
+2.0.6: painel em abas — Licença e instruções, Identidade, Roteiros, Experiências, Contato, Cotação, Sobre.
+Cada aba mostra as suas peças (Editar no Elementor / Ver), instala só aquela parte e edita os dados que ela usa.
+Instalar uma parte não mexe em mais nada: cores e fontes globais do Elementor só na instalação completa,
+menus só com cabeçalho/rodapé, formulários só os da parte — dá para trocar um site no ar aos poucos.

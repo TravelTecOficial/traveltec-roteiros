@@ -23,7 +23,7 @@ Estado do módulo: [`docs/modulos/voucher-tec.md`](docs/modulos/voucher-tec.md).
 
 A partir da 1.3.0 o site consulta as releases deste repositório e mostra
 "Atualizar agora" na tela de Plugins, como qualquer plugin do repositório oficial.
-Para conferir na hora: Roteiros › Modelos do Elementor › **Procurar atualização**.
+Para conferir na hora: **Voucher Tec › Licença e instruções › Procurar atualização** (na 1.x: Roteiros › Modelos do Elementor).
 
 Se o repositório for privado, cada site precisa de um token de leitura no `wp-config.php`:
 
