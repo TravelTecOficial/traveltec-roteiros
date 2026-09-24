@@ -40,7 +40,10 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e
-  formulários intactos. Modelos 1.x #174/#175/#193 guardados. Só atualizar — não clicar em
+  formulários intactos. Modelos 1.x #174/#175/#193 guardados.
+  Experiências instalada (arquivo #282, post #283) e Contato (/contato/ #294, obrigado #295, forms contato #296 e
+  newsletter #297, captação ligada com o company_id). Dados de contato aplicados do Cliente Ideal. Menu trocado pelo
+  dono. Falta: teste de envio dos formulários (dono, no fim), Cotação e Sobre. Só atualizar — não clicar em
   "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
