@@ -433,6 +433,8 @@ function tt_voucher_instalar( $opcoes = array() ) {
 	}
 	tt_voucher_salvar_ids( $ids );
 	tt_voucher_atualizar_acoes_forms();
+	// páginas novas entram nos menus que o site já usa (ajustes.php)
+	tt_voucher_menus_ligar( $rel );
 
 	// O Elementor Pro só reconhece as condições depois que o cache dele é refeito.
 	try {

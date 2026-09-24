@@ -45,6 +45,10 @@ O que é instalado (chaves):
 | formulários `cotacao`, `contato`, `newsletter` | JetFormBuilder, envio AJAX, redirecionam para as páginas de obrigado |
 | menus `principal`, `rodape` | Home, Roteiros, Blog, Cotação, Sobre, Contato / Página inicial, Roteiros, Contato, Política |
 
+Site no ar com menus próprios: as páginas instaladas entram neles sozinhas (itens como "Quem Somos"/"Fale Conosco"
+passam a apontar para as páginas novas; o que faltar entra no fim do menu do cabeçalho). A assinatura TravelTec antiga
+do rodapé vira uma linha discreta ao ativar/atualizar o plugin.
+
 Modelos de outro cabeçalho/rodapé que disputem a mesma condição perdem a condição (guardada em
 `tt_voucher_condicoes_anteriores`) — o relatório avisa em `avisos`.
 

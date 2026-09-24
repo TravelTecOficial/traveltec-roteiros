@@ -88,3 +88,7 @@ descobre a última versão pela página de releases — a atualização aparece 
 o layout antigo). Ex.: DSelection, em que o texto do Kit é Cinzel, só maiúsculas.
 
 2.0.14: links dentro das páginas do plugin seguem a fonte do texto (o Kit pode ter fonte própria para links).
+
+2.0.15: as páginas instaladas entram nos menus do site ("Quem Somos", "Fale Conosco", "Cotação"... passam a
+apontar para as páginas novas; o que faltar entra no fim do menu do cabeçalho). Ao ativar ou atualizar, a
+assinatura TravelTec antiga do rodapé vira uma linha discreta.

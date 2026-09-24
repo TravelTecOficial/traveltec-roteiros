@@ -40,6 +40,13 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [x] 2.0.13: fontes da paleta dentro dos documentos do plugin (variáveis globais de tipografia redefinidas só
   neles, `wp_head` #tt-voucher-fontes-docs). No DSelection o Kit tem Cinzel no texto e as páginas novas saíam em maiúsculas.
 - [x] 2.0.14: links nos documentos do plugin com `font-family:inherit` (o Kit do DSelection tem Cinzel nos links).
+- [x] 2.0.15 (`includes/ajustes.php`), pedido do dono no Zizi Quatti ("se está instalando tem que entrar"; "é marca
+  nossa"): (1) `tt_voucher_menus_ligar` — sobre/contato/cotação (e roteiros, se houver roteiro publicado) entram nos
+  menus do site com posição; item com o mesmo papel (página/slug/âncora/nome: Quem Somos, Fale Conosco, Cotação de
+  Viagem...) é reapontado, o que faltar vai para o fim do menu da posição menu-1; backup em
+  `tt_voucher_menus_anteriores`. Roda ao instalar qualquer parte e uma vez por versão. (2)
+  `tt_voucher_assinatura_discreta` — assinatura antiga (`tt-assinatura__rule`) vira linha discreta, mantendo cor
+  (`--tt-fg`) e filtro do logo; roda na ativação e uma vez por versão (`tt_voucher_ajustes_versao`).
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e
