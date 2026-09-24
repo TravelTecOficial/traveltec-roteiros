@@ -222,6 +222,10 @@ add_filter( 'body_class', function ( $classes ) {
 } );
 
 add_action( 'wp_head', function () {
+	// Os marcadores só existem nos modelos do plugin: sem o site padrão instalado, nada a acrescentar.
+	if ( ! tt_voucher_ids_documentos() ) {
+		return;
+	}
 	echo '<style id="tt-voucher-vazio">a[href="#tt-vazio"],.elementor-icon-list-item:has(>a[href="#tt-vazio"]){display:none!important}</style>' . "\n";
 	// Só nos sites com o site padrão instalado: logo retangular (o da referência é redondo) não cresce demais.
 	if ( ! empty( tt_voucher_ids()['docs']['header'] ) ) {

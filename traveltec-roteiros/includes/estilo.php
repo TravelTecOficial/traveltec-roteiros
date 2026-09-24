@@ -206,8 +206,14 @@ function tt_voucher_limpar_cache() {
 	do_action( 'litespeed_purge_all' );
 }
 
-/** As fontes da paleta usadas no CSS das páginas (os widgets o Elementor já carrega sozinho). */
+/**
+ * As fontes da paleta usadas no CSS das páginas (os widgets o Elementor já carrega sozinho).
+ * Só com o site padrão instalado: nos sites da 1.x seria um download a mais sem uso.
+ */
 add_action( 'wp_enqueue_scripts', function () {
+	if ( ! tt_voucher_ids_documentos() ) {
+		return;
+	}
 	$e       = tt_voucher_estilo();
 	$fams    = array_unique( array( $e['fonte_titulos'], $e['fonte_textos'] ) );
 	$partes  = array();

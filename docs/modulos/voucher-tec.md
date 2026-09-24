@@ -20,6 +20,11 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   logo do cabeçalho limitado. Daqui em diante os sites atualizam pelo painel (Plugins › Atualizar agora).
 - [x] 2.0.3: peça reinstalada já sai com a paleta atual do site (antes voltava laranja).
 - [x] 2.0.4: popup do menu do celular (#1078 na Rede) incluído — num site limpo o ☰ não abria nada.
+- [x] 2.0.5: sem o site padrão instalado (sites da 1.x), o plugin não acrescenta nada às páginas — fontes do
+  Google e CSS dos ícones vazios só depois de instalar. Pedido para atualizar os 6 sites no ar sem peso extra.
+- [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
+  Ajimex (`ajimex.com.br`, 1.3.2, modelos 1.x #174/#175/#193): em andamento. Só atualizar — não clicar em
+  "Instalar site padrão". Troca de layout nesses sites é etapa separada, peça por peça.
 - [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
