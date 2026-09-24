@@ -82,6 +82,11 @@ TROCAS = [
     # o link do título do card herda do título (senão pega o tamanho de título global do Kit do site)
     (".blog-grade .elementor-post__title a{color:var(--blog-titulo)}",
      ".blog-grade .elementor-post__title a{color:var(--blog-titulo);font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;letter-spacing:inherit}"),
+    # post com o cabeçalho transparente por cima da capa: o título desce a altura do cabeçalho
+    (".blog-capa{padding-top:calc(var(--blog-nav-h) + 28px)}",
+     ".blog-capa{padding-top:calc(var(--blog-nav-h) + 28px)}
+body.tt-topo-transparente .blog-capa{--blog-nav-h:96px}
+@media (max-width:1024px){body.tt-topo-transparente .blog-capa{--blog-nav-h:80px}}"),
 ]
 
 REDES = [  # rede, ícone Font Awesome, rótulo
