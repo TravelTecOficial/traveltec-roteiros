@@ -79,6 +79,9 @@ TROCAS = [
     ("/cotacao-de-viagens/", "https://tt.token/url_cotacao"),
     ('href="/roteiros/"', 'href="https://tt.token/url_roteiros"'),
     ('href="/blog/"', 'href="https://tt.token/url_blog"'),
+    # o link do título do card herda do título (senão pega o tamanho de título global do Kit do site)
+    (".blog-grade .elementor-post__title a{color:var(--blog-titulo)}",
+     ".blog-grade .elementor-post__title a{color:var(--blog-titulo);font-family:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;letter-spacing:inherit}"),
 ]
 
 REDES = [  # rede, ícone Font Awesome, rótulo

@@ -30,6 +30,7 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [x] 2.0.8: links internos por marcador (`https://tt.token/url_cotacao|url_roteiros|url_blog`, e `url_contato`,
   `url_sobre`) resolvidos para a página que existir no site; `liberar_condicoes` trata single/single-post/single-page
   como a mesma disputa. Achado no Ajimex (cotação em /cotacao-de-viagem/, blog em /experiencias/).
+- [x] 2.0.9: título do card do blog não herda mais o tamanho de título global do Kit (Ajimex: títulos enormes).
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e

@@ -72,3 +72,6 @@ globais do Elementor (Kit) só mudam depois que o cabeçalho do plugin estiver i
 2.0.8: links internos dos modelos (botões de cotação, "Ver roteiros", blog) apontam para a página que existir no
 site — a do plugin ou a que já havia (/cotacao-de-viagem/, /experiencias/, /fale-conosco/...). O post do blog
 assume também o lugar de um "Single Post" antigo. Quem já instalou uma parte: reinstalar para ganhar os links.
+
+2.0.9: títulos dos cards do blog no tamanho do modelo mesmo em sites com tipografia global própria (antes pegavam
+o tamanho de título do Kit e ficavam enormes).
