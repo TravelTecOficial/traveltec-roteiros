@@ -32,7 +32,7 @@ O que é instalado (chaves):
 
 | Chave | O quê |
 |---|---|
-| `header`, `footer` | Cabeçalho (transparente sobre o topo das páginas com a classe `tt-topo-transparente`) e rodapé |
+| `header`, `footer`, `menu-popup` | Cabeçalho (transparente sobre o topo das páginas com a classe `tt-topo-transparente`), rodapé e o popup do menu no celular |
 | `card`, `lista`, `single` | Roteiros: card com movimento, lista em `/roteiros/`, página do roteiro (hero, preço, galeria, abas) |
 | `blog-arquivo`, `blog-post` | Lista do blog (todos os arquivos) e post |
 | `sobre`, `contato`, `cotacao` | Páginas `/sobre/`, `/contato/`, `/cotacao-de-viagens/` |

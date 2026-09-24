@@ -18,7 +18,9 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   secundária clara, sinopse fora do site.
 - [x] **2.0.2 publicada no GitHub** (24/09/2026, release v2.0.2, commit d95ccae): modelos da Rede v2.0 (post #5424),
   logo do cabeçalho limitado. Daqui em diante os sites atualizam pelo painel (Plugins › Atualizar agora).
-- [ ] **Teste da 2.0.1** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
+- [x] 2.0.3: peça reinstalada já sai com a paleta atual do site (antes voltava laranja).
+- [x] 2.0.4: popup do menu do celular (#1078 na Rede) incluído — num site limpo o ☰ não abria nada.
+- [ ] **Teste da 2.0.4** (reinstalar com substituir + aplicar) e demais páginas (roteiro com conteúdo, blog, obrigado, mobile)
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
 
