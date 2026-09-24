@@ -83,3 +83,6 @@ aparece ao rolar a página.
 
 2.0.12: quando a API do GitHub recusa (limite de consultas por IP, comum em hospedagem compartilhada), o site
 descobre a última versão pela página de releases — a atualização aparece mesmo assim.
+
+2.0.13: as páginas do plugin usam as fontes da aba Identidade mesmo quando o Kit do site tem outras (sites com
+o layout antigo). Ex.: DSelection, em que o texto do Kit é Cinzel, só maiúsculas.

@@ -213,6 +213,32 @@ function tt_voucher_limpar_cache() {
 }
 
 /**
+ * Fontes da paleta nos documentos do plugin, mesmo quando o Kit do site usa outras (sites com o layout antigo,
+ * em que o Kit não é trocado). Os widgets sem fonte própria seguem as variáveis globais do Kit — aqui elas são
+ * redefinidas só dentro dos documentos do plugin. Ex.: DSelection, com Cinzel (só maiúsculas) como texto no Kit.
+ */
+add_action( 'wp_head', function () {
+	$ids = tt_voucher_ids_documentos();
+	if ( ! $ids ) {
+		return;
+	}
+	$e   = tt_voucher_estilo();
+	$fam = function ( $f ) {
+		return '"' . str_replace( array( '"', '<', '>', ';', '{', '}' ), '', $f ) . '"';
+	};
+	$sel = implode( ',', array_map( function ( $id ) {
+		return '.elementor-' . (int) $id;
+	}, $ids ) );
+	echo '<style id="tt-voucher-fontes-docs">' . $sel . '{'
+		. '--e-global-typography-primary-font-family:' . $fam( $e['fonte_titulos'] ) . ';'
+		. '--e-global-typography-secondary-font-family:' . $fam( $e['fonte_titulos'] ) . ';'
+		. '--e-global-typography-text-font-family:' . $fam( $e['fonte_textos'] ) . ';'
+		. '--e-global-typography-accent-font-family:' . $fam( $e['fonte_textos'] ) . ';'
+		. 'font-family:' . $fam( $e['fonte_textos'] ) . ',sans-serif}'
+		. '</style>' . "\n";
+}, 20 );
+
+/**
  * As fontes da paleta usadas no CSS das páginas (os widgets o Elementor já carrega sozinho).
  * Só com o site padrão instalado: nos sites da 1.x seria um download a mais sem uso.
  */
