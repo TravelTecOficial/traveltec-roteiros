@@ -15,6 +15,11 @@
 	color: #1d2327;
 }
 
+/* o atributo hidden precisa vencer os display: grid/flex desta folha (modo texto livre do preço, painéis das abas) */
+.tt-rot [hidden] {
+	display: none !important;
+}
+
 .tt-rot__topo {
 	margin: 0;
 	padding: 12px 16px;

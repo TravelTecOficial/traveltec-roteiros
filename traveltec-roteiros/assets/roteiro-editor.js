@@ -22,7 +22,7 @@
 		}
 		todos( 'textarea[data-tt-editor]', painel ).forEach( function ( area ) {
 			window.wp.editor.initialize( area.id, {
-				tinymce: { wpautop: true, height: 240, toolbar1: 'bold,italic,bullist,numlist,link,unlink,undo,redo,removeformat', toolbar2: '' },
+				tinymce: { wpautop: false, height: 240, toolbar1: 'bold,italic,bullist,numlist,link,unlink,undo,redo,removeformat', toolbar2: '' },
 				quicktags: true,
 				mediaButtons: false
 			} );

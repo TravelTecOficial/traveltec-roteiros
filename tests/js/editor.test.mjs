@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { JSDOM } from 'jsdom';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
+const CSS = fs.readFileSync(path.resolve(AQUI, '../../traveltec-roteiros/assets/roteiro-editor.css'), 'utf8');
 const JS = fs.readFileSync(path.resolve(AQUI, '../../traveltec-roteiros/assets/roteiro-editor.js'), 'utf8');
 
 const FOTOS = [{ url: 'https://x.test/a.jpg', alt: '' }, { url: 'https://x.test/b.jpg', alt: 'Praia' }, { url: 'https://x.test/c.jpg', alt: '' }];
@@ -90,6 +91,7 @@ test('editor: usa barra enxuta, sem botão de mídia, com a aba Texto', () => {
   assert.equal(cfg.mediaButtons, false);
   assert.equal(cfg.quicktags, true);
   assert.match(cfg.tinymce.toolbar1, /bullist,numlist/);
+  assert.equal(cfg.tinymce.wpautop, false, 'wpautop ligado faria o TinyMCE tirar os <p> ao salvar (o site mostra o campo sem autop)');
 });
 
 test('sem wp.editor (falha ao carregar) a tela não quebra', () => {
@@ -176,4 +178,10 @@ test('fotos: sem wp.media o botão não faz nada nem quebra', () => {
   const j = montar({}, { wp: {} });
   clicar(j.document.querySelector('[data-tt-add-fotos]'));
   assert.equal(valorDe(j, 'tt_galeria[alterado]'), '0');
+});
+
+test('css: [hidden] dentro da caixa vence qualquer display do autor (senão a grade do preço aparece no modo texto livre)', () => {
+  // O jsdom não reproduz a cascata por origem (folha do navegador x do autor), então a regra é conferida no texto do CSS:
+  // sem `!important`, `.tt-rot__grade { display: grid }` ganha de `[hidden]` e o bloco escondido continua na tela.
+  assert.match(CSS, /\.tt-rot\s+\[hidden\]\s*\{[^}]*display:\s*none\s*!important/);
 });
