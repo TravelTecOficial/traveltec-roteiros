@@ -164,7 +164,9 @@ function tt_voucher_instalar_forms( &$ids, &$rel, $so = null ) {
 		if ( ! $f ) {
 			continue;
 		}
-		$args = array( 'post_type' => 'jet-form-builder', 'post_status' => 'publish', 'post_title' => $f['titulo'], 'post_content' => $f['content'] );
+		// A cotação já sai com o orçamento na moeda escolhida no painel (aba Cotação).
+		$conteudo = 'cotacao' === $chave ? tt_voucher_orcamento_no_conteudo( $f['content'], tt_voucher_moeda_orcamento() ) : $f['content'];
+		$args     = array( 'post_type' => 'jet-form-builder', 'post_status' => 'publish', 'post_title' => $f['titulo'], 'post_content' => $conteudo );
 		$id   = isset( $ids['forms'][ $chave ] ) && tt_voucher_vivo( $ids['forms'][ $chave ] ) ? (int) $ids['forms'][ $chave ] : 0;
 		if ( $id ) {
 			$args['ID'] = $id;

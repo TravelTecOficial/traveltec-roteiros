@@ -47,6 +47,18 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   `tt_voucher_menus_anteriores`. Roda ao instalar qualquer parte e uma vez por versão. (2)
   `tt_voucher_assinatura_discreta` — assinatura antiga (`tt-assinatura__rule`) vira linha discreta, mantendo cor
   (`--tt-fg`) e filtro do logo; roda na ativação e uma vez por versão (`tt_voucher_ajustes_versao`).
+- [x] 2.0.16 (`includes/opcoes.php`), pedido do dono em 25/09/2026, desenho aprovado no chat: (1) aba Cotação —
+  moeda do orçamento por pessoa: `tt_voucher_moeda_orcamento` = USD (padrão) | BRL; reescreve o título e as 5
+  faixas do campo `field_orcamento` do formulário de cotação instalado (BRL: 10–15 mil, 15–25 mil, 25–35 mil,
+  35–50 mil, acima de 50 mil; sem câmbio) e a reinstalação do formulário já sai na moeda escolhida; (2) aba
+  Roteiros — `tt_voucher_preco_roteiros` = exibir (padrão) | consulte; filtro `get_post_metadata` devolve
+  "Consulte-nos" para `preco_de_referencia` só na exibição (não no admin nem na REST — o n8n e o editor seguem
+  vendo o valor); vale para card e página sem reinstalar modelos. Também em `aplicar` (`moeda_orcamento`,
+  `preco_roteiros`) e em `status` (`opcoes`). Testes PHP 7.4/8.2 (lógica com stubs do WP) passando; teste no WP
+  no ar pendente (abaixo). Site sem o formulário de cotação do plugin (ex.: Rede Turística, #1025 antigo): a
+  opção de moeda avisa e vale quando instalar a peça.
+- [ ] **Teste da 2.0.16 no WP no ar** (`VoucherTecTeste`): `aplicar` com `moeda_orcamento`/`preco_roteiros`,
+  conferir cotação (R$/US$), card e página de roteiro com "Consulte-nos", e que o n8n ainda grava o preço.
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
   Ajimex (`ajimex.com.br`): 1.3.2 → 2.0.7 OK; cores do site (#3B2E7E/#2A2159/#A8C83C, Nunito/Source Sans 3)
   aplicadas; aba Roteiros instalada (card #276, lista #277, roteiro #278) — aprovado pelo dono. Kit, home, menus e

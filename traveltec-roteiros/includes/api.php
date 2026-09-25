@@ -56,6 +56,12 @@ function tt_voucher_aplicar( $entrada ) {
 		$rel['estilo']     = array( 'documentos_alterados' => tt_voucher_aplicar_estilo( $novo ), 'paleta' => tt_voucher_estilo() );
 	}
 
+	if ( isset( $entrada['moeda_orcamento'] ) || isset( $entrada['preco_roteiros'] ) ) {
+		$op                     = tt_voucher_salvar_opcoes( $entrada );
+		$rel['dados_alterados'] = array_merge( (array) $rel['dados_alterados'], $op['dados_alterados'] );
+		$rel['avisos']          = array_merge( (array) $rel['avisos'], $op['avisos'] );
+	}
+
 	tt_voucher_atualizar_acoes_forms(); // e-mail da agência nos formulários
 	tt_voucher_limpar_cache();
 	return $rel;
@@ -88,6 +94,10 @@ function tt_voucher_status() {
 		'captacao'       => (bool) get_option( 'tt_voucher_captacao' ),
 		'dados'          => tt_voucher_dados(),
 		'estilo'         => tt_voucher_estilo(),
+		'opcoes'         => array(
+			'moeda_orcamento' => tt_voucher_moeda_orcamento(),
+			'preco_roteiros'  => tt_voucher_preco_roteiros(),
+		),
 		'marcadores'     => array(
 			'texto'    => '%tt:campo% — campos de dados + nome, nome_url, whatsapp, whatsapp_digitos, telefone, telefone_digitos, endereco, mapa_q, history_html, ano, company_id',
 			'url'      => 'https://tt.token/<campo> — URL inteira (instagram_url, facebook_url, youtube_url, linkedin_url, tiktok_url, site_oficial); vazio esconde o link',

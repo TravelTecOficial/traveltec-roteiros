@@ -326,6 +326,14 @@ function tt_voucher_aba_roteiros( $st ) {
 	tt_voucher_aviso_site_antigo( $st );
 	tt_voucher_tabela_pecas( tt_voucher_grupos()['roteiros'], $st );
 	tt_voucher_form_instalar( 'roteiros', 'roteiros', $st );
+	tt_voucher_form_opcao(
+		'roteiros',
+		'preco_roteiros',
+		'Preço nos roteiros',
+		'Vale para o card (lista /roteiros/) e para a página de cada roteiro. O valor continua gravado no roteiro: dá para voltar a exibir a qualquer momento.',
+		array( 'exibir' => 'Exibir o preço de referência do roteiro', 'consulte' => 'Mostrar “' . TT_VOUCHER_TEXTO_CONSULTE . '” no lugar do preço' ),
+		tt_voucher_preco_roteiros()
+	);
 }
 
 function tt_voucher_aba_experiencias( $st ) {
@@ -356,6 +364,14 @@ function tt_voucher_aba_cotacao( $st ) {
 	tt_voucher_aviso_site_antigo( $st );
 	tt_voucher_tabela_pecas( tt_voucher_grupos()['cotacao'], $st );
 	tt_voucher_form_instalar( 'cotacao', 'cotacao', $st );
+	tt_voucher_form_opcao(
+		'cotacao',
+		'moeda_orcamento',
+		'Orçamento do formulário',
+		'Moeda das faixas de orçamento por pessoa que o cliente escolhe na cotação. São faixas fixas em cada moeda, sem conversão de câmbio; dá para ajustá-las depois em Editar formulário.',
+		array( 'USD' => 'Dólar americano (US$ 2.000 a acima de US$ 10.000)', 'BRL' => 'Real (R$ 10.000 a acima de R$ 50.000)' ),
+		tt_voucher_moeda_orcamento()
+	);
 	echo '<h2>Captação de leads</h2><p style="max-width:860px">Depois de cada envio com sucesso (cotação, contato e newsletter), o site manda o lead ao webhook com o ID da agência, os dados do formulário, as UTMs e os ids de clique (gclid, fbclid…), guardados por 90 dias.</p>';
 	echo '<p>Situação: <strong>' . ( $st['captacao'] ? 'ligada' : 'desligada' ) . '</strong> · ID da agência: <strong>' . ( $st['dados']['id'] ? esc_html( $st['dados']['id'] ) : 'não preenchido (aba Licença)' ) . '</strong></p>';
 	tt_voucher_form_dados( 'cotacao', $st );

@@ -82,6 +82,10 @@ Faz de uma vez:
   escura e a clara sozinha);
 - e-mail de aviso dos formulários = `email_atendimento`;
 - limpa o CSS do Elementor e o cache do LiteSpeed.
+- opções de exibição (só se vierem no corpo): `moeda_orcamento` = `USD` (padrão) ou `BRL` — troca o título e as
+  faixas do orçamento no formulário de cotação instalado; `preco_roteiros` = `exibir` (padrão) ou `consulte` —
+  o preço de referência dos roteiros sai como "Consulte-nos" no card e na página (o dado do roteiro não muda).
+  `GET /status` mostra a escolha atual em `opcoes`.
 
 Campo ausente ou `null` fica como está. Os extras que não existem em `companies`:
 `telefone` (fixo, opcional — sem ele usa o celular), `youtube_url`, `webhook_url`

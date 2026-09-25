@@ -92,3 +92,9 @@ o layout antigo). Ex.: DSelection, em que o texto do Kit é Cinzel, só maiúscu
 2.0.15: as páginas instaladas entram nos menus do site ("Quem Somos", "Fale Conosco", "Cotação"... passam a
 apontar para as páginas novas; o que faltar entra no fim do menu do cabeçalho). Ao ativar ou atualizar, a
 assinatura TravelTec antiga do rodapé vira uma linha discreta.
+
+2.0.16: duas opções no painel. Aba Cotação: moeda do orçamento por pessoa no formulário (dólar, o padrão, ou
+real — faixas fixas em cada moeda, sem conversão de câmbio). Aba Roteiros: preço nos roteiros — exibir o preço
+de referência (padrão) ou mostrar "Consulte-nos" no card e na página do roteiro (o valor gravado não muda).
+Também pela API: POST /wp-json/voucher-tec/v1/aplicar com moeda_orcamento (USD|BRL) e preco_roteiros
+(exibir|consulte); GET /status devolve as escolhas em "opcoes".
