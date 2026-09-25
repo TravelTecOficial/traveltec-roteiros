@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Voucher Tec - Travel Tec
  * Description: Site padrão das agências Travel Tec: roteiros (tipo de conteúdo, campos, API do n8n / Cliente Ideal), cabeçalho, rodapé, blog, Sobre, Contato, Cotação, páginas de obrigado, formulários e captação de leads (UTMs + webhook). Dados, cores e fontes da agência aplicados de uma vez pelo painel ou pela API.
- * Version:     2.0.16
+ * Version:     2.1.0
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // O slug continua traveltec-roteiros: é assim que os sites da 1.x recebem esta versão pela atualização automática.
-define( 'TT_ROTEIROS_VERSION', '2.0.16' );
+define( 'TT_ROTEIROS_VERSION', '2.1.0' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
@@ -28,6 +28,9 @@ require_once TT_ROTEIROS_DIR . 'includes/estilo.php';
 require_once TT_ROTEIROS_DIR . 'includes/instalador.php';
 require_once TT_ROTEIROS_DIR . 'includes/ajustes.php';
 require_once TT_ROTEIROS_DIR . 'includes/opcoes.php';
+require_once TT_ROTEIROS_DIR . 'includes/roteiro-dados.php';
+require_once TT_ROTEIROS_DIR . 'includes/roteiro-editor.php';
+require_once TT_ROTEIROS_DIR . 'includes/menu.php';
 require_once TT_ROTEIROS_DIR . 'includes/captacao.php';
 require_once TT_ROTEIROS_DIR . 'includes/api.php';
 require_once TT_ROTEIROS_DIR . 'includes/admin.php';
@@ -159,43 +162,6 @@ add_action( 'wp_enqueue_scripts', function () {
 		return;
 	}
 	wp_enqueue_style( 'tt-roteiros-galeria', TT_ROTEIROS_URL . 'assets/galeria.css', array(), TT_ROTEIROS_VERSION );
-} );
-
-/* ------------------------------------------------------------------ Edição no painel */
-
-add_action( 'add_meta_boxes', function () {
-	if ( function_exists( 'acf_get_field_groups' ) && acf_get_field_groups( array( 'post_type' => 'roteiros' ) ) ) {
-		return;
-	}
-	add_meta_box( 'tt_roteiros_campos', 'Dados do roteiro', function ( $post ) {
-		wp_nonce_field( 'tt_roteiros_salvar', 'tt_roteiros_nonce' );
-		echo '<p class="description">A imagem de capa é a <strong>Imagem destacada</strong> (coluna ao lado).</p>';
-		foreach ( tt_roteiros_campos() as $chave => $def ) {
-			$valor = get_post_meta( $post->ID, $chave, true );
-			echo '<p><label for="tt_' . esc_attr( $chave ) . '"><strong>' . esc_html( $def[0] ) . '</strong></label><br>';
-			if ( 'text' === $def[1] ) {
-				echo '<input type="text" class="widefat" id="tt_' . esc_attr( $chave ) . '" name="tt_roteiros[' . esc_attr( $chave ) . ']" value="' . esc_attr( $valor ) . '">';
-			} else {
-				echo '<textarea class="widefat" rows="6" id="tt_' . esc_attr( $chave ) . '" name="tt_roteiros[' . esc_attr( $chave ) . ']">' . esc_textarea( $valor ) . '</textarea>';
-			}
-			echo '</p>';
-		}
-	}, 'roteiros', 'normal', 'high' );
-} );
-
-add_action( 'save_post_roteiros', function ( $post_id ) {
-	if ( ! isset( $_POST['tt_roteiros_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['tt_roteiros_nonce'] ) ), 'tt_roteiros_salvar' ) ) {
-		return;
-	}
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE || ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-	$enviado = isset( $_POST['tt_roteiros'] ) && is_array( $_POST['tt_roteiros'] ) ? wp_unslash( $_POST['tt_roteiros'] ) : array();
-	foreach ( array_keys( tt_roteiros_campos() ) as $chave ) {
-		if ( isset( $enviado[ $chave ] ) ) {
-			update_post_meta( $post_id, $chave, wp_kses_post( $enviado[ $chave ] ) );
-		}
-	}
 } );
 
 /* ------------------------------------------------------------------ Ativação */

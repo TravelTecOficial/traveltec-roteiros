@@ -57,10 +57,13 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   `preco_roteiros`) e em `status` (`opcoes`). Testes PHP 7.4/8.2 (lógica com stubs do WP) passando; teste no WP
   no ar pendente (abaixo). Site sem o formulário de cotação do plugin (ex.: Rede Turística, #1025 antigo): a
   opção de moeda avisa e vale quando instalar a peça.
-- [ ] **2.1.0 — menu único e editor de roteiros** (pedido do dono em 25/09/2026; desenho aprovado no chat, spec escrita, aguardando
-  revisão do dono): Voucher Tec › Roteiros / Adicionar roteiro / Configuração num só menu; tela de edição em abas com editor
-  visual (Resumo, Preço, Fotos, Programação, Hospedagem, Inclui/Não inclui, Condições) gravando o mesmo formato; lista com colunas
-  Capa e Preço. Spec: `landing-pages/docs/superpowers/specs/2026-09-25-voucher-tec-roteiros-editor-design.md`.
+- [x] **2.1.0 — menu único e editor de roteiros** (pedido do dono em 25/09/2026; spec e plano em `landing-pages/docs/superpowers/`):
+  menu **Voucher Tec › Roteiros / Adicionar roteiro / Configuração** (`includes/menu.php`; o menu "Roteiros" solto sai, o de topo
+  passa a `edit_posts` e a Configuração exige `manage_options`); tela de edição em 7 abas com editor visual, preço em campos e
+  fotos pela Biblioteca de Mídia (`includes/roteiro-editor.php`, `includes/roteiro-dados.php`, `assets/roteiro-editor.js|css`);
+  lista com colunas Capa e Preço. Formato gravado igual ao do import; preço e fotos só regravam com `alterado`. Testes em
+  `tests/` (`cd tests && npm install && npm test`: PHP 7.4 e 8.2 por php-wasm + jsdom). **Pendente:** conferência do dono no
+  site de teste (`VoucherTecTeste`), comparativo "salvar sem mexer" e publicação da release v2.1.0.
 - [x] 2.0.16 testada no ar (25/09/2026): Zizi Quatti com orçamento em reais e DSelection com "Consulte-nos" nos 9 roteiros.
 - [ ] **Teste da 2.0.16 no WP no ar** (`VoucherTecTeste`): `aplicar` com `moeda_orcamento`/`preco_roteiros`,
   conferir cotação (R$/US$), card e página de roteiro com "Consulte-nos", e que o n8n ainda grava o preço.

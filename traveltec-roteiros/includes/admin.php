@@ -63,7 +63,7 @@ function tt_voucher_aba_postada() {
 }
 
 add_action( 'admin_menu', function () {
-	add_menu_page( 'Voucher Tec', 'Voucher Tec', 'manage_options', 'voucher-tec', 'tt_voucher_tela', 'dashicons-tickets-alt', 58 );
+	add_menu_page( 'Voucher Tec', 'Voucher Tec', 'edit_posts', 'voucher-tec', 'tt_voucher_tela', 'dashicons-tickets-alt', 58 );
 	// endereço antigo (1.x): Roteiros › Modelos do Elementor
 	add_submenu_page( 'edit.php?post_type=roteiros', 'Voucher Tec', 'Voucher Tec', 'manage_options', 'tt-roteiros-modelos', function () {
 		echo '<script>location.href=' . wp_json_encode( tt_voucher_url_painel() ) . ';</script>';
@@ -387,6 +387,9 @@ function tt_voucher_aba_sobre( $st ) {
 }
 
 function tt_voucher_tela() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'Sem permissão.' );
+	}
 	$st  = tt_voucher_status();
 	$aba = tt_voucher_aba_atual();
 	echo '<div class="wrap"><h1>Voucher Tec — Travel Tec</h1>';

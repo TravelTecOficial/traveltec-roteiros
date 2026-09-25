@@ -98,3 +98,9 @@ real — faixas fixas em cada moeda, sem conversão de câmbio). Aba Roteiros: p
 de referência (padrão) ou mostrar "Consulte-nos" no card e na página do roteiro (o valor gravado não muda).
 Também pela API: POST /wp-json/voucher-tec/v1/aplicar com moeda_orcamento (USD|BRL) e preco_roteiros
 (exibir|consulte); GET /status devolve as escolhas em "opcoes".
+
+2.1.0: menu único "Voucher Tec" com Roteiros, Adicionar roteiro e Configuração (o menu "Roteiros" solto sai). A tela de
+edição do roteiro ganhou abas (Resumo, Preço, Fotos, Programação, Hospedagem, Inclui/Não inclui, Condições) com editor
+visual, preço em campos (prefixo, moeda, valor, complemento) e fotos pela Biblioteca de Mídia. A lista de roteiros ganhou
+as colunas Capa e Preço. O formato gravado não mudou: roteiros importados, o n8n e os modelos seguem iguais; preço e
+fotos só são regravados quando você mexe neles.
