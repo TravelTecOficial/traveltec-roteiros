@@ -64,10 +64,7 @@ function tt_voucher_aba_postada() {
 
 add_action( 'admin_menu', function () {
 	add_menu_page( 'Voucher Tec', 'Voucher Tec', 'edit_posts', 'voucher-tec', 'tt_voucher_tela', 'dashicons-tickets-alt', 58 );
-	// endereço antigo (1.x): Roteiros › Modelos do Elementor
-	add_submenu_page( 'edit.php?post_type=roteiros', 'Voucher Tec', 'Voucher Tec', 'manage_options', 'tt-roteiros-modelos', function () {
-		echo '<script>location.href=' . wp_json_encode( tt_voucher_url_painel() ) . ';</script>';
-	} );
+	// o endereço antigo da 1.x (Roteiros › Modelos do Elementor) é tratado em menu.php
 } );
 
 add_action( 'admin_enqueue_scripts', function ( $hook ) {

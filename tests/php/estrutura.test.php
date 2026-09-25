@@ -54,6 +54,7 @@ ok( version_compare( $const[1], '2.1.0', '>=' ), 'versão é 2.1.0 ou mais' );
 ok( false === strpos( $principal, "'add_meta_boxes'" ), 'o plugin principal não registra mais a caixa antiga' );
 ok( false === strpos( $principal, 'save_post_roteiros' ), 'o plugin principal não salva mais os campos (agora é o roteiro-editor)' );
 contem( "add_menu_page( 'Voucher Tec', 'Voucher Tec', 'edit_posts', 'voucher-tec'", $admin, 'menu de topo visível para quem edita roteiros' );
+ok( false === strpos( $admin, "'tt-roteiros-modelos'" ), 'admin.php não registra mais o submenu antigo (o endereço antigo é tratado em menu.php)' );
 ok( (bool) preg_match( '/function tt_voucher_tela\(\) \{\s+if \( ! current_user_can\( \'manage_options\' \) \) \{\s+wp_die/', $admin ), 'a tela de Configuração exige manage_options' );
 
 /* ---------------------------------------------------------------- arquivos da tela */
