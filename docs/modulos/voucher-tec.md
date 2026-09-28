@@ -57,6 +57,10 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   `preco_roteiros`) e em `status` (`opcoes`). Testes PHP 7.4/8.2 (lógica com stubs do WP) passando; teste no WP
   no ar pendente (abaixo). Site sem o formulário de cotação do plugin (ex.: Rede Turística, #1025 antigo): a
   opção de moeda avisa e vale quando instalar a peça.
+- [x] **2.0.17 publicada** (28/09/2026, release v2.0.17, OK do dono): categoria e tags do blog (`category`/`post_tag`)
+  ligadas ao tipo `roteiros` (`tt_roteiros_ligar_taxonomias`, também com CPT de outro plugin). O n8n do Cliente Ideal
+  aplica `categories`/`tags` ao publicar. Pendente: levar para a 2.1.0 — o menu novo (`includes/menu.php`,
+  `unset( $submenu['edit.php?post_type=roteiros'] )`) some com os itens Categorias/Tags.
 - [ ] **Teste da 2.0.16 no WP no ar** (`VoucherTecTeste`): `aplicar` com `moeda_orcamento`/`preco_roteiros`,
   conferir cotação (R$/US$), card e página de roteiro com "Consulte-nos", e que o n8n ainda grava o preço.
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
