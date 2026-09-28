@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Voucher Tec - Travel Tec
  * Description: Site padrão das agências Travel Tec: roteiros (tipo de conteúdo, campos, API do n8n / Cliente Ideal), cabeçalho, rodapé, blog, Sobre, Contato, Cotação, páginas de obrigado, formulários e captação de leads (UTMs + webhook). Dados, cores e fontes da agência aplicados de uma vez pelo painel ou pela API.
- * Version:     2.0.16
+ * Version:     2.0.17
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // O slug continua traveltec-roteiros: é assim que os sites da 1.x recebem esta versão pela atualização automática.
-define( 'TT_ROTEIROS_VERSION', '2.0.16' );
+define( 'TT_ROTEIROS_VERSION', '2.0.17' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
@@ -80,8 +80,22 @@ function tt_roteiros_registrar_tipo() {
 	}
 }
 
+/**
+ * Categoria e tags do roteiro: as mesmas do blog (category / post_tag), ligadas ao tipo roteiros —
+ * também quando o tipo vem de outro plugin (CPT UI, ACF). Assim a REST aceita `categories`/`tags`
+ * em /wp/v2/roteiros, que é o que o n8n do Cliente Ideal envia ao publicar.
+ */
+function tt_roteiros_ligar_taxonomias() {
+	if ( ! post_type_exists( 'roteiros' ) ) {
+		return;
+	}
+	register_taxonomy_for_object_type( 'category', 'roteiros' );
+	register_taxonomy_for_object_type( 'post_tag', 'roteiros' );
+}
+
 add_action( 'init', function () {
 	tt_roteiros_registrar_tipo();
+	tt_roteiros_ligar_taxonomias();
 	foreach ( array_keys( tt_roteiros_campos() ) as $chave ) {
 		register_post_meta( 'roteiros', $chave, array(
 			'type'              => 'string',

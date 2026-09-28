@@ -98,3 +98,6 @@ real — faixas fixas em cada moeda, sem conversão de câmbio). Aba Roteiros: p
 de referência (padrão) ou mostrar "Consulte-nos" no card e na página do roteiro (o valor gravado não muda).
 Também pela API: POST /wp-json/voucher-tec/v1/aplicar com moeda_orcamento (USD|BRL) e preco_roteiros
 (exibir|consulte); GET /status devolve as escolhas em "opcoes".
+
+2.0.17: roteiros com categoria e tags (as mesmas do blog). Aparecem na tela do roteiro e a API aceita
+categories/tags em /wp/v2/roteiros — o Cliente Ideal envia as definidas na importação do roteiro.
