@@ -1,0 +1,12 @@
+/* Página do destino (Voucher Tec): lista "o que fazer" e galeria. Cores e fontes vêm do site. */
+.tt-destino-titulo{margin:0 0 16px}
+.tt-destino-texto>:last-child{margin-bottom:0}
+.tt-destino-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.tt-destino-lista li{position:relative;padding-left:30px;line-height:1.5}
+.tt-destino-lista li::before{content:"";position:absolute;left:4px;top:.3em;width:7px;height:13px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);opacity:.75}
+.tt-destino-galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tt-destino-galeria a{display:block;overflow:hidden;border-radius:8px}
+.tt-destino-galeria img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .3s}
+.tt-destino-galeria a:hover img{transform:scale(1.04)}
+@media (max-width:1024px){.tt-destino-galeria{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:767px){.tt-destino-galeria{grid-template-columns:repeat(2,1fr);gap:10px}}

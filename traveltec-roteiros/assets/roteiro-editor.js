@@ -1,5 +1,6 @@
 /**
- * Tela de edição do roteiro (Voucher Tec): abas, editor visual sob demanda, preço e fotos.
+ * Tela de edição do roteiro e do destino (Voucher Tec): abas, editor visual sob demanda, preço, fotos, lista de
+ * itens e contador.
  * O PHP (includes/roteiro-editor.php) desenha o HTML e grava; aqui só o comportamento. Preço e fotos ligam o
  * campo "alterado" na primeira edição — sem ele o servidor mantém o valor gravado.
  */
@@ -201,13 +202,18 @@
 				return;
 			}
 			if ( ! quadro ) {
-				quadro = window.wp.media( { title: 'Escolher fotos do roteiro', button: { text: 'Adicionar ao roteiro' }, library: { type: 'image' }, multiple: true } );
+				quadro = window.wp.media( {
+					title: caixa.getAttribute( 'data-titulo' ) || 'Escolher fotos do roteiro',
+					button: { text: caixa.getAttribute( 'data-botao' ) || 'Adicionar ao roteiro' },
+					library: { type: 'image' },
+					multiple: true
+				} );
 				quadro.on( 'select', function () {
 					quadro.state().get( 'selection' ).each( function ( anexo ) {
 						var dados = anexo.toJSON();
 						var url = ( dados.sizes && dados.sizes.large && dados.sizes.large.url ) || dados.url;
 						if ( url ) {
-							fotos.push( { url: url, alt: dados.alt || '' } );
+							fotos.push( { id: dados.id || 0, url: url, alt: dados.alt || '' } ); // o id é usado pelos destinos; o roteiro grava só url e alt
 						}
 					} );
 					desenhar();
@@ -221,6 +227,94 @@
 		sincronizar( false );
 	}
 
+	/* ------------------------------------------------------------ lista de itens (destino: o que fazer) */
+
+	function iniciarItens( raiz ) {
+		todos( '[data-tt-itens]', raiz ).forEach( function ( caixa ) {
+			var lista = caixa.querySelector( '[data-tt-itens-lista]' );
+			var nome = caixa.getAttribute( 'data-nome' );
+
+			function atualizar() {
+				var itens = todos( 'li', lista );
+				itens.forEach( function ( item, i ) {
+					item.querySelector( '[data-tt-sobe]' ).disabled = i === 0;
+					item.querySelector( '[data-tt-desce]' ).disabled = i === itens.length - 1;
+				} );
+			}
+
+			function equipar( item ) {
+				var acoes = document.createElement( 'span' );
+				acoes.className = 'tt-rot__foto-acoes';
+				var sobe = botaoFoto( '↑', 'Mover para cima', false, function () {
+					lista.insertBefore( item, item.previousElementSibling );
+					atualizar();
+				} );
+				sobe.setAttribute( 'data-tt-sobe', '' );
+				var desce = botaoFoto( '↓', 'Mover para baixo', false, function () {
+					lista.insertBefore( item.nextElementSibling, item );
+					atualizar();
+				} );
+				desce.setAttribute( 'data-tt-desce', '' );
+				var remove = botaoFoto( '×', 'Remover item', false, function () {
+					lista.removeChild( item );
+					atualizar();
+				} );
+				remove.setAttribute( 'data-tt-remove', '' );
+				acoes.appendChild( sobe );
+				acoes.appendChild( desce );
+				acoes.appendChild( remove );
+				item.appendChild( acoes );
+				// Enter num campo de texto publicaria o post: aqui ele abre o item seguinte.
+				item.querySelector( 'input' ).addEventListener( 'keydown', function ( evento ) {
+					if ( evento.key !== 'Enter' ) {
+						return;
+					}
+					evento.preventDefault();
+					novoItem( item.nextElementSibling );
+				} );
+			}
+
+			function novoItem( antesDe ) {
+				var item = document.createElement( 'li' );
+				item.className = 'tt-rot__item';
+				var campo = document.createElement( 'input' );
+				campo.type = 'text';
+				campo.className = 'widefat';
+				campo.name = nome;
+				item.appendChild( campo );
+				equipar( item );
+				lista.insertBefore( item, antesDe || null );
+				atualizar();
+				campo.focus();
+			}
+
+			todos( 'li', lista ).forEach( equipar );
+			atualizar();
+			caixa.querySelector( '[data-tt-add-item]' ).addEventListener( 'click', function () {
+				novoItem( null );
+			} );
+		} );
+	}
+
+	/* ------------------------------------------------------------ contador de caracteres (destino: resumo) */
+
+	function iniciarContadores( raiz ) {
+		todos( '[data-tt-contador]', raiz ).forEach( function ( area ) {
+			var alvo = parseInt( area.getAttribute( 'data-tt-contador' ), 10 ) || 0;
+			var campo = area.closest( '.tt-rot__campo' );
+			var saida = campo ? campo.querySelector( '[data-tt-contador-saida]' ) : null;
+			if ( ! saida ) {
+				return;
+			}
+			function contar() {
+				saida.textContent = area.value.length + ' de ' + alvo + ' caracteres';
+				saida.classList.toggle( 'is-acima', area.value.length > alvo );
+			}
+			area.addEventListener( 'input', contar );
+			contar();
+		} );
+	}
+
 	/* ------------------------------------------------------------ início */
 
 	function iniciar( raiz ) {
@@ -231,6 +325,8 @@
 		iniciarAbas( raiz );
 		iniciarPreco( raiz );
 		iniciarFotos( raiz );
+		iniciarItens( raiz );
+		iniciarContadores( raiz );
 	}
 
 	function iniciarTodos() {

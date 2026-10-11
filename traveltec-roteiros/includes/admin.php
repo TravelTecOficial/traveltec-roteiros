@@ -18,6 +18,7 @@ function tt_voucher_abas() {
 		'licenca'      => 'Licença e instruções',
 		'identidade'   => 'Identidade',
 		'roteiros'     => 'Roteiros',
+		'destinos'     => 'Destinos',
 		'experiencias' => 'Experiências',
 		'contato'      => 'Contato',
 		'cotacao'      => 'Cotação',
@@ -33,6 +34,7 @@ function tt_voucher_grupos() {
 	return array(
 		'identidade'   => array( 'header', 'menu-popup', 'footer', 'newsletter', 'obrigado-newsletter' ),
 		'roteiros'     => array( 'card', 'lista', 'single' ),
+		'destinos'     => array( 'destino-card', 'destinos-lista', 'destino-single' ),
 		'experiencias' => array( 'blog-arquivo', 'blog-post' ),
 		'contato'      => array( 'contato', 'obrigado-contato', 'newsletter' ),
 		'cotacao'      => array( 'cotacao', 'obrigado-cotacao', 'newsletter' ),
@@ -331,6 +333,33 @@ function tt_voucher_aba_roteiros( $st ) {
 		array( 'exibir' => 'Exibir o preço de referência do roteiro', 'consulte' => 'Mostrar “' . TT_VOUCHER_TEXTO_CONSULTE . '” no lugar do preço' ),
 		tt_voucher_preco_roteiros()
 	);
+}
+
+/** Página publicada no endereço dado (ex.: 'destinos'), ou null. Com o tipo ativo, o arquivo do tipo vence a página. */
+function tt_voucher_pagina_em_conflito( $caminho ) {
+	$pagina = get_page_by_path( $caminho, OBJECT, 'page' );
+	return $pagina && 'publish' === $pagina->post_status ? $pagina : null;
+}
+
+function tt_voucher_aba_destinos( $st ) {
+	$n = wp_count_posts( 'destinos' );
+	echo '<p><strong>' . (int) ( $n->publish ?? 0 ) . '</strong> destinos publicados · <a href="' . esc_url( admin_url( 'edit.php?post_type=destinos' ) ) . '">Ver todos</a> · <a href="' . esc_url( admin_url( 'post-new.php?post_type=destinos' ) ) . '">Adicionar</a> · <a href="' . esc_url( home_url( '/destinos/' ) ) . '" target="_blank">Abrir /destinos/</a></p>';
+	echo '<p class="description">Os destinos são cadastrados à mão, em Voucher Tec › Adicionar destino.</p>';
+	$ativo = tt_destinos_ativo();
+	if ( ! $ativo ) {
+		echo '<div class="notice notice-info inline"><p>Os destinos ainda <strong>não aparecem no site</strong>. Dá para cadastrar à vontade; para ligar a lista em /destinos/ e a página de cada destino, clique em “Instalar esta parte” abaixo.</p></div>';
+	}
+	$pagina = tt_voucher_pagina_em_conflito( 'destinos' );
+	if ( $pagina ) {
+		echo '<div class="notice notice-warning inline"><p>Este site tem uma <strong>página</strong> no endereço /destinos/ (<a href="' . esc_url( get_edit_post_link( $pagina->ID ) ) . '">' . esc_html( get_the_title( $pagina ) ) . '</a>). ' . ( $ativo ? 'Com os Destinos ligados' : 'Ao instalar esta parte' ) . ', /destinos/ passa a mostrar a lista de destinos e essa página (e as páginas dentro dela) deixam de abrir. Passe o conteúdo para o cadastro de destinos e mande a página para a lixeira.</p></div>';
+	}
+	if ( ! tt_destino_form_id() ) {
+		echo '<div class="notice notice-info inline"><p>O formulário de cotação do plugin não está instalado: a página do destino sai sem formulário. Instale a aba <a href="' . esc_url( tt_voucher_url_painel( array( 'aba' => 'cotacao' ) ) ) . '">Cotação</a>.</p></div>';
+	}
+	echo '<h2>Páginas dos destinos</h2>';
+	tt_voucher_aviso_site_antigo( $st );
+	tt_voucher_tabela_pecas( tt_voucher_grupos()['destinos'], $st );
+	tt_voucher_form_instalar( 'destinos', 'destinos', $st );
 }
 
 function tt_voucher_aba_experiencias( $st ) {

@@ -162,14 +162,14 @@ test('fotos: sem nenhuma foto a lista fica vazia e a contagem diz 0 fotos', () =
 test('fotos: Biblioteca de Mídia adiciona (tamanho large, senão o original) e liga "alterado"', () => {
   let aoEscolher;
   const escolhidas = [
-    { toJSON: () => ({ url: 'https://x.test/orig1.jpg', alt: 'Um', sizes: { large: { url: 'https://x.test/large1.jpg' } } }) },
+    { toJSON: () => ({ id: 41, url: 'https://x.test/orig1.jpg', alt: 'Um', sizes: { large: { url: 'https://x.test/large1.jpg' } } }) },
     { toJSON: () => ({ url: 'https://x.test/orig2.jpg', alt: '' }) },
   ];
   const quadro = { on: (evento, fn) => { if (evento === 'select') { aoEscolher = fn; } }, open: () => {}, state: () => ({ get: () => ({ each: (fn) => escolhidas.forEach(fn) }) }) };
   const j = montar({ fotos: [] }, { wp: { editor: { initialize() {} }, media: () => quadro } });
   clicar(j.document.querySelector('[data-tt-add-fotos]'));
   aoEscolher();
-  assert.deepEqual(JSON.parse(valorDe(j, 'tt_galeria[urls]')), [{ url: 'https://x.test/large1.jpg', alt: 'Um' }, { url: 'https://x.test/orig2.jpg', alt: '' }]);
+  assert.deepEqual(JSON.parse(valorDe(j, 'tt_galeria[urls]')), [{ id: 41, url: 'https://x.test/large1.jpg', alt: 'Um' }, { id: 0, url: 'https://x.test/orig2.jpg', alt: '' }]);
   assert.equal(valorDe(j, 'tt_galeria[alterado]'), '1');
   assert.equal(j.document.querySelectorAll('.tt-rot__foto').length, 2);
 });
@@ -184,4 +184,96 @@ test('css: [hidden] dentro da caixa vence qualquer display do autor (senão a gr
   // O jsdom não reproduz a cascata por origem (folha do navegador x do autor), então a regra é conferida no texto do CSS:
   // sem `!important`, `.tt-rot__grade { display: grid }` ganha de `[hidden]` e o bloco escondido continua na tela.
   assert.match(CSS, /\.tt-rot\s+\[hidden\]\s*\{[^}]*display:\s*none\s*!important/);
+});
+
+/* ---------------------------------------------------------------- destino: lista de itens, contador, foto com ID */
+function paginaDestino() {
+  return `<div class="tt-rot tt-dest" data-tt-rot>
+    <button type="button" data-tt-aba="resumo" class="is-ativa"></button>
+    <div data-tt-painel="resumo"><div class="tt-rot__campo"><textarea data-tt-contador="160">Ilha</textarea><span data-tt-contador-saida></span></div></div>
+    <div data-tt-itens data-nome="tt_destinos[o_que_fazer][]">
+      <ul data-tt-itens-lista><li><input type="text" name="tt_destinos[o_que_fazer][]" value="A"></li><li><input type="text" name="tt_destinos[o_que_fazer][]" value="B"></li><li><input type="text" name="tt_destinos[o_que_fazer][]" value="C"></li></ul>
+      <button type="button" data-tt-add-item>Adicionar item</button>
+    </div>
+    <div data-tt-fotos data-urls='[{"id":127,"url":"https://x.test/n1.jpg","alt":""}]' data-titulo="Escolher fotos do destino" data-botao="Adicionar ao destino">
+      <input type="hidden" data-tt-alterado><input type="hidden" name="tt_destinos[galeria]" data-tt-fotos-json>
+      <ul data-tt-lista></ul><button type="button" data-tt-add-fotos>Adicionar</button><span data-tt-contagem></span>
+    </div></div>`;
+}
+
+function montarDestino() {
+  const dom = new JSDOM(`<!doctype html><body><form>${paginaDestino()}</form></body>`, { runScripts: 'outside-only', pretendToBeVisual: true });
+  const w = dom.window;
+  w.__midia = null;
+  w.wp = {
+    media(opcoes) {
+      w.__midia = { opcoes, on(ev, cb) { this.cb = cb; }, open() {}, state: () => ({ get: () => ({ each: (f) => f({ toJSON: () => ({ id: 128, url: 'https://x.test/n2.jpg', alt: 'Baía' }) }) }) }) };
+      return w.__midia;
+    }
+  };
+  w.eval(JS);
+  // o script liga sozinho no DOMContentLoaded; nos testes chamamos na hora (iniciar é idempotente)
+  w.TTRoteiroEditor.iniciar(w.document.querySelector('[data-tt-rot]'));
+  const valores = () => [...w.document.querySelectorAll('[data-tt-itens-lista] input')].map((i) => i.value);
+  return { w, doc: w.document, valores };
+}
+
+test('destino: cada item ganha subir, descer e remover; as pontas ficam travadas', () => {
+  const { doc } = montarDestino();
+  const itens = doc.querySelectorAll('[data-tt-itens-lista] li');
+  assert.equal(itens[0].querySelectorAll('button').length, 3);
+  assert.equal(itens[0].querySelector('[data-tt-sobe]').disabled, true);
+  assert.equal(itens[2].querySelector('[data-tt-desce]').disabled, true);
+  assert.equal(itens[1].querySelector('[data-tt-sobe]').disabled, false);
+});
+
+test('destino: mover e remover itens muda a ordem dos campos', () => {
+  const { doc, valores } = montarDestino();
+  doc.querySelectorAll('[data-tt-itens-lista] li')[2].querySelector('[data-tt-sobe]').click();
+  assert.deepEqual(valores(), ['A', 'C', 'B']);
+  doc.querySelectorAll('[data-tt-itens-lista] li')[0].querySelector('[data-tt-remove]').click();
+  assert.deepEqual(valores(), ['C', 'B']);
+  assert.equal(doc.querySelectorAll('[data-tt-itens-lista] li')[0].querySelector('[data-tt-sobe]').disabled, true);
+});
+
+test('destino: "Adicionar item" cria um campo vazio com o nome certo e põe o cursor nele', () => {
+  const { doc, valores } = montarDestino();
+  doc.querySelector('[data-tt-add-item]').click();
+  assert.deepEqual(valores(), ['A', 'B', 'C', '']);
+  const novo = doc.querySelectorAll('[data-tt-itens-lista] input')[3];
+  assert.equal(novo.name, 'tt_destinos[o_que_fazer][]');
+  assert.equal(doc.activeElement, novo);
+});
+
+test('destino: Enter num item não envia o formulário e abre o item seguinte', () => {
+  const { w, doc, valores } = montarDestino();
+  let enviou = false;
+  doc.querySelector('form').addEventListener('submit', () => { enviou = true; });
+  const primeiro = doc.querySelectorAll('[data-tt-itens-lista] input')[0];
+  const tecla = new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+  primeiro.dispatchEvent(tecla);
+  assert.equal(tecla.defaultPrevented, true);
+  assert.equal(enviou, false);
+  assert.deepEqual(valores(), ['A', '', 'B', 'C']);
+});
+
+test('destino: contador do resumo acompanha a digitação', () => {
+  const { w, doc } = montarDestino();
+  const saida = doc.querySelector('[data-tt-contador-saida]');
+  assert.equal(saida.textContent, '4 de 160 caracteres');
+  const area = doc.querySelector('[data-tt-contador]');
+  area.value = 'x'.repeat(170);
+  area.dispatchEvent(new w.Event('input', { bubbles: true }));
+  assert.equal(saida.textContent, '170 de 160 caracteres');
+  assert.equal(saida.classList.contains('is-acima'), true);
+});
+
+test('destino: foto escolhida na Biblioteca entra com o ID; a janela usa os textos do destino', () => {
+  const { w, doc } = montarDestino();
+  doc.querySelector('[data-tt-add-fotos]').click();
+  assert.equal(w.__midia.opcoes.title, 'Escolher fotos do destino');
+  assert.equal(w.__midia.opcoes.button.text, 'Adicionar ao destino');
+  w.__midia.cb();
+  const gravado = JSON.parse(doc.querySelector('[data-tt-fotos-json]').value);
+  assert.deepEqual(gravado.map((f) => f.id), [127, 128]);
 });

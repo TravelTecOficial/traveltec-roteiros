@@ -107,3 +107,12 @@ edição do roteiro ganhou abas (Resumo, Preço, Fotos, Programação, Hospedage
 visual, preço em campos (prefixo, moeda, valor, complemento) e fotos pela Biblioteca de Mídia. A lista de roteiros ganhou
 as colunas Capa e Preço. O formato gravado não mudou: roteiros importados, o n8n e os modelos seguem iguais; preço e
 fotos só são regravados quando você mexe neles. Categorias e Tags dos roteiros ficam no menu Voucher Tec.
+
+2.2.0: Destinos. Novo tipo de conteúdo, em Voucher Tec › Destinos e Adicionar destino: nome, foto de capa, resumo
+(para o card), texto de abertura, lista "O que fazer", "Quando ir" e fotos pela Biblioteca de Mídia. No site, a
+lista fica em /destinos/ e cada destino em /destinos/<nome>/, com galeria, botão e o formulário de cotação já com o
+destino preenchido. Para ligar: Voucher Tec › Configuração › Destinos › Instalar esta parte — até lá os destinos ficam só no
+painel e nenhum endereço do site muda. Site que já tem uma
+página no endereço /destinos/: a aba avisa — passe o conteúdo para o cadastro e mande a página para a lixeira.
+Também pela API: /wp-json/wp/v2/destinos, campos em "acf" (texto_de_abertura, o_que_fazer, quando_ir, galeria,
+imagem_destaque).

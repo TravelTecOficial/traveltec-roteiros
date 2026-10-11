@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Voucher Tec - Travel Tec
- * Description: Site padrão das agências Travel Tec: roteiros (tipo de conteúdo, campos, API do n8n / Cliente Ideal), cabeçalho, rodapé, blog, Sobre, Contato, Cotação, páginas de obrigado, formulários e captação de leads (UTMs + webhook). Dados, cores e fontes da agência aplicados de uma vez pelo painel ou pela API.
- * Version:     2.1.0
+ * Description: Site padrão das agências Travel Tec: roteiros e destinos (tipos de conteúdo, campos, API do n8n / Cliente Ideal), cabeçalho, rodapé, blog, Sobre, Contato, Cotação, páginas de obrigado, formulários e captação de leads (UTMs + webhook). Dados, cores e fontes da agência aplicados de uma vez pelo painel ou pela API.
+ * Version:     2.2.0
  * Author:      TravelTec
  * Text Domain: traveltec-roteiros
  * Requires PHP: 7.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // O slug continua traveltec-roteiros: é assim que os sites da 1.x recebem esta versão pela atualização automática.
-define( 'TT_ROTEIROS_VERSION', '2.1.0' );
+define( 'TT_ROTEIROS_VERSION', '2.2.0' );
 define( 'TT_ROTEIROS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TT_ROTEIROS_URL', plugin_dir_url( __FILE__ ) );
 define( 'TT_ROTEIROS_BASENAME', plugin_basename( __FILE__ ) );
@@ -30,6 +30,9 @@ require_once TT_ROTEIROS_DIR . 'includes/ajustes.php';
 require_once TT_ROTEIROS_DIR . 'includes/opcoes.php';
 require_once TT_ROTEIROS_DIR . 'includes/roteiro-dados.php';
 require_once TT_ROTEIROS_DIR . 'includes/roteiro-editor.php';
+require_once TT_ROTEIROS_DIR . 'includes/destino-dados.php';
+require_once TT_ROTEIROS_DIR . 'includes/destinos.php';
+require_once TT_ROTEIROS_DIR . 'includes/destino-editor.php';
 require_once TT_ROTEIROS_DIR . 'includes/menu.php';
 require_once TT_ROTEIROS_DIR . 'includes/captacao.php';
 require_once TT_ROTEIROS_DIR . 'includes/api.php';
@@ -113,17 +116,19 @@ add_action( 'init', function () {
 }, 20 );
 
 /**
- * Em /roteiros/ quem escreve o título da aba é o Rank Math, com o modelo dele
+ * Em /roteiros/ e /destinos/ quem escreve o título da aba é o Rank Math, com o modelo dele
  * ("%pt_plural% Archive %sep% %sitename%") — daí sair "Roteiros Archive".
  * Tira só esse "Archive" que o próprio Rank Math acrescenta; um título escrito à mão
  * em Rank Math › Títulos e Meta › Roteiros passa direto, sem ser mexido.
  */
 add_filter( 'rank_math/frontend/title', function ( $titulo ) {
-	$tipo = get_post_type_object( 'roteiros' );
-	if ( ! is_post_type_archive( 'roteiros' ) || ! $tipo ) {
-		return $titulo;
+	foreach ( array( 'roteiros', 'destinos' ) as $nome ) {
+		$tipo = get_post_type_object( $nome );
+		if ( $tipo && is_post_type_archive( $nome ) ) {
+			return str_replace( $tipo->labels->name . ' Archive', $tipo->labels->name, $titulo );
+		}
 	}
-	return str_replace( $tipo->labels->name . ' Archive', $tipo->labels->name, $titulo );
+	return $titulo;
 } );
 
 /**
@@ -186,6 +191,7 @@ add_action( 'wp_enqueue_scripts', function () {
  */
 register_activation_hook( __FILE__, function () {
 	tt_roteiros_registrar_tipo();
+	tt_destinos_registrar_tipo();
 	$novo = ! get_option( TT_ROTEIROS_OPT ) && ! get_option( TT_VOUCHER_OPT_IDS );
 	$dep  = tt_voucher_dependencias();
 	if ( $novo && $dep['elementor'] && $dep['elementor_pro'] ) {

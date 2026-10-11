@@ -83,6 +83,24 @@
    "tipo": "page",
    "titulo": "Obrigado por assinar",
    "slug": "obrigado-newsletters"
+  },
+  {
+   "chave": "destino-card",
+   "tipo": "elementor_library",
+   "titulo": "Destinos — card",
+   "slug": null
+  },
+  {
+   "chave": "destinos-lista",
+   "tipo": "elementor_library",
+   "titulo": "Destinos — lista (/destinos/)",
+   "slug": null
+  },
+  {
+   "chave": "destino-single",
+   "tipo": "elementor_library",
+   "titulo": "Destinos — página do destino",
+   "slug": null
   }
  ],
  "forms": [
@@ -91,6 +109,7 @@
   "newsletter"
  ],
  "imagens": [
+  "banner-destinos.jpg",
   "parallax-como-funciona.jpg",
   "photo-1480480565647-1c4385c7c0bf.jpg",
   "photo-1526481280693-3bfa7568e0f3.jpg",
