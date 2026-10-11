@@ -106,4 +106,4 @@ categories/tags em /wp/v2/roteiros — o Cliente Ideal envia as definidas na imp
 edição do roteiro ganhou abas (Resumo, Preço, Fotos, Programação, Hospedagem, Inclui/Não inclui, Condições) com editor
 visual, preço em campos (prefixo, moeda, valor, complemento) e fotos pela Biblioteca de Mídia. A lista de roteiros ganhou
 as colunas Capa e Preço. O formato gravado não mudou: roteiros importados, o n8n e os modelos seguem iguais; preço e
-fotos só são regravados quando você mexe neles.
+fotos só são regravados quando você mexe neles. Categorias e Tags dos roteiros ficam no menu Voucher Tec.

@@ -65,6 +65,22 @@ igual( 'edit.php?post_type=roteiros', $topo, 'depois do WordPress reparentar, o 
 igual( array( 'edit.php?post_type=roteiros', 'post-new.php?post_type=roteiros', 'voucher-tec' ), array_column( $final[ $topo ], 2 ), 'submenu final: exatamente Roteiros, Adicionar e Configuração — sem itens duplicados do tipo de conteúdo nem o antigo' );
 igual( array( 'Roteiros', 'Adicionar roteiro', 'Configuração' ), array_column( $final[ $topo ], 0 ), 'submenu final: nomes certos' );
 
+/* ---------------------------------------------------------------- categorias e tags (2.0.17) seguem no menu */
+$GLOBALS['tt_menu'] = array();
+$GLOBALS['submenu'] = array(
+	'voucher-tec'                 => array( $auto ),
+	'edit.php?post_type=roteiros' => array(
+		5  => array( 'Todos os roteiros', 'edit_posts', 'edit.php?post_type=roteiros' ),
+		10 => array( 'Adicionar novo', 'edit_posts', 'post-new.php?post_type=roteiros' ),
+		15 => array( 'Categorias', 'manage_categories', 'edit-tags.php?taxonomy=category&amp;post_type=roteiros' ),
+		16 => array( 'Tags', 'manage_post_tags', 'edit-tags.php?taxonomy=post_tag&amp;post_type=roteiros' ),
+	),
+);
+tt_voucher_menu_roteiros();
+list( $topo, $final ) = tt_teste_reparentar( $GLOBALS['submenu'], 'voucher-tec' );
+igual( array( 'Roteiros', 'Adicionar roteiro', 'Categorias', 'Tags', 'Configuração' ), array_column( $final[ $topo ], 0 ), 'categorias e tags dos roteiros aparecem sob Voucher Tec, antes da Configuração' );
+igual( 'edit-tags.php?taxonomy=category&amp;post_type=roteiros', $final[ $topo ][2][2], 'o endereço da taxonomia vai igual ao que o WordPress registra' );
+
 /* ---------------------------------------------------------------- endereço antigo (1.x) e destaque do menu */
 igual( 'https://exemplo.test/wp-admin/admin.php?page=voucher-tec', tt_voucher_endereco_antigo( array( 'post_type' => 'roteiros', 'page' => 'tt-roteiros-modelos' ) ), 'endereço antigo (Roteiros › Modelos do Elementor) leva ao painel' );
 igual( '', tt_voucher_endereco_antigo( array( 'page' => 'outra-pagina' ) ), 'outras páginas não são redirecionadas' );

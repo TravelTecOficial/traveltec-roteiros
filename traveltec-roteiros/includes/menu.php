@@ -1,6 +1,6 @@
 <?php
 /**
- * Menu único do painel: Voucher Tec › Roteiros · Adicionar roteiro · Configuração.
+ * Menu único do painel: Voucher Tec › Roteiros · Adicionar roteiro · Categorias · Tags · Configuração.
  *
  * O menu de topo "Roteiros" (tipo de conteúdo) sai e seus itens entram sob "Voucher Tec". O menu de topo
  * "Voucher Tec" é criado em admin.php (o painel em abas); aqui ele ganha os itens de roteiros na frente e o item
@@ -18,39 +18,75 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** Ordem final do submenu: Roteiros, Adicionar roteiro, (outros itens), Configuração. Renomeia o item do menu de topo. */
+/** Tipos de conteúdo que moram no menu Voucher Tec: tipo => array( nome da lista, nome do "adicionar" ). */
+function tt_voucher_menu_tipos() {
+	return array(
+		'roteiros' => array( 'Roteiros', 'Adicionar roteiro' ),
+	);
+}
+
+/**
+ * Ordem final do submenu: para cada tipo, a lista, o "adicionar" e as taxonomias dele; depois os outros itens;
+ * Configuração por último. Renomeia o item do menu de topo.
+ */
 function tt_voucher_menu_ordenar( $itens ) {
-	$roteiros  = array();
-	$adicionar = array();
-	$config    = array();
-	$outros    = array();
+	$grupos = array();
+	foreach ( array_keys( tt_voucher_menu_tipos() ) as $tipo ) {
+		$grupos[ $tipo ] = array( 'lista' => array(), 'novo' => array(), 'tax' => array() );
+	}
+	$config = array();
+	$outros = array();
 	foreach ( (array) $itens as $item ) {
-		switch ( $item[2] ) {
-			case 'edit.php?post_type=roteiros':
-				$roteiros = $item;
-				break;
-			case 'post-new.php?post_type=roteiros':
-				$adicionar = $item;
-				break;
-			case 'voucher-tec':
-				$item[0] = 'Configuração';
-				$item[1] = 'manage_options';
-				$item[3] = 'Voucher Tec — Configuração';
-				$config  = $item;
-				break;
-			default:
-				$outros[] = $item;
+		$slug = html_entity_decode( (string) $item[2] );
+		if ( 'voucher-tec' === $slug ) {
+			$item[0] = 'Configuração';
+			$item[1] = 'manage_options';
+			$item[3] = 'Voucher Tec — Configuração';
+			$config  = $item;
+			continue;
+		}
+		$achou = false;
+		foreach ( array_keys( $grupos ) as $tipo ) {
+			if ( 'edit.php?post_type=' . $tipo === $slug ) {
+				$grupos[ $tipo ]['lista'] = $item;
+				$achou                    = true;
+			} elseif ( 'post-new.php?post_type=' . $tipo === $slug ) {
+				$grupos[ $tipo ]['novo'] = $item;
+				$achou                   = true;
+			} elseif ( 0 === strpos( $slug, 'edit-tags.php?' ) && preg_match( '/[?&]post_type=' . preg_quote( $tipo, '/' ) . '$/', $slug ) ) {
+				$grupos[ $tipo ]['tax'][] = $item;
+				$achou                    = true;
+			}
+		}
+		if ( ! $achou ) {
+			$outros[] = $item;
 		}
 	}
-	return array_values( array_filter( array_merge( array( $roteiros, $adicionar ), $outros, array( $config ) ) ) );
+	$saida = array();
+	foreach ( $grupos as $g ) {
+		$saida = array_merge( $saida, array( $g['lista'], $g['novo'] ), $g['tax'] );
+	}
+	return array_values( array_filter( array_merge( $saida, $outros, array( $config ) ) ) );
 }
 
 function tt_voucher_menu_roteiros() {
 	global $submenu;
-	remove_menu_page( 'edit.php?post_type=roteiros' );
-	unset( $submenu['edit.php?post_type=roteiros'] ); // itens do tipo de conteúdo (Todos os roteiros, Adicionar novo): passam a ser os nossos
-	add_submenu_page( 'voucher-tec', 'Roteiros', 'Roteiros', 'edit_posts', 'edit.php?post_type=roteiros' );
-	add_submenu_page( 'voucher-tec', 'Adicionar roteiro', 'Adicionar roteiro', 'edit_posts', 'post-new.php?post_type=roteiros' );
+	foreach ( tt_voucher_menu_tipos() as $tipo => $nomes ) {
+		$pai = 'edit.php?post_type=' . $tipo;
+		$tax = array(); // Categorias, Tags...: o WordPress só os registra no submenu do tipo, que é esvaziado abaixo
+		foreach ( isset( $submenu[ $pai ] ) ? (array) $submenu[ $pai ] : array() as $item ) {
+			if ( 0 === strpos( (string) $item[2], 'edit-tags.php?' ) ) {
+				$tax[] = $item;
+			}
+		}
+		remove_menu_page( $pai );
+		unset( $submenu[ $pai ] ); // itens do tipo de conteúdo (Todos, Adicionar novo): passam a ser os nossos
+		add_submenu_page( 'voucher-tec', $nomes[0], $nomes[0], 'edit_posts', $pai );
+		add_submenu_page( 'voucher-tec', $nomes[1], $nomes[1], 'edit_posts', 'post-new.php?post_type=' . $tipo );
+		foreach ( $tax as $item ) {
+			$submenu['voucher-tec'][] = $item; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- mesmo formato que o WordPress usa
+		}
+	}
 	if ( isset( $submenu['voucher-tec'] ) ) {
 		$submenu['voucher-tec'] = tt_voucher_menu_ordenar( $submenu['voucher-tec'] ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	}
