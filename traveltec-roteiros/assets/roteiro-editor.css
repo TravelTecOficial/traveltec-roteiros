@@ -237,3 +237,11 @@
 		padding: 9px 10px;
 	}
 }
+
+/* destino: lista de itens e contador do resumo */
+.tt-rot__itens-lista{margin:12px 0;padding:0;list-style:none;display:grid;gap:8px;max-width:760px}
+.tt-rot__item{display:flex;gap:8px;align-items:center;margin:0}
+.tt-rot__item input{flex:1 1 auto}
+.tt-rot__item .tt-rot__foto-acoes{position:static;display:flex;gap:4px;flex:0 0 auto;opacity:1;background:none;padding:0}
+.tt-rot__contador{color:#646970}
+.tt-rot__contador.is-acima{color:#b32d2e;font-weight:600}

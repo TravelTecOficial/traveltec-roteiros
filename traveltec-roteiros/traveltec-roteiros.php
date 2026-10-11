@@ -32,6 +32,7 @@ require_once TT_ROTEIROS_DIR . 'includes/roteiro-dados.php';
 require_once TT_ROTEIROS_DIR . 'includes/roteiro-editor.php';
 require_once TT_ROTEIROS_DIR . 'includes/destino-dados.php';
 require_once TT_ROTEIROS_DIR . 'includes/destinos.php';
+require_once TT_ROTEIROS_DIR . 'includes/destino-editor.php';
 require_once TT_ROTEIROS_DIR . 'includes/menu.php';
 require_once TT_ROTEIROS_DIR . 'includes/captacao.php';
 require_once TT_ROTEIROS_DIR . 'includes/api.php';

@@ -69,3 +69,5 @@ ok( array_search( 'includes/roteiro-dados.php', $m[1], true ) < array_search( 'i
 ok( array_search( 'includes/destino-dados.php', $m[1], true ) < array_search( 'includes/destinos.php', $m[1], true ), 'destino-dados vem antes de destinos' );
 ok( array_search( 'includes/instalador.php', $m[1], true ) < array_search( 'includes/destinos.php', $m[1], true ), 'instalador vem antes de destinos (tt_voucher_ids)' );
 ok( file_exists( '/p/assets/destinos.css' ) && file_exists( '/p/assets/destino.js' ), 'arquivos do site para o destino existem' );
+ok( in_array( 'includes/destino-editor.php', $m[1], true ), 'ligado no plugin principal: includes/destino-editor.php' );
+ok( array_search( 'includes/destino-dados.php', $m[1], true ) < array_search( 'includes/destino-editor.php', $m[1], true ), 'destino-dados vem antes de destino-editor' );
