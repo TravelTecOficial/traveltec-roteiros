@@ -116,3 +116,6 @@ painel e nenhum endereço do site muda. Site que já tem uma
 página no endereço /destinos/: a aba avisa — passe o conteúdo para o cadastro e mande a página para a lixeira.
 Também pela API: /wp-json/wp/v2/destinos, campos em "acf" (texto_de_abertura, o_que_fazer, quando_ir, galeria,
 imagem_destaque).
+
+2.2.1: a lista /destinos/ saía vazia (a grade trazia um filtro da página antiga do site-modelo). Depois de atualizar,
+reinstale a parte em Voucher Tec › Configuração › Destinos.

@@ -202,13 +202,15 @@
        "sizes": []
       },
       "equal_height": "yes",
-      "post_query_post_type": "current_query",
-      "post_query_query_id": "tt_destinos",
+      "post_query_post_type": "destinos",
       "posts_per_page": 12,
       "pagination_type": "numbers",
       "pagination_align": "center",
       "enable_nothing_found_message": "yes",
-      "nothing_found_message_text": "Nenhum destino publicado ainda."
+      "nothing_found_message_text": "Nenhum destino publicado ainda.",
+      "post_query_post_status": [
+       "publish"
+      ]
      },
      "elements": [],
      "widgetType": "loop-grid"

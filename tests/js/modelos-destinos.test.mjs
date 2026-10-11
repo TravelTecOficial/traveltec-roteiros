@@ -43,11 +43,14 @@ test('nada do site-modelo sobra nos modelos', () => {
   }
 });
 
-test('lista: grade com o card do plugin, na consulta da própria página', () => {
+test('lista: grade com o card do plugin, só destinos publicados, sem o filtro da página antiga', () => {
   const lista = JSON.parse(ler('destinos-lista'));
   const grade = widgets(lista.data).find((w) => w.widgetType === 'loop-grid');
   assert.equal(grade.settings.template_id, '{{DOC:destino-card}}');
-  assert.equal(grade.settings.post_query_post_type, 'current_query');
+  assert.equal(grade.settings.post_query_post_type, 'destinos');
+  assert.deepEqual(grade.settings.post_query_post_status, ['publish']);
+  // no site-modelo a grade usava a consulta 'tt_destinos' (páginas-filhas de Destinos): com ela a lista sai vazia
+  assert.equal('post_query_query_id' in grade.settings, false);
   assert.match(ler('destinos-lista'), /\{\{IMG:banner-destinos\.jpg\}\}/);
   assert.match(ler('destinos-lista'), /https:\/\/tt\.token\/url_cotacao/);
   assert.match(ler('destinos-lista'), /https:\/\/wa\.me\/%tt:whatsapp_digitos%/);

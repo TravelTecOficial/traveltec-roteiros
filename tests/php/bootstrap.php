@@ -2,7 +2,7 @@
 // Base dos testes PHP: constantes e stubs mínimos do WordPress + verificadores. Não é carregada pelo plugin.
 define( 'ABSPATH', '/' );
 define( 'TT_ROTEIROS_URL', 'https://exemplo.test/wp-content/plugins/traveltec-roteiros/' );
-define( 'TT_ROTEIROS_VERSION', '2.2.0-teste' );
+define( 'TT_ROTEIROS_VERSION', '2.2.1-teste' );
 
 $GLOBALS['tt_falhas'] = 0;
 $GLOBALS['tt_meta']   = array();   // [post_id][chave] => valor
