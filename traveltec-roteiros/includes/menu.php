@@ -1,6 +1,7 @@
 <?php
 /**
- * Menu único do painel: Voucher Tec › Roteiros · Adicionar roteiro · Categorias · Tags · Configuração.
+ * Menu único do painel: Voucher Tec › Roteiros · Adicionar roteiro · Categorias · Tags · Destinos ·
+ * Adicionar destino · Configuração.
  *
  * O menu de topo "Roteiros" (tipo de conteúdo) sai e seus itens entram sob "Voucher Tec". O menu de topo
  * "Voucher Tec" é criado em admin.php (o painel em abas); aqui ele ganha os itens de roteiros na frente e o item
@@ -10,8 +11,8 @@
  * Como o primeiro item passa a ser "Roteiros" (e não o próprio menu de topo), o WordPress (wp-admin/includes/menu.php)
  * troca o menu de topo para `edit.php?post_type=roteiros` e COPIA os itens do submenu por índice para esse pai. Por isso
  * o submenu antigo do tipo de conteúdo precisa ser esvaziado aqui — senão os itens dele ficam ao lado dos nossos,
- * duplicados. E por isso não há filtros parent_file/submenu_file: depois dessa troca o WordPress já abre o menu e destaca o
- * item certo nas telas de roteiros (um filtro devolvendo 'voucher-tec' fecharia o menu).
+ * duplicados. O único filtro é o parent_file dos destinos (ver tt_voucher_menu_pai): as telas
+ * de roteiros o WordPress já abre e destaca sozinho depois dessa troca.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function tt_voucher_menu_tipos() {
 	return array(
 		'roteiros' => array( 'Roteiros', 'Adicionar roteiro' ),
+		'destinos' => array( 'Destinos', 'Adicionar destino' ),
 	);
 }
 
@@ -93,6 +95,16 @@ function tt_voucher_menu_roteiros() {
 }
 // Depois de admin.php criar o menu de topo (prioridade 10) e de o WordPress registrar os menus dos tipos de conteúdo.
 add_action( 'admin_menu', 'tt_voucher_menu_roteiros', 99 );
+
+/**
+ * Depois de o WordPress reparentar, o menu de topo é o da lista de roteiros. As telas de destino têm outro pai
+ * (edit.php?post_type=destinos): aponta para o de topo, para o menu abrir e destacar "Destinos".
+ * Nunca devolver 'voucher-tec' — esse já não é o endereço do menu de topo e o menu fecharia.
+ */
+function tt_voucher_menu_pai( $pai ) {
+	return 'edit.php?post_type=destinos' === $pai ? 'edit.php?post_type=roteiros' : $pai;
+}
+add_filter( 'parent_file', 'tt_voucher_menu_pai' );
 
 /* ------------------------------------------------------------------ Endereço antigo (1.x) */
 

@@ -40,6 +40,12 @@ function tt_voucher_alvos_menu( $ids ) {
 		$url             = get_post_type_archive_link( 'roteiros' );
 		$alvos['roteiros'] = array( 'Roteiros', 0, $url ? $url : home_url( '/roteiros/' ), array( 'roteiros', 'pacotes' ), array( 'roteiros', 'pacotes' ) );
 	}
+	// Destinos: mesma regra dos roteiros — só com destino publicado.
+	$d = wp_count_posts( 'destinos' );
+	if ( $pag( 'destinos-lista' ) && ! empty( $d->publish ) ) {
+		$url               = get_post_type_archive_link( 'destinos' );
+		$alvos['destinos'] = array( 'Destinos', 0, $url ? $url : home_url( '/destinos/' ), array( 'destinos' ), array( 'destinos' ) );
+	}
 	return $alvos;
 }
 

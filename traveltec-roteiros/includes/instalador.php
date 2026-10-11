@@ -365,6 +365,23 @@ function tt_voucher_gravar_doc( $doc, &$ids, &$rel, $substituir ) {
 	return $id;
 }
 
+/** Chaves dos documentos na ordem de gravação: os cards (loop-item) primeiro, porque as listas precisam do ID deles. */
+function tt_voucher_ordem_docs( $docs ) {
+	$cards  = array();
+	$outros = array();
+	foreach ( (array) $docs as $chave => $doc ) {
+		if ( ! is_array( $doc ) ) {
+			continue;
+		}
+		if ( isset( $doc['template_type'] ) && 'loop-item' === $doc['template_type'] ) {
+			$cards[] = $chave;
+		} else {
+			$outros[] = $chave;
+		}
+	}
+	return array_merge( $cards, $outros );
+}
+
 /* ------------------------------------------------------------------ Instalação completa */
 
 /**
@@ -384,6 +401,7 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		return new WP_Error( 'sem_elementor', 'Elementor e Elementor Pro (ou PRO Elements) precisam estar ativos.' );
 	}
 	tt_roteiros_registrar_tipo();
+	tt_destinos_registrar_tipo();
 	$ids    = tt_voucher_ids();
 	$indice = tt_voucher_indice();
 	$quer   = function ( $chave ) use ( $so ) {
@@ -421,16 +439,19 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		$rel['avisos'][] = 'JetFormBuilder não está ativo: formulários não instalados.';
 	}
 	tt_voucher_salvar_ids( $ids );
-	if ( $quer( 'card' ) && isset( $docs['card'] ) ) {
-		tt_voucher_gravar_doc( $docs['card'], $ids, $rel, $substituir ); // a lista precisa do ID do card
+	$ordem = tt_voucher_ordem_docs( $docs );
+	foreach ( $ordem as $chave ) {
+		if ( 'loop-item' === $docs[ $chave ]['template_type'] ) {
+			tt_voucher_gravar_doc( $docs[ $chave ], $ids, $rel, $substituir ); // as listas precisam do ID do card
+		}
 	}
 	// Os menus do plugin só entram com o cabeçalho/rodapé; depois disso são refeitos a cada peça (ganham a página nova).
 	if ( $quer( 'header' ) || $quer( 'footer' ) || $quer( 'menu-popup' ) || ! empty( $ids['menus'] ) ) {
 		tt_voucher_instalar_menus( $ids, $rel );
 	}
-	foreach ( $docs as $chave => $doc ) {
-		if ( $doc && 'card' !== $chave ) {
-			tt_voucher_gravar_doc( $doc, $ids, $rel, $substituir );
+	foreach ( $ordem as $chave ) {
+		if ( 'loop-item' !== $docs[ $chave ]['template_type'] ) {
+			tt_voucher_gravar_doc( $docs[ $chave ], $ids, $rel, $substituir );
 		}
 	}
 	tt_voucher_salvar_ids( $ids );
