@@ -60,3 +60,12 @@ ok( (bool) preg_match( '/function tt_voucher_tela\(\) \{\s+if \( ! current_user_
 /* ---------------------------------------------------------------- arquivos da tela */
 ok( file_exists( '/p/assets/roteiro-editor.js' ), 'assets/roteiro-editor.js existe' );
 ok( file_exists( '/p/assets/roteiro-editor.css' ), 'assets/roteiro-editor.css existe' );
+
+/* ---------------------------------------------------------------- destinos (2.2.0) */
+foreach ( array( 'includes/destino-dados.php', 'includes/destinos.php' ) as $novo ) {
+	ok( in_array( $novo, $m[1], true ), 'ligado no plugin principal: ' . $novo );
+}
+ok( array_search( 'includes/roteiro-dados.php', $m[1], true ) < array_search( 'includes/destino-dados.php', $m[1], true ), 'roteiro-dados vem antes de destino-dados (funções de texto)' );
+ok( array_search( 'includes/destino-dados.php', $m[1], true ) < array_search( 'includes/destinos.php', $m[1], true ), 'destino-dados vem antes de destinos' );
+ok( array_search( 'includes/instalador.php', $m[1], true ) < array_search( 'includes/destinos.php', $m[1], true ), 'instalador vem antes de destinos (tt_voucher_ids)' );
+ok( file_exists( '/p/assets/destinos.css' ) && file_exists( '/p/assets/destino.js' ), 'arquivos do site para o destino existem' );
