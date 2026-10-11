@@ -12,6 +12,8 @@ O que muda em relação à Rede:
   valores da Rede e o plugin troca tudo de uma vez ao aplicar os dados do cliente;
 - o CSS do cabeçalho transparente passa a depender da classe body.tt-topo-transparente.
 
+Os três modelos de destinos vêm do site-modelo (src/destinos) — ver a seção `destinos` abaixo.
+
     python build_v2.py
 """
 import copy
@@ -196,6 +198,132 @@ def textos_sobre(data):
     rec(data)
 
 
+# ---------------------------------------------------------------------------------------------- destinos
+# Fonte: site-modelo "Sua Agência de Viagens" (src/destinos/*.json). O Kit de lá tem cores e fontes globais
+# próprias (neutro100, titulo2...) que não existem nos outros sites: aqui cada global vira valor fixo na
+# paleta de referência do plugin, que o instalador troca pelas cores e fontes do site (tt_voucher_trocar_paleta).
+SRC_DESTINOS = RAIZ / "src" / "destinos"
+DESTINOS = [  # (chave, arquivo em src/destinos, título, tipo do modelo, condições)
+    ("destino-card", "card", "Destinos — card", "loop-item", []),
+    ("destinos-lista", "lista", "Destinos — lista (/destinos/)", "archive", ["include/archive/destinos_archive"]),
+    ("destino-single", "single", "Destinos — página do destino", "single-page", ["include/singular/destinos"]),
+]
+COR_GLOBAL = {
+    "primary": PRIMARIA, "secondary": "#FFF1E0", "accent": "#C56F00", "text": "#3C3D3D",
+    "neutro100": "#FFFFFF", "neutro300": "#FFB700", "neutro600": "#62738A", "neutro900": "#3C3D3D",
+}
+TIPO_GLOBAL = {  # id: (fonte, peso, tamanho no computador, tablet, celular, entrelinha)
+    "primary": ("Montserrat", "700", 56, 44, 34, 1.15),
+    "titulo2": ("Montserrat", "700", 40, 34, 28, 1.2),
+    "secondary": ("Montserrat", "700", 28, 24, 22, 1.3),
+    "titulo4": ("Montserrat", "700", 22, 21, 20, 1.35),
+    "accent": ("Montserrat", "600", 16, 16, 16, 1.2),
+    "text": ("Roboto", "400", 17, 16, 16, 1.7),
+}
+BANNER_DESTINOS = "banner-destinos.jpg"
+
+
+def resolver_globais(no):
+    """Troca cada referência a cor/fonte global do Kit por valor fixo. Global desconhecido: erro (KeyError)."""
+    if isinstance(no, list):
+        return [resolver_globais(x) for x in no]
+    if not isinstance(no, dict):
+        return no
+    st = no.get("settings")
+    if isinstance(st, dict) and isinstance(st.get("__globals__"), dict):
+        for campo, ref in st["__globals__"].items():
+            m = re.match(r"globals/(colors|typography)\?id=(\w+)$", ref or "")
+            if not m:
+                continue
+            tipo, gid = m.groups()
+            if tipo == "colors":
+                st[campo] = COR_GLOBAL[gid]
+                continue
+            fonte, peso, pc, tablet, celular, linha = TIPO_GLOBAL[gid]
+            pre = campo[: -len("typography")]  # "typography_typography" -> "typography_"
+            st[campo] = "custom"
+            st[pre + "font_family"] = fonte
+            st[pre + "font_weight"] = peso
+            for sufixo, tam in (("", pc), ("_tablet", tablet), ("_mobile", celular)):
+                st[pre + "font_size" + sufixo] = {"unit": "px", "size": tam, "sizes": []}
+            st[pre + "line_height"] = {"unit": "em", "size": linha, "sizes": []}
+        del st["__globals__"]
+    return {k: resolver_globais(v) for k, v in no.items()}
+
+
+def percorrer(nos):
+    for e in nos:
+        yield e
+        yield from percorrer(e.get("elements", []))
+
+
+def widget(id_, tipo, settings):
+    return {"id": id_, "elType": "widget", "widgetType": tipo, "settings": settings, "elements": []}
+
+
+def coluna(id_, elementos):
+    return {"id": id_, "elType": "container", "isInner": True, "elements": elementos, "settings": {
+        "content_width": "full", "flex_direction": "column",
+        "width": {"unit": "%", "size": 50, "sizes": []}, "width_mobile": {"unit": "%", "size": 100, "sizes": []}}}
+
+
+def botao_destino():
+    """Botão da página de exemplo (Fernando de Noronha), com o nome do destino no texto e link para o formulário."""
+    src = json.loads((SRC_DESTINOS / "botao.json").read_text(encoding="utf-8"))
+    botao = next(e for e in percorrer(json.loads(src["meta"]["_elementor_data"])) if e.get("widgetType") == "button")
+    st = resolver_globais(copy.deepcopy(botao))["settings"]
+    st["text"] = "Quero uma cotação"
+    st["link"] = {"url": "#tt-destino-cotacao", "is_external": "", "nofollow": "", "custom_attributes": ""}
+    st["__dynamic__"] = {"text": '[elementor-tag id="ttd0009" name="post-title" settings="%7B%22before%22%3A%22Quero%20uma%20cota%C3%A7%C3%A3o%20para%20%22%7D"]'}
+    return widget("ttd0008", "button", st)
+
+
+def corpo_destino():
+    """Corpo da página do destino: shortcodes do plugin (seção sem conteúdo não aparece)."""
+    return [
+        widget("ttd0001", "shortcode", {"shortcode": '[tt_destino_texto campo="texto_de_abertura"]'}),
+        {"id": "ttd0002", "elType": "container", "isInner": True, "settings": {
+            "content_width": "full", "flex_direction": "row", "flex_direction_mobile": "column",
+            "flex_gap": {"unit": "px", "size": 48, "column": "48", "row": "32", "isLinked": False}},
+         "elements": [
+            coluna("ttd0003", [widget("ttd0004", "shortcode", {"shortcode": '[tt_destino_lista titulo="O que fazer"]'})]),
+            coluna("ttd0005", [widget("ttd0006", "shortcode", {"shortcode": '[tt_destino_texto campo="quando_ir" titulo="Quando ir"]'})]),
+         ]},
+        widget("ttd0007", "shortcode", {"shortcode": '[tt_destino_galeria titulo="Galeria"]'}),
+        botao_destino(),
+    ]
+
+
+def montar_destino(chave, data):
+    data = resolver_globais(data)
+    for e in percorrer(data):
+        st = e.get("settings") if isinstance(e.get("settings"), dict) else {}
+        wt = e.get("widgetType")
+        if chave == "destinos-lista":
+            if wt == "loop-grid":
+                st["template_id"] = "{{DOC:destino-card}}"
+                st["post_query_post_type"] = "current_query"
+            fundo = st.get("background_image")
+            if isinstance(fundo, dict) and "banner-destinos" in str(fundo.get("url")):
+                st["background_image"] = {"url": "{{IMG:%s}}" % BANNER_DESTINOS, "id": "{{IMGID:%s}}" % BANNER_DESTINOS, "size": "", "alt": "", "source": "library"}
+            if wt == "button" and "tt_whatsapp_link" in str(st.get("__dynamic__")):
+                st.pop("__dynamic__", None)
+                st["link"] = {"url": "https://wa.me/%tt:whatsapp_digitos%", "is_external": "on", "nofollow": "", "custom_attributes": ""}
+        if chave == "destino-card":
+            e["elements"] = [x for x in e.get("elements", []) if x.get("widgetType") != "post-info"]
+        if chave == "destino-single":
+            filhos = e.get("elements", [])
+            if any(x.get("widgetType") == "theme-post-content" for x in filhos):
+                e["elements"] = corpo_destino()
+                st.setdefault("flex_direction", "column")
+                st.setdefault("flex_gap", {"unit": "px", "size": 40, "column": "40", "row": "40", "isLinked": True})
+            formulario = [x for x in filhos if x.get("widgetType") == "shortcode" and "jet_fb_form" in str(x.get("settings", {}).get("shortcode"))]
+            if formulario:
+                st["_element_id"] = "tt-destino-cotacao"
+                e["elements"] = [widget("ttd0010", "shortcode", {"shortcode": '[tt_destino_form titulo="Solicite sua cotação para este destino"]'})]
+    return tratar(data, chave)  # trocas de texto comuns (links internos, nome, WhatsApp...)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     indice = {"docs": [], "forms": [], "imagens": sorted(set(IMAGENS.values()))}
@@ -220,6 +348,24 @@ def main():
         (OUT / f"{chave}.json").write_text(txt, encoding="utf-8")
         indice["docs"].append({"chave": chave, "tipo": tipo, "titulo": titulo, "slug": slug})
         print(f"{chave:22s} {len(txt) // 1024:4d} KB  restos da Rede: {len(restos)}")
+    for chave, arq, titulo, tipo_modelo, cond in DESTINOS:
+        src = json.loads((SRC_DESTINOS / f"{arq}.json").read_text(encoding="utf-8"))
+        meta = src["meta"]
+        data = montar_destino(chave, json.loads(meta["_elementor_data"]))
+        ps = meta.get("_elementor_page_settings") or {}
+        ps = tratar(resolver_globais(ps) if isinstance(ps, dict) else {}, chave)
+        doc = {
+            "chave": chave, "tipo": "elementor_library", "titulo": titulo, "slug": None, "condicoes": cond,
+            "template_type": tipo_modelo, "page_template": "", "topo_transparente": False,
+            "data": data, "page_settings": ps,
+        }
+        txt = json.dumps(doc, ensure_ascii=False, indent=1)
+        restos = re.findall(r"yellowgreen|hostingersite|globals/|__globals__|tt_whatsapp_link|form_id=\\\"99", txt)
+        if restos:
+            raise SystemExit(f"{chave}: sobrou do site-modelo: {sorted(set(restos))}")
+        (OUT / f"{chave}.json").write_text(txt, encoding="utf-8")
+        indice["docs"].append({"chave": chave, "tipo": "elementor_library", "titulo": titulo, "slug": None})
+        print(f"{chave:22s} {len(txt) // 1024:4d} KB  (destinos)")
     for chave, arq, titulo in FORMS:
         src = json.loads((SRC / f"{arq}.json").read_text(encoding="utf-8"))
         m = src["meta"]

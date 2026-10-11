@@ -1,0 +1,418 @@
+{
+ "chave": "destinos-lista",
+ "tipo": "elementor_library",
+ "titulo": "Destinos — lista (/destinos/)",
+ "slug": null,
+ "condicoes": [
+  "include/archive/destinos_archive"
+ ],
+ "template_type": "archive",
+ "page_template": "",
+ "topo_transparente": false,
+ "data": [
+  {
+   "id": "2b92703",
+   "elType": "container",
+   "settings": {
+    "_title": "Topo",
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "padding": {
+     "unit": "px",
+     "top": "72",
+     "right": "24",
+     "bottom": "72",
+     "left": "24",
+     "isLinked": false
+    },
+    "flex_gap": {
+     "unit": "px",
+     "size": 0,
+     "column": "0",
+     "row": "0",
+     "isLinked": true
+    },
+    "flex_align_items": "center",
+    "flex_justify_content": "center",
+    "min_height": {
+     "unit": "px",
+     "size": 380,
+     "sizes": []
+    },
+    "min_height_mobile": {
+     "unit": "px",
+     "size": 280,
+     "sizes": []
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "48",
+     "right": "16",
+     "bottom": "48",
+     "left": "16",
+     "isLinked": false
+    },
+    "background_background": "classic",
+    "background_image": {
+     "url": "{{IMG:banner-destinos.jpg}}",
+     "id": "{{IMGID:banner-destinos.jpg}}",
+     "size": "",
+     "alt": "",
+     "source": "library"
+    },
+    "background_position": "center center",
+    "background_size": "cover",
+    "background_repeat": "no-repeat",
+    "background_overlay_background": "classic",
+    "background_overlay_opacity": {
+     "unit": "px",
+     "size": 0.55,
+     "sizes": []
+    },
+    "background_color": "#E98300",
+    "background_overlay_color": "#E98300"
+   },
+   "elements": [
+    {
+     "id": "cddb2a0",
+     "elType": "container",
+     "settings": {
+      "_title": "Cabeçalho da seção",
+      "content_width": "full",
+      "flex_direction": "column",
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": false
+      },
+      "flex_gap": {
+       "unit": "px",
+       "size": 12,
+       "column": "12",
+       "row": "12",
+       "isLinked": true
+      },
+      "flex_align_items": "center"
+     },
+     "elements": [
+      {
+       "id": "2d3d38c",
+       "elType": "widget",
+       "settings": {
+        "title": "Destinos",
+        "header_size": "h1",
+        "align": "center",
+        "title_color": "#FFFFFF",
+        "typography_typography": "custom",
+        "typography_font_family": "Montserrat",
+        "typography_font_weight": "700",
+        "typography_font_size": {
+         "unit": "px",
+         "size": 56,
+         "sizes": []
+        },
+        "typography_font_size_tablet": {
+         "unit": "px",
+         "size": 44,
+         "sizes": []
+        },
+        "typography_font_size_mobile": {
+         "unit": "px",
+         "size": 34,
+         "sizes": []
+        },
+        "typography_line_height": {
+         "unit": "em",
+         "size": 1.15,
+         "sizes": []
+        }
+       },
+       "elements": [],
+       "widgetType": "heading"
+      },
+      {
+       "id": "bda8236",
+       "elType": "widget",
+       "settings": {
+        "editor": "<p>Escolha um destino para ver o que fazer e pedir uma cotação.</p>",
+        "align": "center",
+        "text_color": "#FFB700"
+       },
+       "elements": [],
+       "widgetType": "text-editor"
+      }
+     ],
+     "isInner": false
+    }
+   ],
+   "isInner": false
+  },
+  {
+   "id": "cb7462f",
+   "elType": "container",
+   "settings": {
+    "_title": "Lista de destinos",
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "padding": {
+     "unit": "px",
+     "top": "96",
+     "right": "24",
+     "bottom": "96",
+     "left": "24",
+     "isLinked": false
+    },
+    "flex_gap": {
+     "unit": "px",
+     "size": 0,
+     "column": "0",
+     "row": "0",
+     "isLinked": true
+    },
+    "padding_mobile": {
+     "unit": "px",
+     "top": "56",
+     "right": "16",
+     "bottom": "56",
+     "left": "16",
+     "isLinked": false
+    }
+   },
+   "elements": [
+    {
+     "id": "5be1795",
+     "elType": "widget",
+     "settings": {
+      "_skin": "post",
+      "template_id": "{{DOC:destino-card}}",
+      "columns": 3,
+      "columns_tablet": 2,
+      "columns_mobile": 1,
+      "column_gap": {
+       "unit": "px",
+       "size": 24,
+       "sizes": []
+      },
+      "row_gap": {
+       "unit": "px",
+       "size": 24,
+       "sizes": []
+      },
+      "equal_height": "yes",
+      "post_query_post_type": "current_query",
+      "post_query_query_id": "tt_destinos",
+      "posts_per_page": 12,
+      "pagination_type": "numbers",
+      "pagination_align": "center",
+      "enable_nothing_found_message": "yes",
+      "nothing_found_message_text": "Nenhum destino publicado ainda."
+     },
+     "elements": [],
+     "widgetType": "loop-grid"
+    }
+   ],
+   "isInner": false
+  },
+  {
+   "id": "7ca07e0",
+   "elType": "container",
+   "settings": {
+    "_title": "CTA cotação",
+    "content_width": "boxed",
+    "flex_direction": "column",
+    "padding": {
+     "unit": "px",
+     "top": "96",
+     "right": "24",
+     "bottom": "96",
+     "left": "24",
+     "isLinked": false
+    },
+    "flex_gap": {
+     "unit": "px",
+     "size": 28,
+     "column": "28",
+     "row": "28",
+     "isLinked": true
+    },
+    "flex_align_items": "center",
+    "background_background": "classic",
+    "padding_mobile": {
+     "unit": "px",
+     "top": "56",
+     "right": "16",
+     "bottom": "56",
+     "left": "16",
+     "isLinked": false
+    },
+    "background_color": "#E98300"
+   },
+   "elements": [
+    {
+     "id": "c085bbe",
+     "elType": "container",
+     "settings": {
+      "_title": "Cabeçalho da seção",
+      "content_width": "full",
+      "flex_direction": "column",
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": false
+      },
+      "flex_gap": {
+       "unit": "px",
+       "size": 12,
+       "column": "12",
+       "row": "12",
+       "isLinked": true
+      },
+      "flex_align_items": "center"
+     },
+     "elements": [
+      {
+       "id": "bb076b9",
+       "elType": "widget",
+       "settings": {
+        "title": "Pronto para planejar sua próxima viagem?",
+        "header_size": "h2",
+        "align": "center",
+        "title_color": "#FFFFFF",
+        "typography_typography": "custom",
+        "typography_font_family": "Montserrat",
+        "typography_font_weight": "700",
+        "typography_font_size": {
+         "unit": "px",
+         "size": 40,
+         "sizes": []
+        },
+        "typography_font_size_tablet": {
+         "unit": "px",
+         "size": 34,
+         "sizes": []
+        },
+        "typography_font_size_mobile": {
+         "unit": "px",
+         "size": 28,
+         "sizes": []
+        },
+        "typography_line_height": {
+         "unit": "em",
+         "size": 1.2,
+         "sizes": []
+        }
+       },
+       "elements": [],
+       "widgetType": "heading"
+      },
+      {
+       "id": "b0f6b28",
+       "elType": "widget",
+       "settings": {
+        "editor": "<p>Conte o que você imagina e receba uma proposta sob medida.</p>",
+        "align": "center",
+        "text_color": "#FFB700"
+       },
+       "elements": [],
+       "widgetType": "text-editor"
+      }
+     ],
+     "isInner": false
+    },
+    {
+     "id": "9ae9243",
+     "elType": "container",
+     "settings": {
+      "_title": "CTA — botões",
+      "content_width": "full",
+      "flex_direction": "row",
+      "padding": {
+       "unit": "px",
+       "top": "0",
+       "right": "0",
+       "bottom": "0",
+       "left": "0",
+       "isLinked": false
+      },
+      "flex_gap": {
+       "unit": "px",
+       "size": 12,
+       "column": "12",
+       "row": "12",
+       "isLinked": true
+      },
+      "flex_justify_content": "center",
+      "flex_wrap": "wrap"
+     },
+     "elements": [
+      {
+       "id": "0a7c3f9",
+       "elType": "widget",
+       "settings": {
+        "text": "Solicitar cotação",
+        "link": {
+         "url": "https://tt.token/url_cotacao",
+         "is_external": "",
+         "nofollow": "",
+         "custom_attributes": ""
+        }
+       },
+       "elements": [],
+       "widgetType": "button"
+      },
+      {
+       "id": "ea9a2d5",
+       "elType": "widget",
+       "settings": {
+        "text": "Falar no WhatsApp",
+        "link": {
+         "url": "https://wa.me/%tt:whatsapp_digitos%",
+         "is_external": "on",
+         "nofollow": "",
+         "custom_attributes": ""
+        },
+        "background_background": "classic",
+        "background_color": "#FFFFFF00",
+        "button_background_hover_background": "classic",
+        "border_border": "solid",
+        "border_width": {
+         "unit": "px",
+         "top": "1",
+         "right": "1",
+         "bottom": "1",
+         "left": "1",
+         "isLinked": false
+        },
+        "selected_icon": {
+         "value": "fab fa-whatsapp",
+         "library": "fa-brands"
+        },
+        "icon_align": "left",
+        "icon_indent": {
+         "unit": "px",
+         "size": 8,
+         "sizes": []
+        },
+        "button_text_color": "#FFFFFF",
+        "border_color": "#FFFFFF",
+        "hover_color": "#E98300",
+        "button_background_hover_color": "#FFFFFF"
+       },
+       "elements": [],
+       "widgetType": "button"
+      }
+     ],
+     "isInner": false
+    }
+   ],
+   "isInner": false
+  }
+ ],
+ "page_settings": {}
+}
