@@ -1,0 +1,16 @@
+{
+  "name": "traveltec-roteiros-testes",
+  "private": true,
+  "type": "module",
+  "description": "Testes do plugin Voucher Tec (PHP 7.4 e 8.2 por php-wasm, JS por jsdom). Não vai no zip.",
+  "scripts": {
+    "test": "node run.mjs && node --test \"js/*.test.mjs\"",
+    "test:php": "node run.mjs",
+    "test:js": "node --test \"js/*.test.mjs\""
+  },
+  "devDependencies": {
+    "@php-wasm/node": "*",
+    "@php-wasm/universal": "*",
+    "jsdom": "*"
+  }
+}

@@ -101,3 +101,9 @@ Também pela API: POST /wp-json/voucher-tec/v1/aplicar com moeda_orcamento (USD|
 
 2.0.17: roteiros com categoria e tags (as mesmas do blog). Aparecem na tela do roteiro e a API aceita
 categories/tags em /wp/v2/roteiros — o Cliente Ideal envia as definidas na importação do roteiro.
+
+2.1.0: menu único "Voucher Tec" com Roteiros, Adicionar roteiro e Configuração (o menu "Roteiros" solto sai). A tela de
+edição do roteiro ganhou abas (Resumo, Preço, Fotos, Programação, Hospedagem, Inclui/Não inclui, Condições) com editor
+visual, preço em campos (prefixo, moeda, valor, complemento) e fotos pela Biblioteca de Mídia. A lista de roteiros ganhou
+as colunas Capa e Preço. O formato gravado não mudou: roteiros importados, o n8n e os modelos seguem iguais; preço e
+fotos só são regravados quando você mexe neles. Categorias e Tags dos roteiros ficam no menu Voucher Tec.

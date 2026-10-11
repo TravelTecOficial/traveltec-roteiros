@@ -1,0 +1,239 @@
+/* Tela de edição do roteiro (Voucher Tec): abas, campos, preço e fotos. Só carrega na edição de "roteiros". */
+
+#tt_roteiros_campos .inside {
+	margin: 0;
+	padding: 0;
+}
+
+.tt-rot {
+	--tt-azul: #2271b1;
+	--tt-azul-escuro: #135e96;
+	--tt-verde: #00a32a;
+	--tt-borda: #dcdcde;
+	--tt-fundo: #f6f7f7;
+	--tt-texto-suave: #646970;
+	color: #1d2327;
+}
+
+/* o atributo hidden precisa vencer os display: grid/flex desta folha (modo texto livre do preço, painéis das abas) */
+.tt-rot [hidden] {
+	display: none !important;
+}
+
+.tt-rot__topo {
+	margin: 0;
+	padding: 12px 16px;
+	background: var(--tt-fundo);
+	border-bottom: 1px solid var(--tt-borda);
+	color: var(--tt-texto-suave);
+}
+
+/* abas */
+.tt-rot__abas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	padding: 10px 12px 0;
+	border-bottom: 1px solid var(--tt-borda);
+	background: #fff;
+}
+
+.tt-rot__aba {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 -1px;
+	padding: 10px 14px;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	border-radius: 6px 6px 0 0;
+	background: transparent;
+	color: var(--tt-texto-suave);
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.tt-rot__aba:hover {
+	color: var(--tt-azul-escuro);
+	background: var(--tt-fundo);
+}
+
+.tt-rot__aba:focus-visible {
+	outline: 2px solid var(--tt-azul);
+	outline-offset: -2px;
+}
+
+.tt-rot__aba.is-ativa {
+	color: #1d2327;
+	font-weight: 600;
+	background: #fff;
+	border-color: var(--tt-borda);
+	box-shadow: inset 0 3px 0 var(--tt-azul);
+}
+
+.tt-rot__ponto {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	border: 1.5px solid #a7aaad;
+	background: transparent;
+}
+
+.tt-rot__ponto.is-cheio {
+	border-color: var(--tt-verde);
+	background: var(--tt-verde);
+}
+
+/* painéis e campos */
+.tt-rot__painel {
+	padding: 18px 16px 8px;
+}
+
+.tt-rot__campo {
+	margin: 0 0 18px;
+}
+
+.tt-rot__campo > label {
+	display: block;
+	margin: 0 0 6px;
+	font-weight: 600;
+}
+
+.tt-rot__campo .description {
+	margin: 6px 0 0;
+	color: var(--tt-texto-suave);
+}
+
+.tt-rot__campo input[type="text"],
+.tt-rot__campo select {
+	width: 100%;
+	max-width: none;
+	min-height: 36px;
+}
+
+/* preço */
+.tt-rot__grade {
+	display: grid;
+	grid-template-columns: 1.2fr 1fr 1fr 2fr;
+	gap: 12px;
+}
+
+.tt-rot__grade .tt-rot__campo {
+	margin-bottom: 8px;
+}
+
+.tt-rot__previa {
+	margin: 4px 0 8px;
+	padding: 10px 14px;
+	border-left: 3px solid var(--tt-azul);
+	background: var(--tt-fundo);
+	border-radius: 0 4px 4px 0;
+}
+
+/* fotos */
+.tt-rot__miniaturas {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	gap: 12px;
+	margin: 12px 0 16px;
+	padding: 0;
+	list-style: none;
+}
+
+.tt-rot__foto {
+	position: relative;
+	margin: 0;
+	border: 1px solid var(--tt-borda);
+	border-radius: 8px;
+	overflow: hidden;
+	background: var(--tt-fundo);
+}
+
+.tt-rot__foto img {
+	display: block;
+	width: 100%;
+	height: 110px;
+	object-fit: cover;
+}
+
+.tt-rot__foto-acoes {
+	display: flex;
+	justify-content: space-between;
+	padding: 4px 6px;
+	background: #fff;
+	border-top: 1px solid var(--tt-borda);
+}
+
+.tt-rot__foto-botao {
+	min-width: 30px;
+	padding: 2px 6px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: var(--tt-azul-escuro);
+	font-size: 16px;
+	line-height: 1.4;
+	cursor: pointer;
+}
+
+.tt-rot__foto-botao:hover:not(:disabled) {
+	background: var(--tt-fundo);
+}
+
+.tt-rot__foto-botao:disabled {
+	color: #c3c4c7;
+	cursor: default;
+}
+
+.tt-rot__foto-botao[aria-label="Remover foto"] {
+	color: #b32d2e;
+}
+
+.tt-rot__contagem {
+	margin-left: 8px;
+	color: var(--tt-texto-suave);
+}
+
+/* lista "Todos os roteiros" */
+.column-tt_capa {
+	width: 72px;
+}
+
+.column-tt_capa img {
+	display: block;
+	width: 56px;
+	height: 56px;
+	object-fit: cover;
+	border-radius: 6px;
+}
+
+.column-tt_preco {
+	width: 22%;
+}
+
+.tt-rot__selo {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 8px;
+	border-radius: 10px;
+	background: #f0f0f1;
+	color: var(--tt-texto-suave);
+	font-size: 11px;
+	white-space: nowrap;
+}
+
+@media (max-width: 782px) {
+	.tt-rot__grade {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.tt-rot__campo--larga {
+		grid-column: 1 / -1;
+	}
+
+	.tt-rot__aba {
+		padding: 9px 10px;
+	}
+}
