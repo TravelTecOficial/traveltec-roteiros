@@ -114,8 +114,12 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   do site-modelo (páginas-filhas de #29). Agora consulta o tipo `destinos`, como a lista de roteiros.
 - [x] **2.2.2** (11/10/2026): `tt_voucher_item_certo` só aceita como certo o item que é link; item de menu que era a
   página `/destinos/` (mesmo endereço da lista) passa a ser reapontado. Achado no rodapé do site-modelo.
-- [ ] **Destinos no site-modelo**: atualizar para a 2.2.0, instalar a aba Destinos, recriar Noronha, Sardenha e
-  Tóquio no tipo novo e mandar as páginas #29, #82, #84 e #86 para a lixeira.
+- [x] **Destinos no site-modelo** (11/10/2026, plugin 2.2.2): modelos #360 (card), #361 (lista) e #362 (página); destinos
+  #363 Fernando de Noronha, #365 Sardenha, #366 Tóquio, recriados das páginas pela REST. Páginas #29, #82, #84 e #86 na
+  lixeira (cópias em `_wordpress-base/_scratch/destinos-2026-10-11/`). Menu do cabeçalho com "Destinos" depois de
+  Roteiros; rodapé reapontado. Conferido no navegador: lista, as três páginas, galeria, botão, formulário com o destino
+  preenchido e celular. **Falta o dono conferir a tela de cadastro** (Voucher Tec › Adicionar destino) — não foi aberta
+  no painel pelo Claude.
 - [ ] **Automação dos destinos** (n8n / Cliente Ideal) — etapa futura.
 - Código dos destinos: `includes/destinos.php`, `includes/destino-dados.php`, `includes/destino-editor.php`,
   `assets/destinos.css`, `assets/destino.js`, `assets/roteiro-editor.js|css` (tela, compartilhada com os roteiros),
@@ -158,6 +162,5 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 
 ## Próximo passo
 
-Destinos no site-modelo (`yellowgreen-termite-955684`): o dono atualiza o plugin pelo painel; depois o Claude instala a
-aba Destinos, recria Noronha, Sardenha e Tóquio no tipo novo e manda as páginas antigas para a lixeira. Em seguida,
-a automação dos destinos (n8n / Cliente Ideal).
+Dono confere a tela de cadastro de destinos no site-modelo. Depois: automação dos destinos (n8n / Cliente Ideal).
+Antes de instalar a aba Destinos no Ajimex ou na Zizi Quatti: passar as páginas de destino para o cadastro.
