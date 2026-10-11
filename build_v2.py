@@ -302,7 +302,11 @@ def montar_destino(chave, data):
         if chave == "destinos-lista":
             if wt == "loop-grid":
                 st["template_id"] = "{{DOC:destino-card}}"
-                st["post_query_post_type"] = "current_query"
+                # mesma consulta da lista de roteiros. No site-modelo a grade usava a consulta própria "tt_destinos"
+                # (páginas-filhas de Destinos): com ela a lista de destinos sai vazia.
+                st["post_query_post_type"] = "destinos"
+                st["post_query_post_status"] = ["publish"]
+                st.pop("post_query_query_id", None)
             fundo = st.get("background_image")
             if isinstance(fundo, dict) and "banner-destinos" in str(fundo.get("url")):
                 st["background_image"] = {"url": "{{IMG:%s}}" % BANNER_DESTINOS, "id": "{{IMGID:%s}}" % BANNER_DESTINOS, "size": "", "alt": "", "source": "library"}

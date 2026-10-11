@@ -2,9 +2,13 @@
 // Aba Destinos da Configuração, grupo de peças e ordem de gravação — admin.php / instalador.php
 require __DIR__ . '/bootstrap.php';
 
-$admin = file_get_contents( '/p/includes/admin.php' );
-$inst  = file_get_contents( '/p/includes/instalador.php' );
-$aj    = file_get_contents( '/p/includes/ajustes.php' );
+// No Windows o git pode gravar os arquivos com CRLF: os testes abaixo comparam trechos com quebra de linha.
+$ler   = function ( $arq ) {
+	return str_replace( "\r\n", "\n", file_get_contents( '/p/includes/' . $arq ) );
+};
+$admin = $ler( 'admin.php' );
+$inst  = $ler( 'instalador.php' );
+$aj    = $ler( 'ajustes.php' );
 
 /* ---------------------------------------------------------------- aba e grupo (lidos do código, sem carregar o WordPress) */
 ok( (bool) preg_match( "/'roteiros'\s*=>\s*'Roteiros',\s*'destinos'\s*=>\s*'Destinos',/", $admin ), 'aba Destinos logo depois de Roteiros' );
