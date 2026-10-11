@@ -29,7 +29,7 @@ contem( 'class="tt-rot tt-dest" data-tt-rot', $html, 'caixa: usa a mesma raiz do
 igual( 4, substr_count( $html, 'data-tt-aba="' ), 'caixa: quatro abas' );
 igual( 4, substr_count( $html, 'data-tt-painel="' ), 'caixa: quatro painéis' );
 igual( 3, substr_count( $html, 'tt-rot__ponto is-cheio' ), 'caixa: Resumo, O que fazer e Fotos preenchidas; Quando ir vazia' );
-contem( '<textarea class="widefat" rows="3" id="tt_dest_resumo" name="excerpt" data-tt-contador="160">Ilha &amp; mar</textarea>', $html, 'resumo: grava no resumo do post (campo "excerpt" do WordPress)' );
+contem( '<label for="excerpt">Resumo</label><textarea class="widefat" rows="3" id="excerpt" name="excerpt" data-tt-contador="160">Ilha &amp; mar</textarea>', $html, 'resumo: é o campo "excerpt" do WordPress, com o id que o salvamento automático lê (senão o rascunho perde o resumo)' );
 contem( 'name="tt_destinos[texto_de_abertura]" data-tt-editor>&lt;p&gt;Abertura&lt;/p&gt;</textarea>', $html, 'abertura: editor visual' );
 contem( 'data-tt-itens data-nome="tt_destinos[o_que_fazer][]"', $html, 'lista: caixa de itens' );
 contem( '<input type="hidden" name="tt_destinos[o_que_fazer_presente]" value="1">', $html, 'lista: marca de presença (para gravar a lista vazia)' );

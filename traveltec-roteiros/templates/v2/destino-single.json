@@ -124,9 +124,9 @@
     },
     "flex_gap": {
      "unit": "px",
-     "size": 0,
-     "column": "0",
-     "row": "0",
+     "size": 40,
+     "column": "40",
+     "row": "40",
      "isLinked": true
     },
     "padding_mobile": {

@@ -345,9 +345,13 @@ function tt_voucher_aba_destinos( $st ) {
 	$n = wp_count_posts( 'destinos' );
 	echo '<p><strong>' . (int) ( $n->publish ?? 0 ) . '</strong> destinos publicados · <a href="' . esc_url( admin_url( 'edit.php?post_type=destinos' ) ) . '">Ver todos</a> · <a href="' . esc_url( admin_url( 'post-new.php?post_type=destinos' ) ) . '">Adicionar</a> · <a href="' . esc_url( home_url( '/destinos/' ) ) . '" target="_blank">Abrir /destinos/</a></p>';
 	echo '<p class="description">Os destinos são cadastrados à mão, em Voucher Tec › Adicionar destino.</p>';
+	$ativo = tt_destinos_ativo();
+	if ( ! $ativo ) {
+		echo '<div class="notice notice-info inline"><p>Os destinos ainda <strong>não aparecem no site</strong>. Dá para cadastrar à vontade; para ligar a lista em /destinos/ e a página de cada destino, clique em “Instalar esta parte” abaixo.</p></div>';
+	}
 	$pagina = tt_voucher_pagina_em_conflito( 'destinos' );
 	if ( $pagina ) {
-		echo '<div class="notice notice-warning inline"><p>Este site tem uma <strong>página</strong> no endereço /destinos/ (<a href="' . esc_url( get_edit_post_link( $pagina->ID ) ) . '">' . esc_html( get_the_title( $pagina ) ) . '</a>). Com os Destinos do plugin, /destinos/ passa a mostrar a lista de destinos e essa página (e as páginas dentro dela) deixam de abrir. Passe o conteúdo para o cadastro de destinos e mande a página para a lixeira.</p></div>';
+		echo '<div class="notice notice-warning inline"><p>Este site tem uma <strong>página</strong> no endereço /destinos/ (<a href="' . esc_url( get_edit_post_link( $pagina->ID ) ) . '">' . esc_html( get_the_title( $pagina ) ) . '</a>). ' . ( $ativo ? 'Com os Destinos ligados' : 'Ao instalar esta parte' ) . ', /destinos/ passa a mostrar a lista de destinos e essa página (e as páginas dentro dela) deixam de abrir. Passe o conteúdo para o cadastro de destinos e mande a página para a lixeira.</p></div>';
 	}
 	if ( ! tt_destino_form_id() ) {
 		echo '<div class="notice notice-info inline"><p>O formulário de cotação do plugin não está instalado: a página do destino sai sem formulário. Instale a aba <a href="' . esc_url( tt_voucher_url_painel( array( 'aba' => 'cotacao' ) ) ) . '">Cotação</a>.</p></div>';

@@ -116,6 +116,15 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - Código dos destinos: `includes/destinos.php`, `includes/destino-dados.php`, `includes/destino-editor.php`,
   `assets/destinos.css`, `assets/destino.js`, `assets/roteiro-editor.js|css` (tela, compartilhada com os roteiros),
   `src/destinos/` + seção `destinos` do `build_v2.py` (modelos).
+- **Destinos só "ligam" em quem instala a aba** (`tt_destinos_ativo`: existe o modelo `destino-single`). Antes disso o tipo
+  aparece no painel e na REST, mas não assume `/destinos/` nem `/destinos/<nome>/`. Motivo: em 11/10/2026 **Ajimex e Zizi
+  Quatti tinham página `/destinos/` publicada (#29)** — com o tipo sempre público, só atualizar o plugin derrubaria as
+  páginas-filhas. Antes de instalar a aba num site desses: passar o conteúdo para o cadastro e mandar as páginas para a lixeira.
+- Página do destino: abertura, "o que fazer", "quando ir", galeria e formulário saem por shortcodes do plugin
+  (`[tt_destino_texto|lista|galeria|form]`), não por tags dinâmicas — assim a seção vazia some com o título.
+- Ficou para depois (revisão de 11/10/2026): faixa do formulário aparece vazia sem formulário de cotação instalado;
+  menus criados pelo próprio plugin só ganham "Destinos" na instalação seguinte de uma parte; barra invertida some ao
+  salvar (igual aos roteiros); `banner-destinos.jpg` entra na Biblioteca a cada reinstalação parcial.
 
 ## Decisões do dono
 

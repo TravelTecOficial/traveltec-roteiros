@@ -20,9 +20,10 @@ function tt_destino_campo_editor( $chave, $rotulo, $valor, $ajuda = '' ) {
 }
 
 function tt_destino_painel_resumo( $v ) {
-	// name="excerpt": é o campo de resumo do próprio WordPress — ele grava sozinho no resumo do post.
-	echo '<div class="tt-rot__campo"><label for="tt_dest_resumo">Resumo</label>';
-	echo '<textarea class="widefat" rows="3" id="tt_dest_resumo" name="excerpt" data-tt-contador="160">' . esc_textarea( $v['resumo'] ) . '</textarea>';
+	// É o campo de resumo do próprio WordPress (name e id "excerpt"): ele grava sozinho no resumo do post, e o
+	// salvamento automático lê o campo pelo id — com outro id, o rascunho perderia o resumo.
+	echo '<div class="tt-rot__campo"><label for="excerpt">Resumo</label>';
+	echo '<textarea class="widefat" rows="3" id="excerpt" name="excerpt" data-tt-contador="160">' . esc_textarea( $v['resumo'] ) . '</textarea>';
 	echo '<p class="description">Uma ou duas frases. Aparece no card do destino, na lista /destinos/. <span class="tt-rot__contador" data-tt-contador-saida></span></p></div>';
 	tt_destino_campo_editor( 'texto_de_abertura', 'Texto de abertura', $v['texto_de_abertura'], 'O texto que abre a página do destino, logo abaixo da foto de capa.' );
 }

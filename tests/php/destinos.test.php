@@ -13,6 +13,7 @@ function register_post_type( $t, $args ) { $GLOBALS['tt_tipos'][ $t ] = $args; }
 function register_post_meta( $t, $chave, $args ) { $GLOBALS['tt_metas'][ $t ][ $chave ] = $args; }
 function add_shortcode( $nome, $cb ) { $GLOBALS['tt_shortcodes'][ $nome ] = $cb; }
 function shortcode_atts( $padrao, $atts ) { return array_merge( $padrao, array_intersect_key( (array) $atts, $padrao ) ); }
+function shortcode_exists( $n ) { return isset( $GLOBALS['tt_shortcodes'][ $n ] ); }
 function do_shortcode( $s ) { return 'FORM(' . $s . ')'; }
 function get_the_ID() { return 9; }
 function wpautop( $s ) { return $s; }
@@ -26,11 +27,25 @@ require '/p/includes/destino-dados.php';
 require '/p/includes/destinos.php';
 
 /* ---------------------------------------------------------------- tipo de conteúdo */
+// Sem a aba Destinos instalada: existe no painel e na REST, mas não toma os endereços do site
+// (Ajimex e Zizi Quatti têm PÁGINAS em /destinos/ — atualizar o plugin não pode derrubá-las).
+ok( ! tt_destinos_ativo(), 'sem o modelo da página do destino instalado, os destinos não estão ativos no site' );
 tt_destinos_registrar_tipo();
 $tipo = $GLOBALS['tt_tipos']['destinos'];
-igual( 'destinos', $tipo['has_archive'], 'arquivo em /destinos/' );
-igual( array( 'slug' => 'destinos', 'with_front' => false ), $tipo['rewrite'], 'endereço /destinos/<slug>/' );
-ok( true === $tipo['public'] && true === $tipo['show_in_rest'] && 'destinos' === $tipo['rest_base'], 'público e na REST' );
+ok( false === $tipo['has_archive'] && false === $tipo['rewrite'] && false === $tipo['publicly_queryable'], 'inativo: sem /destinos/ nem /destinos/<slug>/' );
+ok( true === $tipo['show_ui'] && true === $tipo['show_in_rest'] && 'destinos' === $tipo['rest_base'], 'inativo: cadastro e REST funcionam' );
+ok( true === $tipo['exclude_from_search'] && false === $tipo['show_in_nav_menus'], 'inativo: fora da busca e dos menus' );
+$GLOBALS['tt_ids']['docs']['destino-single'] = 300;
+ok( ! tt_destinos_ativo(), 'modelo na lixeira: continua inativo' );
+$GLOBALS['tt_vivos'] = array( 300 );
+ok( tt_destinos_ativo(), 'modelo instalado e vivo: ativo' );
+tt_destinos_registrar_tipo();
+igual( false, $GLOBALS['tt_tipos']['destinos']['has_archive'], 'já registrado: não registra de novo sozinho' );
+tt_destinos_registrar_tipo( true );
+$tipo = $GLOBALS['tt_tipos']['destinos'];
+igual( 'destinos', $tipo['has_archive'], 'ativo: arquivo em /destinos/' );
+igual( array( 'slug' => 'destinos', 'with_front' => false ), $tipo['rewrite'], 'ativo: endereço /destinos/<slug>/' );
+ok( true === $tipo['publicly_queryable'] && true === $tipo['show_in_rest'] && 'destinos' === $tipo['rest_base'], 'ativo: público e na REST' );
 igual( array( 'title', 'thumbnail', 'excerpt', 'revisions' ), $tipo['supports'], 'título, capa, resumo e revisões' );
 $GLOBALS['tt_tipos']['destinos'] = 'de-outro-plugin';
 tt_destinos_registrar_tipo();
@@ -58,7 +73,28 @@ igual( '', $sc['tt_destino_form']( array( 'titulo' => 'Solicite sua cotação' )
 $GLOBALS['tt_ids']['forms']['cotacao'] = 305;
 igual( 0, tt_destino_form_id(), 'formulário na lixeira: 0' );
 $GLOBALS['tt_vivos'] = array( 305 );
+igual( 0, tt_destino_form_id(), 'JetFormBuilder desligado (shortcode não existe): 0, para não aparecer o código na página' );
+$GLOBALS['tt_shortcodes']['jet_fb_form'] = 'jfb';
 igual( 305, tt_destino_form_id(), 'formulário instalado e vivo' );
 $form = $sc['tt_destino_form']( array( 'titulo' => 'Solicite sua cotação' ) );
 contem( '<h2 class="tt-destino-titulo">Solicite sua cotação</h2>', $form, 'formulário: título' );
 contem( 'FORM([jet_fb_form form_id="305" submit_type="ajax"', $form, 'formulário: o de cotação do plugin' );
+
+/* ---------------------------------------------------------------- primeiro destino publicado entra no menu do site */
+$GLOBALS['tt_ligou'] = 0;
+function tt_voucher_menus_ligar() { $GLOBALS['tt_ligou']++; }
+$publicar = function ( $novo, $antigo, $tipo ) {
+	foreach ( $GLOBALS['tt_acoes']['transition_post_status'] as $cb ) {
+		$cb( $novo, $antigo, (object) array( 'post_type' => $tipo ) );
+	}
+};
+$GLOBALS['tt_vivos'] = array( 300, 305 );
+$publicar( 'publish', 'draft', 'destinos' );
+igual( 1, $GLOBALS['tt_ligou'], 'destino publicado: liga o item Destinos nos menus do site' );
+$publicar( 'publish', 'publish', 'destinos' );
+$publicar( 'draft', 'publish', 'destinos' );
+$publicar( 'publish', 'draft', 'roteiros' );
+igual( 1, $GLOBALS['tt_ligou'], 'atualizar, despublicar ou publicar outro tipo não mexe nos menus' );
+$GLOBALS['tt_vivos'] = array( 305 );
+$publicar( 'publish', 'draft', 'destinos' );
+igual( 1, $GLOBALS['tt_ligou'], 'sem a aba Destinos instalada, publicar não mexe nos menus' );

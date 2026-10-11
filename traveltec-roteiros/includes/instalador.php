@@ -224,6 +224,13 @@ function tt_voucher_instalar_menus( &$ids, &$rel ) {
 			array( 'Política de Privacidade', '', (int) get_option( 'wp_page_for_privacy_policy' ) ),
 		) ),
 	);
+	// Destinos: entra depois de Roteiros quando a lista está instalada e há destino publicado.
+	$destinos = wp_count_posts( 'destinos' );
+	if ( $pag( 'destinos-lista' ) && ! empty( $destinos->publish ) ) {
+		foreach ( array( 'principal', 'rodape' ) as $qual ) {
+			array_splice( $menus[ $qual ][2], 2, 0, array( array( 'Destinos', home_url( '/destinos/' ), 0 ) ) );
+		}
+	}
 	$locais = get_theme_mod( 'nav_menu_locations', array() );
 	foreach ( $menus as $chave => $def ) {
 		$menu = ! empty( $ids['menus'][ $chave ] ) ? wp_get_nav_menu_object( (int) $ids['menus'][ $chave ] ) : false;
@@ -476,6 +483,8 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		tt_voucher_estilo_no_kit( tt_voucher_estilo() );
 	}
 	tt_voucher_limpar_cache();
+	// Com a aba Destinos instalada, o tipo passa a responder em /destinos/ — registra de novo antes de refazer as regras.
+	tt_destinos_registrar_tipo( true );
 	flush_rewrite_rules( true );
 	$rel['ids'] = $ids;
 	return $rel;

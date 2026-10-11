@@ -14,6 +14,9 @@ contem( 'function tt_voucher_pagina_em_conflito( $caminho )', $admin, 'aviso de 
 contem( 'tt_destino_form_id()', $admin, 'a aba avisa quando falta o formulário de cotação' );
 contem( 'tt_destinos_registrar_tipo();', $inst, 'a instalação registra o tipo antes de refazer os endereços' );
 contem( "wp_count_posts( 'destinos' )", $aj, 'menu do site: Destinos só com destino publicado' );
+contem( 'tt_destinos_registrar_tipo( true );', $inst, 'instalar a aba Destinos liga os endereços do tipo antes de refazer as regras' );
+contem( "array( 'Destinos', home_url( '/destinos/' ), 0 )", $inst, 'menus do próprio plugin: Destinos entra' );
+contem( 'tt_destinos_ativo()', $admin, 'a aba avisa enquanto os destinos não estão ligados no site' );
 
 /* ---------------------------------------------------------------- ordem de gravação: cards antes das listas */
 preg_match( '/function tt_voucher_ordem_docs\(.*?\n}\n/s', $inst, $f );

@@ -10,13 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /* ------------------------------------------------------------------ Tipo de conteúdo e campos */
 
-function tt_destinos_registrar_tipo() {
-	// Se o site já tem o tipo (CPT UI, ACF...), não registra de novo.
+/**
+ * Os destinos estão ligados neste site? Só depois de instalada a aba Destinos (o modelo da página do destino existe).
+ * Antes disso o tipo existe no painel e na REST, mas não toma os endereços /destinos/ e /destinos/<nome>/ —
+ * há sites com PÁGINAS nesses endereços, e atualizar o plugin não pode tirá-las do ar.
+ */
+function tt_destinos_ativo() {
+	$ids = tt_voucher_ids();
+	return ! empty( $ids['docs']['destino-single'] ) && tt_voucher_vivo( (int) $ids['docs']['destino-single'] );
+}
+
+/**
+ * Registra o tipo. $de_novo: registra outra vez o tipo do próprio plugin (a instalação da aba Destinos usa, para
+ * ligar os endereços na mesma hora).
+ */
+function tt_destinos_registrar_tipo( $de_novo = false ) {
 	if ( post_type_exists( 'destinos' ) ) {
-		return;
+		// Se o site já tem o tipo (CPT UI, ACF...), não registra por cima.
+		if ( ! $de_novo || empty( $GLOBALS['tt_destinos_do_plugin'] ) ) {
+			return;
+		}
 	}
+	$ativo                            = tt_destinos_ativo();
+	$GLOBALS['tt_destinos_do_plugin'] = true;
 	register_post_type( 'destinos', array(
-		'labels'        => array(
+		'labels'              => array(
 			'name'          => 'Destinos',
 			'singular_name' => 'Destino',
 			'add_new_item'  => 'Adicionar novo destino',
@@ -26,14 +44,19 @@ function tt_destinos_registrar_tipo() {
 			'not_found'     => 'Nenhum destino encontrado.',
 			'archives'      => 'Destinos',
 		),
-		'public'        => true,
-		'has_archive'   => 'destinos', // /destinos/ lista os destinos; /destinos/<slug>/ abre um
-		'show_in_rest'  => true,
-		'rest_base'     => 'destinos',
-		'menu_icon'     => 'dashicons-location-alt',
-		'menu_position' => 22,
-		'supports'      => array( 'title', 'thumbnail', 'excerpt', 'revisions' ),
-		'rewrite'       => array( 'slug' => 'destinos', 'with_front' => false ),
+		'public'              => $ativo,
+		'publicly_queryable'  => $ativo,
+		'exclude_from_search' => ! $ativo,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_nav_menus'   => $ativo,
+		'has_archive'         => $ativo ? 'destinos' : false, // /destinos/ lista os destinos; /destinos/<slug>/ abre um
+		'show_in_rest'        => true,
+		'rest_base'           => 'destinos',
+		'menu_icon'           => 'dashicons-location-alt',
+		'menu_position'       => 22,
+		'supports'            => array( 'title', 'thumbnail', 'excerpt', 'revisions' ),
+		'rewrite'             => $ativo ? array( 'slug' => 'destinos', 'with_front' => false ) : false,
 	) );
 }
 
@@ -61,6 +84,14 @@ add_action( 'init', function () {
 		update_option( 'tt_destinos_regras', TT_ROTEIROS_VERSION );
 	}
 }, 99 );
+
+// Destino publicado (com a aba Destinos instalada): o item "Destinos" entra nos menus do site.
+// Prioridade 20: depois de o WordPress zerar a contagem de posts do tipo.
+add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
+	if ( 'publish' === $novo && 'publish' !== $antigo && 'destinos' === $post->post_type && tt_destinos_ativo() ) {
+		tt_voucher_menus_ligar();
+	}
+}, 20, 3 );
 
 /** Campo "acf" na API REST — mesmo formato dos roteiros: { title, excerpt, acf: { ..., imagem_destaque } }. */
 add_action( 'rest_api_init', function () {
@@ -103,7 +134,8 @@ add_action( 'rest_api_init', function () {
 function tt_destino_form_id() {
 	$ids = tt_voucher_ids();
 	$id  = isset( $ids['forms']['cotacao'] ) ? (int) $ids['forms']['cotacao'] : 0;
-	return $id && tt_voucher_vivo( $id ) ? $id : 0;
+	// Sem o JetFormBuilder ativo o shortcode dele não existe e o código apareceria escrito na página.
+	return $id && tt_voucher_vivo( $id ) && shortcode_exists( 'jet_fb_form' ) ? $id : 0;
 }
 
 /** [tt_destino_texto campo="texto_de_abertura|quando_ir" titulo="..."] */

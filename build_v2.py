@@ -315,8 +315,9 @@ def montar_destino(chave, data):
             filhos = e.get("elements", [])
             if any(x.get("widgetType") == "theme-post-content" for x in filhos):
                 e["elements"] = corpo_destino()
-                st.setdefault("flex_direction", "column")
-                st.setdefault("flex_gap", {"unit": "px", "size": 40, "column": "40", "row": "40", "isLinked": True})
+                # o contêiner de origem só tinha o conteúdo do post, sem espaço entre filhos
+                st["flex_direction"] = "column"
+                st["flex_gap"] = {"unit": "px", "size": 40, "column": "40", "row": "40", "isLinked": True}
             formulario = [x for x in filhos if x.get("widgetType") == "shortcode" and "jet_fb_form" in str(x.get("settings", {}).get("shortcode"))]
             if formulario:
                 st["_element_id"] = "tt-destino-cotacao"

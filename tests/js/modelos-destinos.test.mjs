@@ -70,6 +70,9 @@ test('página do destino: corpo por shortcodes do plugin, botão e formulário',
     '[tt_destino_form titulo="Solicite sua cotação para este destino"]',
   ]);
   assert.equal(ws.some((w) => w.widgetType === 'theme-post-content'), false, 'o conteúdo do post não é usado');
+  const corpo = single.data.find((c) => (c.elements || []).some((e) => e.widgetType === 'shortcode' && e.settings.shortcode.includes('texto_de_abertura')));
+  assert.equal(corpo.settings.flex_gap.size, 40, 'as seções do corpo têm espaço entre si');
+  assert.equal(corpo.settings.flex_direction, 'column');
   const botao = ws.find((w) => w.widgetType === 'button');
   assert.equal(botao.settings.link.url, '#tt-destino-cotacao');
   assert.match(botao.settings.__dynamic__.text, /name="post-title"/);
