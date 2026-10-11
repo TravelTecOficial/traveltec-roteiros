@@ -119,3 +119,6 @@ imagem_destaque).
 
 2.2.1: a lista /destinos/ saía vazia (a grade trazia um filtro da página antiga do site-modelo). Depois de atualizar,
 reinstale a parte em Voucher Tec › Configuração › Destinos.
+
+2.2.2: item de menu que era uma página no mesmo endereço da lista (ex.: página "Destinos" em /destinos/) passa a ser
+reapontado para a lista — antes ficava como estava e quebrava quando a página saía do ar.

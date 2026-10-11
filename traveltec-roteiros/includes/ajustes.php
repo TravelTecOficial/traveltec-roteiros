@@ -80,7 +80,9 @@ function tt_voucher_item_certo( $item, $alvo ) {
 	if ( $page_id ) {
 		return 'post_type' === $item->type && (int) $item->object_id === $page_id;
 	}
-	return untrailingslashit( (string) $item->url ) === untrailingslashit( $url );
+	// Só link conta: uma PÁGINA no mesmo endereço (ex.: página "Destinos" em /destinos/) sai do ar quando a lista do
+	// tipo assume o endereço, e o item ficaria quebrado.
+	return 'custom' === $item->type && untrailingslashit( (string) $item->url ) === untrailingslashit( $url );
 }
 
 /**
