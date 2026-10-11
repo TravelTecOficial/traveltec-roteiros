@@ -83,8 +83,22 @@ function tt_roteiros_registrar_tipo() {
 	}
 }
 
+/**
+ * Categoria e tags do roteiro: as mesmas do blog (category / post_tag), ligadas ao tipo roteiros —
+ * também quando o tipo vem de outro plugin (CPT UI, ACF). Assim a REST aceita `categories`/`tags`
+ * em /wp/v2/roteiros, que é o que o n8n do Cliente Ideal envia ao publicar.
+ */
+function tt_roteiros_ligar_taxonomias() {
+	if ( ! post_type_exists( 'roteiros' ) ) {
+		return;
+	}
+	register_taxonomy_for_object_type( 'category', 'roteiros' );
+	register_taxonomy_for_object_type( 'post_tag', 'roteiros' );
+}
+
 add_action( 'init', function () {
 	tt_roteiros_registrar_tipo();
+	tt_roteiros_ligar_taxonomias();
 	foreach ( array_keys( tt_roteiros_campos() ) as $chave ) {
 		register_post_meta( 'roteiros', $chave, array(
 			'type'              => 'string',

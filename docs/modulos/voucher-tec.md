@@ -57,6 +57,11 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   `preco_roteiros`) e em `status` (`opcoes`). Testes PHP 7.4/8.2 (lógica com stubs do WP) passando; teste no WP
   no ar pendente (abaixo). Site sem o formulário de cotação do plugin (ex.: Rede Turística, #1025 antigo): a
   opção de moeda avisa e vale quando instalar a peça.
+- [x] 2.0.16 testada no ar (25/09/2026): Zizi Quatti com orçamento em reais e DSelection com "Consulte-nos" nos 9 roteiros.
+- [x] **2.0.17 publicada** (28/09/2026, release v2.0.17, OK do dono): categoria e tags do blog (`category`/`post_tag`)
+  ligadas ao tipo `roteiros` (`tt_roteiros_ligar_taxonomias`, também com CPT de outro plugin). O n8n do Cliente Ideal
+  aplica `categories`/`tags` ao publicar. Pendente: levar para a 2.1.0 — o menu novo (`includes/menu.php`,
+  `unset( $submenu['edit.php?post_type=roteiros'] )`) some com os itens Categorias/Tags.
 - [x] **2.1.0 — menu único e editor de roteiros** (pedido do dono em 25/09/2026; spec e plano em `landing-pages/docs/superpowers/`):
   menu **Voucher Tec › Roteiros / Adicionar roteiro / Configuração** (`includes/menu.php`; o menu "Roteiros" solto sai, o de topo
   passa a `edit_posts` e a Configuração exige `manage_options`); tela de edição em 7 abas com editor visual, preço em campos e
@@ -64,7 +69,6 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   lista com colunas Capa e Preço. Formato gravado igual ao do import; preço e fotos só regravam com `alterado`. Testes em
   `tests/` (`cd tests && npm install && npm test`: PHP 7.4 e 8.2 por php-wasm + jsdom). **Pendente:** conferência do dono no
   site de teste (`VoucherTecTeste`), comparativo "salvar sem mexer" e publicação da release v2.1.0.
-- [x] 2.0.16 testada no ar (25/09/2026): Zizi Quatti com orçamento em reais e DSelection com "Consulte-nos" nos 9 roteiros.
 - [ ] **Teste da 2.0.16 no WP no ar** (`VoucherTecTeste`): `aplicar` com `moeda_orcamento`/`preco_roteiros`,
   conferir cotação (R$/US$), card e página de roteiro com "Consulte-nos", e que o n8n ainda grava o preço.
 - [ ] **Atualização nos 6 sites no ar (1.x → 2.0.5)**, um por vez, conferindo que nada muda na tela.
