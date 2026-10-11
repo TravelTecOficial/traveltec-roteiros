@@ -51,7 +51,7 @@ com o nome do repositório e da tag, e o WordPress instalaria como um plugin nov
 | --- | --- |
 | `traveltec-roteiros/` | o plugin |
 | `traveltec-roteiros/includes/atualizador.php` | atualização pelas releases do GitHub |
-| `traveltec-roteiros/includes/` | dados, estilo, instalador, captação, API e painel |
+| `traveltec-roteiros/includes/` | dados, estilo, instalador, captação, API, painel, roteiros e destinos (tipo, dados e tela de edição) |
 | `traveltec-roteiros/templates/v2/*.json` | páginas, modelos e formulários, com marcadores |
 | `traveltec-roteiros/assets/` | `captacao.js`, `galeria.css`, `img/` (fotos da Sobre e assinatura) |
 | `src/rede/*.json` | exportação da Rede Turística (fonte dos modelos) |

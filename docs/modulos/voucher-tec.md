@@ -103,6 +103,19 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - [ ] **Teste num WordPress no ar** (dono instala; Claude/MCP testa): instalar, aplicar dados de uma agência,
   conferir todas as páginas desktop/mobile, formulários e captação
 
+- [x] **2.2.0 — Destinos, publicada em 11/10/2026** (release v2.2.0; pedido do dono em 11/10/2026): tipo `destinos` (`includes/destinos.php`), dados em
+  `destino-dados.php`, tela em abas em `destino-editor.php` (Resumo, O que fazer, Quando ir, Fotos), menu
+  Voucher Tec › Destinos / Adicionar destino, aba Destinos na Configuração (grupo `destino-card`,
+  `destinos-lista`, `destino-single`). Modelos tirados do site-modelo `yellowgreen-termite-955684`
+  (`src/destinos/`, seção `destinos` do `build_v2.py`). Decisões do dono: só a interface de cadastro agora
+  (automação depois; a REST já aceita `acf`); sem botão de conversão de páginas; **não mexer no site da Zizi**.
+  Spec e plano: `landing-pages/docs/superpowers/specs|plans/2026-10-11-voucher-tec-destinos*.md`.
+- [ ] **Destinos no site-modelo**: atualizar para a 2.2.0, instalar a aba Destinos, recriar Noronha, Sardenha e
+  Tóquio no tipo novo e mandar as páginas #29, #82, #84 e #86 para a lixeira.
+- [ ] **Automação dos destinos** (n8n / Cliente Ideal) — etapa futura.
+- Código dos destinos: `includes/destinos.php`, `includes/destino-dados.php`, `includes/destino-editor.php`,
+  `assets/destinos.css`, `assets/destino.js`, `assets/roteiro-editor.js|css` (tela, compartilhada com os roteiros),
+  `src/destinos/` + seção `destinos` do `build_v2.py` (modelos).
 
 ## Decisões do dono
 
@@ -132,5 +145,6 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 
 ## Próximo passo
 
-O dono instala o zip num WordPress no ar e passa a URL e o Application Password. Depois disso, o Claude
-roda `instalar` e `aplicar` com uma agência do Cliente Ideal e confere o site.
+Destinos no site-modelo (`yellowgreen-termite-955684`): o dono atualiza o plugin pelo painel; depois o Claude instala a
+aba Destinos, recria Noronha, Sardenha e Tóquio no tipo novo e manda as páginas antigas para a lixeira. Em seguida,
+a automação dos destinos (n8n / Cliente Ideal).
