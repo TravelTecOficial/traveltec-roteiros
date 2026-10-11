@@ -112,6 +112,8 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   Spec e plano: `landing-pages/docs/superpowers/specs|plans/2026-10-11-voucher-tec-destinos*.md`.
 - [x] **2.2.1** (11/10/2026): a lista `/destinos/` saía vazia — a grade herdou a consulta `tt_destinos` da página antiga
   do site-modelo (páginas-filhas de #29). Agora consulta o tipo `destinos`, como a lista de roteiros.
+- [x] **2.2.2** (11/10/2026): `tt_voucher_item_certo` só aceita como certo o item que é link; item de menu que era a
+  página `/destinos/` (mesmo endereço da lista) passa a ser reapontado. Achado no rodapé do site-modelo.
 - [ ] **Destinos no site-modelo**: atualizar para a 2.2.0, instalar a aba Destinos, recriar Noronha, Sardenha e
   Tóquio no tipo novo e mandar as páginas #29, #82, #84 e #86 para a lixeira.
 - [ ] **Automação dos destinos** (n8n / Cliente Ideal) — etapa futura.
