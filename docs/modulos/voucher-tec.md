@@ -120,7 +120,41 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   Roteiros; rodapé reapontado. Conferido no navegador: lista, as três páginas, galeria, botão, formulário com o destino
   preenchido e celular. **Falta o dono conferir a tela de cadastro** (Voucher Tec › Adicionar destino) — não foi aberta
   no painel pelo Claude.
-- [ ] **Automação dos destinos** (n8n / Cliente Ideal) — etapa futura.
+- [x] **2.3.0 — Destinos v2, página completa** (14/10/2026, **pronta no repositório, NÃO publicada**: sem release no GitHub,
+  sem instalar em site nenhum — aguarda o OK do dono). Spec e contrato dos campos (Supabase ⇄ plugin):
+  `clienteideal/docs/superpowers/specs/2026-10-14-destinos-v2-design.md` e `...-destinos-v2-campos.md`.
+  - **Campos** (`tt_destinos_campos()` em `destino-dados.php`): `versao`, `escopo` (nacional|internacional), `subchamada` (≤160),
+    `perfis` (até 3 da lista fixa, gravado um por linha), `duracao_ideal` (≤60), `clima`, `como_chegar`, `documentacao`,
+    `moeda`/`idioma`/`fuso` (≤60), `pontos_turisticos`, `passeios`, `gastronomia`, `onde_ficar`, `faq` (listas gravadas como
+    JSON, `tt_destino_listas()` tem máximo e limite de cada sub-campo), `atualizado_em` (AAAA-MM-DD). Os da v1 seguem
+    (`texto_de_abertura` = Visão geral, `o_que_fazer`, `quando_ir`, `galeria`).
+  - **REST `acf`**: leitura devolve listas como array (inclusive `o_que_fazer`, `galeria` e `perfis`) e `versao` como número;
+    gravação aceita array ou texto, limpa e corta (`tt_destino_limpar`). Gravação com `wp_slash` (`tt_destino_gravar_meta`):
+    sem isso o `update_post_meta` tirava a barra do `\"` e o JSON quebrava (de quebra resolve a "barra invertida some ao salvar"
+    nos campos do destino).
+  - **Tela** em 6 abas: Resumo, Informações práticas, O que fazer, Onde ficar, FAQ, Fotos. Listas com sub-campos = linhas fixas
+    até o máximo do contrato (linha em branco não grava; sem JS de repetidor). Foto do ponto/passeio pela Biblioteca de Mídia.
+    Nacional esconde documentação/moeda/idioma/fuso. Documentação só para ler (texto do sistema). Lista simples v1 só aparece
+    em destino que ainda a tem.
+  - **Página** (`destino-single`, gerada por `build_v2.py`): hero (nome, `[tt_destino_subchamada]`, botão "Solicite sua cotação"
+    → `#tt-destino-cotacao`), depois `[tt_destino_visao_geral]`, `[tt_destino_praticas]`, `[tt_destino_o_que_fazer]`,
+    `[tt_destino_onde_ficar]`, `[tt_destino_galeria]`, `[tt_destino_faq]`, `[tt_destino_atualizado]` e o formulário. Cada shortcode
+    devolve '' sem dado (a seção some com o título). Card (`destino-card`) com a subchamada abaixo do nome.
+  - **Decisões (Claude, 14/10/2026)**: passeios com menos de 3 não aparecem (mas ficam gravados — quem edita no painel não
+    perde o que digitou); os mínimos do contrato (4 pontos, 3 pratos, 5 FAQ...) são do Supabase, o plugin só corta no máximo;
+    nacional esconde as partes internacionais mesmo se vier dado; a galeria continua na página (entre Onde ficar e FAQ);
+    "Atualizado em" sem a data do sistema usa a data da última edição; sem formulário de cotação, o CTA mostra o botão do
+    WhatsApp do site (era a faixa vazia da lista de pendências); JSON-LD FAQPage no `<head>` pelo plugin; o botão do meio da
+    página ("Quero uma cotação para X") saiu — o hero já leva ao formulário. Shortcodes da 2.2 (`tt_destino_texto|lista`)
+    continuam, para sites que ainda têm o modelo antigo.
+  - **Testes**: `cd tests && npm test` — PHP 7.4 e 8.2 (limpeza/limites v2, v1 igual, REST, shortcodes, tela) + JS (modelos,
+    escopo e foto do item). Zip: `python empacotar.py` → `dist/traveltec-roteiros.zip`.
+  - **Como atualizar nos sites** (depois da release aprovada): Plugins › "Atualizar agora" **e** Voucher Tec › Configuração ›
+    Destinos › reinstalar a parte (troca a página e o card). Só atualizar, sem reinstalar: o modelo 2.2 continua mostrando
+    abertura, o que fazer, quando ir e galeria; os campos novos ficam gravados, sem aparecer.
+  - **Falta**: dono aprovar → release v2.3.0 → instalar no site-modelo e conferir com um destino v1 e um v2 (nacional e
+    internacional) → Rede Turística e clientes.
+- [ ] **Automação dos destinos** (n8n / Cliente Ideal) — etapa futura (v2: Supabase grava no contrato acima).
 - Código dos destinos: `includes/destinos.php`, `includes/destino-dados.php`, `includes/destino-editor.php`,
   `assets/destinos.css`, `assets/destino.js`, `assets/roteiro-editor.js|css` (tela, compartilhada com os roteiros),
   `src/destinos/` + seção `destinos` do `build_v2.py` (modelos).
@@ -162,5 +196,6 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 
 ## Próximo passo
 
-Dono confere a tela de cadastro de destinos no site-modelo. Depois: automação dos destinos (n8n / Cliente Ideal).
+Dono aprova a 2.3.0 (Destinos v2) → release → site-modelo com destino v1 e v2. Dono confere a tela de cadastro de destinos.
+Depois: automação dos destinos v2 (Supabase + n8n / Cliente Ideal).
 Antes de instalar a aba Destinos no Ajimex ou na Zizi Quatti: passar as páginas de destino para o cadastro.

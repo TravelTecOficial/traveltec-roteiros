@@ -1,12 +1,80 @@
-/* Página do destino (Voucher Tec): lista "o que fazer" e galeria. Cores e fontes vêm do site. */
+/* Página do destino (Voucher Tec): seções, cards, clima, FAQ, galeria. Cores e fontes vêm do site (Kit do Elementor). */
 .tt-destino-titulo{margin:0 0 16px}
+.tt-destino-subtitulo{margin:32px 0 14px;font-size:1.25em}
+.tt-destino-secao>.tt-destino-titulo+.tt-destino-subtitulo{margin-top:8px}
 .tt-destino-texto>:last-child{margin-bottom:0}
 .tt-destino-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .tt-destino-lista li{position:relative;padding-left:30px;line-height:1.5}
 .tt-destino-lista li::before{content:"";position:absolute;left:4px;top:.3em;width:7px;height:13px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);opacity:.75}
+.tt-destino-secao .tt-destino-lista{margin-top:24px}
 .tt-destino-galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .tt-destino-galeria a{display:block;overflow:hidden;border-radius:8px}
 .tt-destino-galeria img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .3s}
 .tt-destino-galeria a:hover img{transform:scale(1.04)}
-@media (max-width:1024px){.tt-destino-galeria{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:767px){.tt-destino-galeria{grid-template-columns:repeat(2,1fr);gap:10px}}
+
+/* hero e card */
+.tt-destino-subchamada{margin:0}
+.tt-destino-subchamada--hero{max-width:760px;margin:0 0 8px;color:#fff;font-size:1.25rem;line-height:1.45;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.tt-destino-subchamada--card{font-weight:600;line-height:1.4}
+
+/* visão geral: destaques */
+.tt-destino-destaques{display:flex;flex-wrap:wrap;gap:16px 40px;margin-top:24px;padding:18px 22px;border-radius:10px;background:rgba(0,0,0,.035)}
+.tt-destino-destaque{display:flex;flex-direction:column;gap:8px}
+.tt-destino-destaque__rotulo{font-size:.8em;text-transform:uppercase;letter-spacing:.06em;opacity:.7}
+.tt-destino-destaque__valor{font-size:1.1em}
+.tt-destino-perfis{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.tt-destino-perfil{padding:4px 12px;border-radius:999px;border:1px solid var(--e-global-color-primary,currentColor);color:var(--e-global-color-primary,inherit);font-size:.9em}
+
+/* informações práticas */
+.tt-destino-clima{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tt-destino-clima__card{padding:16px 18px;border-radius:10px;background:rgba(0,0,0,.035)}
+.tt-destino-clima__estacao{margin:0 0 2px;font-size:1.05em}
+.tt-destino-clima__meses{margin:0 0 10px;font-size:.85em;opacity:.7}
+.tt-destino-clima__card ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.tt-destino-clima__temp{display:flex;gap:12px}
+.tt-destino-info{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.tt-destino-info__item{display:flex;flex-direction:column;gap:4px;padding:14px 18px;border-left:3px solid var(--e-global-color-primary,currentColor);background:rgba(0,0,0,.035)}
+.tt-destino-info__rotulo{font-size:.8em;text-transform:uppercase;letter-spacing:.06em;opacity:.7}
+
+/* o que fazer: cards com foto */
+.tt-destino-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.tt-destino-card{display:flex;flex-direction:column;overflow:hidden;border-radius:10px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.tt-destino-card__foto{position:relative;margin:0}
+.tt-destino-card__foto img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.tt-destino-card__foto figcaption{position:absolute;right:6px;bottom:6px;padding:1px 6px;border-radius:3px;background:rgba(0,0,0,.55);color:#fff;font-size:11px}
+.tt-destino-card__corpo{padding:14px 16px}
+.tt-destino-card__corpo h4{margin:0 0 6px;font-size:1.05em}
+.tt-destino-card__corpo p{margin:0;font-size:.92em;line-height:1.45}
+.tt-destino-pratos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 32px}
+.tt-destino-pratos li{display:flex;flex-direction:column;gap:2px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,.08)}
+
+/* onde ficar */
+.tt-destino-bairros{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tt-destino-bairro{padding:18px 20px;border-radius:10px;border:1px solid rgba(0,0,0,.1)}
+.tt-destino-bairro h3{margin:0 0 6px;font-size:1.1em}
+.tt-destino-bairro__perfil{display:inline-block;margin-bottom:8px;font-size:.85em;color:var(--e-global-color-primary,inherit);font-weight:600}
+.tt-destino-bairro p{margin:0;line-height:1.5}
+
+/* FAQ */
+.tt-destino-faq{display:grid;gap:10px}
+.tt-destino-faq__item{border:1px solid rgba(0,0,0,.1);border-radius:8px;background:#fff}
+.tt-destino-faq__item summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;position:relative;padding-right:44px}
+.tt-destino-faq__item summary::-webkit-details-marker{display:none}
+.tt-destino-faq__item summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.3em;line-height:1}
+.tt-destino-faq__item[open] summary::after{content:"−"}
+.tt-destino-faq__resposta{padding:0 18px 14px}
+.tt-destino-faq__resposta p{margin:0;line-height:1.55}
+
+.tt-destino-atualizado{margin:0;font-size:.85em;opacity:.65}
+.tt-destino-whatsapp{display:inline-block}
+
+@media (max-width:1024px){
+ .tt-destino-galeria,.tt-destino-cards{grid-template-columns:repeat(3,1fr)}
+ .tt-destino-clima{grid-template-columns:repeat(2,1fr)}
+ .tt-destino-bairros{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:767px){
+ .tt-destino-galeria,.tt-destino-cards{grid-template-columns:repeat(2,1fr);gap:10px}
+ .tt-destino-info,.tt-destino-bairros,.tt-destino-pratos{grid-template-columns:1fr}
+ .tt-destino-card__corpo{padding:10px 12px}
+}

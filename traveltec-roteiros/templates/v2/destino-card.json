@@ -150,6 +150,15 @@
        "elements": []
       },
       {
+       "id": "ttdc001",
+       "elType": "widget",
+       "widgetType": "shortcode",
+       "settings": {
+        "shortcode": "[tt_destino_subchamada estilo=\"card\"]"
+       },
+       "elements": []
+      },
+      {
        "id": "18f1d18",
        "elType": "widget",
        "widgetType": "theme-post-excerpt",

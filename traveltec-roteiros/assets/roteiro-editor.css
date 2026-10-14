@@ -245,3 +245,104 @@
 .tt-rot__item .tt-rot__foto-acoes{position:static;display:flex;gap:4px;flex:0 0 auto;opacity:1;background:none;padding:0}
 .tt-rot__contador{color:#646970}
 .tt-rot__contador.is-acima{color:#b32d2e;font-weight:600}
+
+/* destino 2.3.0: rótulo sem label, perfis, listas com sub-campos (pontos, passeios, FAQ...), clima e foto do item */
+#tt_destinos_campos .inside {
+	margin: 0;
+	padding: 0;
+}
+
+.tt-rot__rotulo {
+	display: block;
+	margin: 0 0 6px;
+	font-weight: 600;
+}
+
+.tt-dest-perfis {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 18px;
+}
+
+.tt-dest-linhas {
+	margin: 0 0 22px;
+	padding: 12px 14px 4px;
+	border: 1px solid var(--tt-borda);
+	border-radius: 6px;
+}
+
+.tt-dest-linhas legend {
+	padding: 0 6px;
+	font-weight: 600;
+}
+
+.tt-dest-linhas > .description {
+	margin: 0 0 10px;
+	color: var(--tt-texto-suave);
+}
+
+.tt-dest-linha {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 0;
+	border-top: 1px solid var(--tt-fundo);
+}
+
+.tt-dest-linha__n,
+.tt-dest-linha__estacao {
+	flex: 0 0 auto;
+	min-width: 24px;
+	padding-top: 24px;
+	color: var(--tt-texto-suave);
+}
+
+.tt-dest-linha__estacao {
+	min-width: 80px;
+	color: inherit;
+}
+
+.tt-dest-linha__campo {
+	flex: 1 1 200px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.tt-dest-linha__campo > span {
+	font-size: 12px;
+	color: var(--tt-texto-suave);
+}
+
+.tt-dest-linha__campo--area {
+	flex-basis: 100%;
+}
+
+.tt-dest-linha__campo--numero,
+.tt-dest-linha__campo--foto {
+	flex: 0 0 auto;
+}
+
+.tt-dest-linha__campo--numero input {
+	width: 90px;
+}
+
+.tt-dest-foto {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.tt-dest-foto img {
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border-radius: 4px;
+}
+
+.tt-dest-doc {
+	padding: 10px 12px;
+	background: var(--tt-fundo);
+	border-radius: 6px;
+}

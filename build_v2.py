@@ -268,30 +268,29 @@ def coluna(id_, elementos):
 
 
 def botao_destino():
-    """Botão da página de exemplo (Fernando de Noronha), com o nome do destino no texto e link para o formulário."""
+    """Botão do hero (estilo do botão da página de exemplo do site-modelo): "Solicite sua cotação", rola até o formulário."""
     src = json.loads((SRC_DESTINOS / "botao.json").read_text(encoding="utf-8"))
     botao = next(e for e in percorrer(json.loads(src["meta"]["_elementor_data"])) if e.get("widgetType") == "button")
     st = resolver_globais(copy.deepcopy(botao))["settings"]
-    st["text"] = "Quero uma cotação"
+    st.pop("__dynamic__", None)
+    st["text"] = "Solicite sua cotação"
     st["link"] = {"url": "#tt-destino-cotacao", "is_external": "", "nofollow": "", "custom_attributes": ""}
-    st["__dynamic__"] = {"text": '[elementor-tag id="ttd0009" name="post-title" settings="%7B%22before%22%3A%22Quero%20uma%20cota%C3%A7%C3%A3o%20para%20%22%7D"]'}
     return widget("ttd0008", "button", st)
 
 
 def corpo_destino():
-    """Corpo da página do destino: shortcodes do plugin (seção sem conteúdo não aparece)."""
-    return [
-        widget("ttd0001", "shortcode", {"shortcode": '[tt_destino_texto campo="texto_de_abertura"]'}),
-        {"id": "ttd0002", "elType": "container", "isInner": True, "settings": {
-            "content_width": "full", "flex_direction": "row", "flex_direction_mobile": "column",
-            "flex_gap": {"unit": "px", "size": 48, "column": "48", "row": "32", "isLinked": False}},
-         "elements": [
-            coluna("ttd0003", [widget("ttd0004", "shortcode", {"shortcode": '[tt_destino_lista titulo="O que fazer"]'})]),
-            coluna("ttd0005", [widget("ttd0006", "shortcode", {"shortcode": '[tt_destino_texto campo="quando_ir" titulo="Quando ir"]'})]),
-         ]},
-        widget("ttd0007", "shortcode", {"shortcode": '[tt_destino_galeria titulo="Galeria"]'}),
-        botao_destino(),
+    """Corpo da página do destino (v2): uma seção por shortcode do plugin — seção sem dado não aparece.
+    Ordem da spec Destinos v2: Visão geral, Informações práticas, O que fazer, Onde ficar, (Galeria), FAQ; "Atualizado em" no fim."""
+    secoes = [
+        ("ttd0001", '[tt_destino_visao_geral titulo="Visão geral"]'),
+        ("ttd0004", '[tt_destino_praticas titulo="Informações práticas"]'),
+        ("ttd0006", '[tt_destino_o_que_fazer titulo="O que fazer"]'),
+        ("ttd0011", '[tt_destino_onde_ficar titulo="Onde ficar"]'),
+        ("ttd0007", '[tt_destino_galeria titulo="Galeria"]'),
+        ("ttd0012", '[tt_destino_faq titulo="Perguntas frequentes"]'),
+        ("ttd0013", '[tt_destino_atualizado]'),
     ]
+    return [widget(i, "shortcode", {"shortcode": c}) for i, c in secoes]
 
 
 def montar_destino(chave, data):
@@ -314,9 +313,22 @@ def montar_destino(chave, data):
                 st.pop("__dynamic__", None)
                 st["link"] = {"url": "https://wa.me/%tt:whatsapp_digitos%", "is_external": "on", "nofollow": "", "custom_attributes": ""}
         if chave == "destino-card":
-            e["elements"] = [x for x in e.get("elements", []) if x.get("widgetType") != "post-info"]
+            filhos = [x for x in e.get("elements", []) if x.get("widgetType") != "post-info"]
+            # a subchamada (v2) entra logo abaixo do nome do destino; destino sem subchamada: nada
+            for i, x in enumerate(filhos):
+                if x.get("widgetType") == "theme-post-title":
+                    filhos.insert(i + 1, widget("ttdc001", "shortcode", {"shortcode": '[tt_destino_subchamada estilo="card"]'}))
+                    break
+            e["elements"] = filhos
         if chave == "destino-single":
             filhos = e.get("elements", [])
+            if any(x.get("widgetType") == "theme-post-title" for x in filhos):
+                # hero: nome, subchamada e o botão que rola até o formulário de cotação
+                e["elements"] = filhos + [
+                    widget("ttd0014", "shortcode", {"shortcode": '[tt_destino_subchamada estilo="hero"]'}),
+                    botao_destino(),
+                ]
+                st["flex_gap"] = {"unit": "px", "size": 16, "column": "16", "row": "16", "isLinked": True}
             if any(x.get("widgetType") == "theme-post-content" for x in filhos):
                 e["elements"] = corpo_destino()
                 # o contêiner de origem só tinha o conteúdo do post, sem espaço entre filhos

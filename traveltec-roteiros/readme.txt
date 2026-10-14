@@ -122,3 +122,13 @@ reinstale a parte em Voucher Tec › Configuração › Destinos.
 
 2.2.2: item de menu que era uma página no mesmo endereço da lista (ex.: página "Destinos" em /destinos/) passa a ser
 reapontado para a lista — antes ficava como estava e quebrava quando a página saía do ar.
+
+2.3.0: Destinos v2 — página completa. Campos novos (todos opcionais; destino antigo continua igual): nacional ou
+internacional, subchamada, perfis (até 3), duração ideal, clima das 4 estações, como chegar, documentação, moeda,
+idioma e fuso (só internacional), pontos turísticos e passeios (cards com foto), gastronomia, onde ficar, perguntas
+frequentes e "atualizado em". Tela do destino em abas: Resumo, Informações práticas, O que fazer, Onde ficar, FAQ e
+Fotos. Página do destino refeita: topo com nome, subchamada e botão "Solicite sua cotação"; Visão geral; Informações
+práticas; O que fazer; Onde ficar; Galeria; FAQ (também marcado para o Google, FAQPage); "Atualizado em"; formulário
+de cotação (sem ele, botão do WhatsApp do site). Seção sem dado não aparece. O card da lista mostra a subchamada.
+API: /wp-json/wp/v2/destinos, "acf" com os campos novos; listas vão e voltam como array. Depois de atualizar,
+reinstale a parte em Voucher Tec › Configuração › Destinos (troca a página e o card).

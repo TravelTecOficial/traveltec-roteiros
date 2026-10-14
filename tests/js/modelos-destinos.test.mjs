@@ -56,29 +56,44 @@ test('lista: grade com o card do plugin, só destinos publicados, sem o filtro d
   assert.match(ler('destinos-lista'), /https:\/\/wa\.me\/%tt:whatsapp_digitos%/);
 });
 
-test('card: sem data nem autor (isso é de post de blog)', () => {
+test('card: sem data nem autor (isso é de post de blog) e com a subchamada logo abaixo do nome', () => {
   const card = JSON.parse(ler('destino-card'));
-  assert.equal(widgets(card.data).some((w) => w.widgetType === 'post-info'), false);
+  const ws = widgets(card.data);
+  assert.equal(ws.some((w) => w.widgetType === 'post-info'), false);
+  const i = ws.findIndex((w) => w.widgetType === 'theme-post-title');
+  assert.equal(ws[i + 1].widgetType, 'shortcode');
+  assert.equal(ws[i + 1].settings.shortcode, '[tt_destino_subchamada estilo="card"]');
 });
 
-test('página do destino: corpo por shortcodes do plugin, botão e formulário', () => {
+test('página do destino (v2): hero, as seções da spec por shortcode e o formulário no fim', () => {
   const single = JSON.parse(ler('destino-single'));
   const ws = widgets(single.data);
   const codigos = ws.filter((w) => w.widgetType === 'shortcode').map((w) => w.settings.shortcode);
   assert.deepEqual(codigos, [
-    '[tt_destino_texto campo="texto_de_abertura"]',
-    '[tt_destino_lista titulo="O que fazer"]',
-    '[tt_destino_texto campo="quando_ir" titulo="Quando ir"]',
+    '[tt_destino_subchamada estilo="hero"]',
+    '[tt_destino_visao_geral titulo="Visão geral"]',
+    '[tt_destino_praticas titulo="Informações práticas"]',
+    '[tt_destino_o_que_fazer titulo="O que fazer"]',
+    '[tt_destino_onde_ficar titulo="Onde ficar"]',
     '[tt_destino_galeria titulo="Galeria"]',
+    '[tt_destino_faq titulo="Perguntas frequentes"]',
+    '[tt_destino_atualizado]',
     '[tt_destino_form titulo="Solicite sua cotação para este destino"]',
   ]);
   assert.equal(ws.some((w) => w.widgetType === 'theme-post-content'), false, 'o conteúdo do post não é usado');
-  const corpo = single.data.find((c) => (c.elements || []).some((e) => e.widgetType === 'shortcode' && e.settings.shortcode.includes('texto_de_abertura')));
+  // hero: nome (h1), subchamada e botão — com a foto de capa de fundo
+  const hero = single.data[0];
+  assert.match(hero.settings.__dynamic__.background_image, /name="post-featured-image"/);
+  assert.deepEqual(hero.elements.map((e) => e.widgetType), ['theme-post-title', 'shortcode', 'button']);
+  const botao = hero.elements[2];
+  assert.equal(botao.settings.text, 'Solicite sua cotação');
+  assert.equal(botao.settings.link.url, '#tt-destino-cotacao');
+  assert.equal('__dynamic__' in botao.settings, false);
+  assert.equal(ws.filter((w) => w.widgetType === 'button').length, 1, 'um botão só (o do hero)');
+  const corpo = single.data.find((c) => (c.elements || []).some((e) => e.widgetType === 'shortcode' && e.settings.shortcode.includes('tt_destino_visao_geral')));
   assert.equal(corpo.settings.flex_gap.size, 40, 'as seções do corpo têm espaço entre si');
   assert.equal(corpo.settings.flex_direction, 'column');
-  const botao = ws.find((w) => w.widgetType === 'button');
-  assert.equal(botao.settings.link.url, '#tt-destino-cotacao');
-  assert.match(botao.settings.__dynamic__.text, /name="post-title"/);
-  assert.match(decodeURIComponent(botao.settings.__dynamic__.text), /"before":"Quero uma cotação para "/);
   assert.match(ler('destino-single'), /"_element_id": "tt-destino-cotacao"/);
+  const ids = ws.map((w) => w.id);
+  assert.equal(new Set(ids).size, ids.length, 'ids dos widgets não se repetem');
 });

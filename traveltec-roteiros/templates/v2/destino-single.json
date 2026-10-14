@@ -28,9 +28,9 @@
     },
     "flex_gap": {
      "unit": "px",
-     "size": 0,
-     "column": "0",
-     "row": "0",
+     "size": 16,
+     "column": "16",
+     "row": "16",
      "isLinked": true
     },
     "min_height": {
@@ -103,6 +103,32 @@
       }
      },
      "elements": []
+    },
+    {
+     "id": "ttd0014",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "settings": {
+      "shortcode": "[tt_destino_subchamada estilo=\"hero\"]"
+     },
+     "elements": []
+    },
+    {
+     "id": "ttd0008",
+     "elType": "widget",
+     "widgetType": "button",
+     "settings": {
+      "text": "Solicite sua cotação",
+      "link": {
+       "url": "#tt-destino-cotacao",
+       "is_external": "",
+       "nofollow": "",
+       "custom_attributes": ""
+      },
+      "align": "left",
+      "align_mobile": "justify"
+     },
+     "elements": []
     }
    ]
   },
@@ -144,88 +170,36 @@
      "elType": "widget",
      "widgetType": "shortcode",
      "settings": {
-      "shortcode": "[tt_destino_texto campo=\"texto_de_abertura\"]"
+      "shortcode": "[tt_destino_visao_geral titulo=\"Visão geral\"]"
      },
      "elements": []
     },
     {
-     "id": "ttd0002",
-     "elType": "container",
-     "isInner": true,
+     "id": "ttd0004",
+     "elType": "widget",
+     "widgetType": "shortcode",
      "settings": {
-      "content_width": "full",
-      "flex_direction": "row",
-      "flex_direction_mobile": "column",
-      "flex_gap": {
-       "unit": "px",
-       "size": 48,
-       "column": "48",
-       "row": "32",
-       "isLinked": false
-      }
+      "shortcode": "[tt_destino_praticas titulo=\"Informações práticas\"]"
      },
-     "elements": [
-      {
-       "id": "ttd0003",
-       "elType": "container",
-       "isInner": true,
-       "elements": [
-        {
-         "id": "ttd0004",
-         "elType": "widget",
-         "widgetType": "shortcode",
-         "settings": {
-          "shortcode": "[tt_destino_lista titulo=\"O que fazer\"]"
-         },
-         "elements": []
-        }
-       ],
-       "settings": {
-        "content_width": "full",
-        "flex_direction": "column",
-        "width": {
-         "unit": "%",
-         "size": 50,
-         "sizes": []
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100,
-         "sizes": []
-        }
-       }
-      },
-      {
-       "id": "ttd0005",
-       "elType": "container",
-       "isInner": true,
-       "elements": [
-        {
-         "id": "ttd0006",
-         "elType": "widget",
-         "widgetType": "shortcode",
-         "settings": {
-          "shortcode": "[tt_destino_texto campo=\"quando_ir\" titulo=\"Quando ir\"]"
-         },
-         "elements": []
-        }
-       ],
-       "settings": {
-        "content_width": "full",
-        "flex_direction": "column",
-        "width": {
-         "unit": "%",
-         "size": 50,
-         "sizes": []
-        },
-        "width_mobile": {
-         "unit": "%",
-         "size": 100,
-         "sizes": []
-        }
-       }
-      }
-     ]
+     "elements": []
+    },
+    {
+     "id": "ttd0006",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "settings": {
+      "shortcode": "[tt_destino_o_que_fazer titulo=\"O que fazer\"]"
+     },
+     "elements": []
+    },
+    {
+     "id": "ttd0011",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "settings": {
+      "shortcode": "[tt_destino_onde_ficar titulo=\"Onde ficar\"]"
+     },
+     "elements": []
     },
     {
      "id": "ttd0007",
@@ -237,22 +211,20 @@
      "elements": []
     },
     {
-     "id": "ttd0008",
+     "id": "ttd0012",
      "elType": "widget",
-     "widgetType": "button",
+     "widgetType": "shortcode",
      "settings": {
-      "text": "Quero uma cotação",
-      "link": {
-       "url": "#tt-destino-cotacao",
-       "is_external": "",
-       "nofollow": "",
-       "custom_attributes": ""
-      },
-      "align": "left",
-      "align_mobile": "justify",
-      "__dynamic__": {
-       "text": "[elementor-tag id=\"ttd0009\" name=\"post-title\" settings=\"%7B%22before%22%3A%22Quero%20uma%20cota%C3%A7%C3%A3o%20para%20%22%7D\"]"
-      }
+      "shortcode": "[tt_destino_faq titulo=\"Perguntas frequentes\"]"
+     },
+     "elements": []
+    },
+    {
+     "id": "ttd0013",
+     "elType": "widget",
+     "widgetType": "shortcode",
+     "settings": {
+      "shortcode": "[tt_destino_atualizado]"
      },
      "elements": []
     }

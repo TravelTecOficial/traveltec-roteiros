@@ -5,8 +5,12 @@ require '/p/includes/roteiro-dados.php';
 require '/p/includes/destino-dados.php';
 
 /* ---------------------------------------------------------------- campos e abas */
-igual( array( 'texto_de_abertura', 'o_que_fazer', 'quando_ir', 'galeria' ), array_keys( tt_destinos_campos() ), 'campos do destino' );
-igual( array( 'resumo', 'fazer', 'quando', 'fotos' ), array_keys( tt_destino_abas() ), 'abas do destino' );
+igual(
+	array( 'versao', 'escopo', 'subchamada', 'texto_de_abertura', 'perfis', 'duracao_ideal', 'quando_ir', 'clima', 'como_chegar', 'documentacao', 'moeda', 'idioma', 'fuso', 'pontos_turisticos', 'passeios', 'gastronomia', 'onde_ficar', 'faq', 'atualizado_em', 'o_que_fazer', 'galeria' ),
+	array_keys( tt_destinos_campos() ),
+	'campos do destino: os do contrato v2 e os da v1'
+);
+igual( array( 'resumo', 'praticas', 'fazer', 'ficar', 'faq', 'fotos' ), array_keys( tt_destino_abas() ), 'abas do destino' );
 $abas = tt_destino_abas();
 ok( tt_roteiro_aba_preenchida( $abas['resumo'][1], array( 'resumo' => 'Ilha', 'texto_de_abertura' => '' ) ), 'aba Resumo conta o resumo curto' );
 ok( ! tt_roteiro_aba_preenchida( $abas['fotos'][1], array( 'galeria' => '' ) ), 'aba Fotos vazia sem IDs' );
@@ -39,9 +43,9 @@ igual( '', tt_destino_limpar( 'nao_existe', 'x' ), 'limpar: chave desconhecida n
 /* ---------------------------------------------------------------- o que gravar a partir do formulário */
 igual( array(), tt_destino_valores_a_gravar( null ), 'gravar: sem dados, nada' );
 igual(
-	array( 'texto_de_abertura' => '<p>Oi</p>', 'o_que_fazer' => "A\nB", 'quando_ir' => '<p>Verão</p>', 'galeria' => '1,2' ), // na ordem de tt_destinos_campos()
+	array( 'texto_de_abertura' => '<p>Oi</p>', 'quando_ir' => '<p>Verão</p>', 'o_que_fazer' => "A\nB", 'galeria' => '1,2' ), // na ordem de tt_destinos_campos()
 	tt_destino_valores_a_gravar( array( 'texto_de_abertura' => '<p>Oi</p>', 'quando_ir' => '<p>Verão</p>', 'o_que_fazer' => array( 'A', '', 'B' ), 'galeria' => '[{"id":1},{"id":2}]', 'intruso' => 'x' ) ),
-	'gravar: os quatro campos, sem chaves estranhas'
+	'gravar: os quatro campos da v1, sem chaves estranhas'
 );
 igual( array( 'o_que_fazer' => '' ), tt_destino_valores_a_gravar( array( 'o_que_fazer_presente' => '1' ) ), 'gravar: lista com todos os itens removidos grava vazio' );
 igual( array( 'quando_ir' => '' ), tt_destino_valores_a_gravar( array( 'quando_ir' => array( 'x' ) ) ), 'gravar: valor não escalar vira vazio, não "Array"' );
@@ -59,3 +63,130 @@ contem( '<h2 class="tt-destino-titulo">Galeria</h2><div class="tt-destino-galeri
 contem( '<a href="https://x.test/a.jpg" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="tt-destino-9">', $g, 'galeria: link abre a foto grande na ampliação do Elementor' );
 contem( '<img src="https://x.test/a-768.jpg" alt="Baía &quot;do&quot; Sancho" loading="lazy">', $g, 'galeria: miniatura com alt escapado' );
 igual( 1, substr_count( $g, '<img' ), 'galeria: foto sem endereço é ignorada' );
+
+/* ================================================================ v2 (2.3.0) — contrato dos campos */
+
+/* ---------------------------------------------------------------- campos simples */
+igual( 'nacional', tt_destino_limpar( 'escopo', ' Nacional ' ), 'escopo: nacional' );
+igual( 'internacional', tt_destino_limpar( 'escopo', 'internacional' ), 'escopo: internacional' );
+igual( '', tt_destino_limpar( 'escopo', 'europa' ), 'escopo: fora da lista vira vazio' );
+igual( '2', tt_destino_limpar( 'versao', 2 ), 'versão: número' );
+igual( '2', tt_destino_limpar( 'versao', '2' ), 'versão: texto' );
+igual( '', tt_destino_limpar( 'versao', 'x' ), 'versão inválida: vazio (destino v1)' );
+igual( 2, tt_destino_valor_rest( 'versao', '2' ), 'versão na leitura: inteiro' );
+igual( null, tt_destino_valor_rest( 'versao', '' ), 'versão ausente na leitura: null' );
+$longa = str_repeat( 'á', 170 );
+igual( 160, preg_match_all( '/./us', tt_destino_limpar( 'subchamada', $longa ) ), 'subchamada: corta em 160 caracteres (UTF-8)' );
+igual( 'Praias <b> & sol', tt_destino_limpar( 'subchamada', '<p>Praias &lt;b&gt; &amp; sol</p>' ), 'subchamada: texto sem HTML' );
+igual( '5 a 7 dias', tt_destino_limpar( 'duracao_ideal', ' 5 a 7  dias ' ), 'duração: espaços normalizados' );
+igual( 60, strlen( tt_destino_limpar( 'fuso', str_repeat( 'x', 80 ) ) ), 'fuso: até 60' );
+igual( '2026-10-14', tt_destino_limpar( 'atualizado_em', '2026-10-14' ), 'data: AAAA-MM-DD' );
+igual( '2026-10-14', tt_destino_limpar( 'atualizado_em', '2026-10-14T10:00:00Z' ), 'data: aceita data e hora (fica só a data)' );
+igual( '', tt_destino_limpar( 'atualizado_em', '2026-02-30' ), 'data impossível: vazio' );
+igual( '', tt_destino_limpar( 'atualizado_em', '14/10/2026' ), 'data em outro formato: vazio' );
+
+/* ---------------------------------------------------------------- perfis */
+igual( "praia\nfamilia\nromantico", tt_destino_limpar( 'perfis', array( 'praia', 'Família', 'praia', 'luxo', 'romântico', 'neve' ) ), 'perfis: só os da lista, sem repetir, no máximo 3' );
+igual( array( 'cultura', 'gastronomia' ), tt_destino_valor_rest( 'perfis', "cultura\ngastronomia" ), 'perfis na leitura: array' );
+igual( array( 'neve' ), tt_destino_perfis_ler( 'neve, xpto' ), 'perfis: aceita texto separado por vírgula' );
+
+/* ---------------------------------------------------------------- listas JSON */
+$pontos = array();
+for ( $i = 1; $i <= 10; $i++ ) {
+	$pontos[] = array( 'nome' => "Ponto $i", 'descricao' => 'Linha', 'foto' => $i % 2 ? $i : null );
+}
+$pontos[] = array( 'nome' => '', 'descricao' => 'sem nome' );
+$gravado  = tt_destino_limpar( 'pontos_turisticos', $pontos );
+$lido     = json_decode( $gravado, true );
+igual( 8, count( $lido ), 'pontos: no máximo 8' );
+igual( array( 'nome' => 'Ponto 1', 'descricao' => 'Linha', 'foto' => 1 ), $lido[0], 'pontos: item com nome, descrição e foto (id)' );
+igual( null, $lido[1]['foto'], 'pontos: sem foto = null' );
+igual( $lido, tt_destino_valor_rest( 'pontos_turisticos', $gravado ), 'pontos: leitura devolve o array gravado' );
+igual( $gravado, tt_destino_limpar( 'pontos_turisticos', $gravado ), 'limpar de novo o JSON gravado não muda nada (o WordPress passa pelo sanitize ao gravar)' );
+$p = tt_destino_json_ler( 'pontos_turisticos', array( array( 'nome' => str_repeat( 'n', 90 ), 'descricao' => str_repeat( 'd', 200 ), 'foto' => 'abc' ), 'texto solto', array( 'descricao' => 'sem nome' ) ) );
+igual( 1, count( $p ), 'pontos: item sem nome ou que não é objeto sai' );
+igual( 80, strlen( $p[0]['nome'] ), 'pontos: nome até 80' );
+igual( 160, strlen( $p[0]['descricao'] ), 'pontos: descrição até 160' );
+igual( null, $p[0]['foto'], 'pontos: foto inválida = null' );
+$barra = chr( 92 );
+$aspas = tt_destino_limpar( 'faq', array( array( 'pergunta' => 'Precisa de "visto"?', 'resposta' => 'Não. Barra ' . $barra . ' fica.' ) ) );
+igual( array( array( 'pergunta' => 'Precisa de "visto"?', 'resposta' => 'Não. Barra ' . $barra . ' fica.' ) ), json_decode( $aspas, true ), 'faq: aspas e barra invertida sobrevivem no JSON' );
+contem( 'Não', $aspas, 'json gravado com acento legível' );
+igual( '', tt_destino_limpar( 'faq', array( array( 'pergunta' => 'Só pergunta?', 'resposta' => '' ) ) ), 'faq: pergunta sem resposta sai; lista vazia grava vazio' );
+igual( 8, count( tt_destino_json_ler( 'faq', array_fill( 0, 9, array( 'pergunta' => 'P', 'resposta' => 'R' ) ) ) ), 'faq: no máximo 8' );
+igual( 6, count( tt_destino_json_ler( 'passeios', array_fill( 0, 7, array( 'titulo' => 'T', 'duracao' => '3 h' ) ) ) ), 'passeios: no máximo 6' );
+$ps = tt_destino_json_ler( 'passeios', array( array( 'titulo' => 'T', 'duracao' => str_repeat( 'x', 50 ) ) ) );
+igual( 40, strlen( $ps[0]['duracao'] ), 'passeios: duração até 40' );
+igual( 5, count( tt_destino_json_ler( 'onde_ficar', array_fill( 0, 6, array( 'bairro' => 'B', 'descricao' => 'D', 'perfil' => 'P' ) ) ) ), 'onde ficar: no máximo 5' );
+igual( 6, count( tt_destino_json_ler( 'gastronomia', array_fill( 0, 7, array( 'nome' => 'Prato' ) ) ) ), 'gastronomia: no máximo 6' );
+$gs = tt_destino_json_ler( 'gastronomia', array( array( 'nome' => 'Prato' ) ) );
+igual( array( 'nome' => 'Prato', 'descricao' => '' ), $gs[0], 'gastronomia: sub-campo ausente vira texto vazio' );
+igual( array(), tt_destino_valor_rest( 'faq', '' ), 'lista vazia na leitura: array vazio' );
+igual( array(), tt_destino_json_ler( 'faq', '{quebrado' ), 'JSON quebrado: lista vazia' );
+igual( '', tt_destino_limpar( 'clima', 'nada' ), 'clima: texto que não é lista grava vazio' );
+
+/* ---------------------------------------------------------------- clima */
+$clima = tt_destino_json_ler( 'clima', array(
+	array( 'estacao' => 'inverno', 'meses' => 'jun–ago', 'max' => '14.6', 'min' => 8, 'chuva_mm' => 300 ),
+	array( 'estacao' => 'verao', 'meses' => 'dez–fev', 'max' => 28, 'min' => 18, 'chuva_mm' => -5 ),
+	array( 'estacao' => 'inverno', 'max' => 99 ),
+	array( 'estacao' => 'monção', 'max' => 30 ),
+	array( 'estacao' => 'outono' ),
+) );
+igual( array( 'verao', 'inverno' ), array_column( $clima, 'estacao' ), 'clima: na ordem do ano, uma por estação, estação inválida ou sem dado sai' );
+igual( 15, $clima[1]['max'], 'clima: temperatura arredondada para inteiro' );
+igual( null, $clima[0]['chuva_mm'], 'clima: chuva negativa vira null' );
+$cm = tt_destino_json_ler( 'clima', array( array( 'estacao' => 'inverno', 'min' => '-3' ) ) );
+igual( -3, $cm[0]['min'], 'clima: mínima negativa vale' );
+
+/* ---------------------------------------------------------------- REST: listas da v1 voltam como array */
+igual( array( 'A', 'B' ), tt_destino_valor_rest( 'o_que_fazer', "A\nB" ), 'o que fazer (v1) na leitura: array' );
+igual( array( 12, 13 ), tt_destino_valor_rest( 'galeria', '12,13' ), 'galeria na leitura: array de ids' );
+igual( '<p>Oi</p>', tt_destino_valor_rest( 'texto_de_abertura', '<p>Oi</p>' ), 'texto na leitura: como gravado' );
+igual( null, tt_destino_valor_rest( 'nao_existe', 'x' ), 'chave desconhecida na leitura: null' );
+
+/* ---------------------------------------------------------------- formulário da tela (v2) */
+$v = tt_destino_valores_a_gravar( array(
+	'escopo'            => 'internacional',
+	'perfis'            => array( 'praia' ),
+	'clima'             => array( array( 'estacao' => 'verao', 'meses' => '', 'max' => '30', 'min' => '', 'chuva_mm' => '' ), array( 'estacao' => 'outono', 'meses' => '', 'max' => '', 'min' => '', 'chuva_mm' => '' ) ),
+	'pontos_turisticos' => array( array( 'nome' => 'Torre', 'descricao' => '', 'foto' => '' ), array( 'nome' => '', 'descricao' => '', 'foto' => '' ) ),
+) );
+igual( 'internacional', $v['escopo'], 'tela: escopo' );
+igual( 'praia', $v['perfis'], 'tela: perfis' );
+igual( '[{"estacao":"verao","meses":"","max":30,"min":null,"chuva_mm":null}]', $v['clima'], 'tela: estação em branco não grava' );
+igual( '[{"nome":"Torre","descricao":"","foto":null}]', $v['pontos_turisticos'], 'tela: linha em branco não grava' );
+igual( array( 'perfis' => '' ), tt_destino_valores_a_gravar( array( 'perfis_presente' => '1' ) ), 'tela: nenhum perfil marcado esvazia os perfis' );
+
+/* ---------------------------------------------------------------- HTML das seções v2 */
+igual( '', tt_destino_secao_html( 'x', 'Título', array( '', '' ) ), 'seção sem nada: nada, nem o título' );
+igual( '<section class="tt-destino-secao tt-destino-secao--faq"><h2 class="tt-destino-titulo">FAQ</h2>A</section>', tt_destino_secao_html( 'faq', 'FAQ', array( '', 'A' ) ), 'seção com conteúdo: título + partes' );
+igual( '', tt_destino_subchamada_html( '' ), 'subchamada vazia: nada' );
+igual( '<p class="tt-destino-subchamada tt-destino-subchamada--card">Sol &amp; mar</p>', tt_destino_subchamada_html( 'Sol & mar', 'card' ), 'subchamada no card' );
+$d = tt_destino_destaques_html( "praia\ncultura", '5 a 7 dias' );
+contem( '<li class="tt-destino-perfil">Praia</li><li class="tt-destino-perfil">Cultura</li>', $d, 'destaques: perfis com rótulo' );
+contem( '<strong class="tt-destino-destaque__valor">5 a 7 dias</strong>', $d, 'destaques: duração' );
+igual( '', tt_destino_destaques_html( '', '' ), 'destaques vazios: nada' );
+$c = tt_destino_clima_html( '[{"estacao":"verao","meses":"dez–fev","max":28,"min":18,"chuva_mm":120}]', 'Clima por estação' );
+contem( '<h3 class="tt-destino-subtitulo">Clima por estação</h3><div class="tt-destino-clima">', $c, 'clima: subtítulo e grade' );
+contem( '<h4 class="tt-destino-clima__estacao">Verão</h4><p class="tt-destino-clima__meses">dez–fev</p>', $c, 'clima: estação e meses' );
+contem( 'máx <strong>28 °C</strong>', $c, 'clima: máxima' );
+contem( 'chuva <strong>120 mm</strong>', $c, 'clima: chuva' );
+igual( '', tt_destino_clima_html( '' ), 'clima vazio: nada' );
+igual( '', tt_destino_info_html( '', '', '' ), 'moeda/idioma/fuso vazios: nada' );
+contem( '<span class="tt-destino-info__rotulo">Moeda</span><strong>Euro (EUR)</strong>', tt_destino_info_html( 'Euro (EUR)', '', '' ), 'moeda' );
+$cards = tt_destino_cards_html( array( array( 'titulo' => 'Barco', 'duracao' => '3 h', 'foto_url' => 'https://x.test/b.jpg' ), array( 'titulo' => 'Sem foto', 'duracao' => '' ) ), 'titulo', 'duracao', 'Passeios', 'Foto: Viator' );
+contem( '<figure class="tt-destino-card__foto"><img src="https://x.test/b.jpg" alt="Barco" loading="lazy"><figcaption>Foto: Viator</figcaption></figure>', $cards, 'cards: foto com crédito' );
+contem( '<article class="tt-destino-card tt-destino-card--sem-foto"><div class="tt-destino-card__corpo"><h4>Sem foto</h4></div></article>', $cards, 'cards: sem foto, só o texto' );
+contem( '<p class="tt-destino-atualizado">Atualizado em 14/10/2026</p>', tt_destino_atualizado_html( '2026-10-14' ), 'atualizado em dd/mm/aaaa' );
+igual( '', tt_destino_atualizado_html( '' ), 'sem data: nada' );
+contem( '<li><strong>Pastel de nata</strong><span>Doce de massa folhada</span></li>', tt_destino_gastronomia_html( array( array( 'nome' => 'Pastel de nata', 'descricao' => 'Doce de massa folhada' ) ) ), 'gastronomia' );
+contem( '<article class="tt-destino-bairro"><h3>Alfama</h3><span class="tt-destino-bairro__perfil">Casais</span><p>Bairro antigo</p></article>', tt_destino_onde_ficar_html( array( array( 'bairro' => 'Alfama', 'perfil' => 'Casais', 'descricao' => 'Bairro antigo' ) ) ), 'onde ficar' );
+$faq = array( array( 'pergunta' => 'Precisa de visto?', 'resposta' => 'Não, até 90 dias. &lt;/script&gt;' ) );
+contem( '<details class="tt-destino-faq__item"><summary>Precisa de visto?</summary>', tt_destino_faq_html( $faq ), 'faq: pergunta que abre' );
+$ld = tt_destino_faq_jsonld( $faq );
+contem( '<script type="application/ld+json" class="tt-destino-faq-schema">', $ld, 'faq: JSON-LD' );
+contem( '"@type":"FAQPage"', $ld, 'faq: FAQPage' );
+contem( '"name":"Precisa de visto?"', $ld, 'faq: pergunta no JSON-LD' );
+igual( 1, substr_count( $ld, '</script>' ), 'faq: texto com </script> não fecha a tag antes da hora' );
+igual( '', tt_destino_faq_jsonld( '' ), 'sem FAQ: sem JSON-LD' );

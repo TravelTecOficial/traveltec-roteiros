@@ -315,6 +315,60 @@
 		} );
 	}
 
+	/* ------------------------------------------------------------ destino: nacional esconde os campos de internacional */
+
+	function iniciarEscopo( raiz ) {
+		var seletor = raiz.querySelector( '[data-tt-escopo]' );
+		if ( ! seletor ) {
+			return;
+		}
+		function aplicar() {
+			todos( '[data-tt-so-inter]', raiz ).forEach( function ( bloco ) {
+				bloco.hidden = seletor.value === 'nacional';
+			} );
+		}
+		seletor.addEventListener( 'change', aplicar );
+		aplicar();
+	}
+
+	/* ------------------------------------------------------------ destino: foto de um item (ponto turístico, passeio) */
+
+	function iniciarFotosUnicas( raiz ) {
+		todos( '[data-tt-foto-unica]', raiz ).forEach( function ( caixa ) {
+			var id = caixa.querySelector( '[data-tt-foto-id]' );
+			var previa = caixa.querySelector( '[data-tt-foto-previa]' );
+			var escolher = caixa.querySelector( '[data-tt-foto-escolher]' );
+			var tirar = caixa.querySelector( '[data-tt-foto-tirar]' );
+			var quadro = null;
+
+			function mostrar( novoId, url ) {
+				id.value = novoId ? String( novoId ) : '';
+				previa.src = url || '';
+				previa.hidden = ! url;
+				tirar.hidden = ! novoId;
+				escolher.textContent = novoId ? 'Trocar foto' : 'Escolher foto';
+			}
+
+			escolher.addEventListener( 'click', function () {
+				if ( ! window.wp || ! window.wp.media ) {
+					return;
+				}
+				if ( ! quadro ) {
+					quadro = window.wp.media( { title: 'Escolher foto', button: { text: 'Usar esta foto' }, library: { type: 'image' }, multiple: false } );
+					quadro.on( 'select', function () {
+						var dados = quadro.state().get( 'selection' ).first().toJSON();
+						var url = ( dados.sizes && dados.sizes.thumbnail && dados.sizes.thumbnail.url ) || dados.url;
+						mostrar( dados.id || 0, url );
+					} );
+				}
+				quadro.open();
+			} );
+			tirar.addEventListener( 'click', function () {
+				mostrar( 0, '' );
+			} );
+		} );
+	}
+
 	/* ------------------------------------------------------------ início */
 
 	function iniciar( raiz ) {
@@ -327,6 +381,8 @@
 		iniciarFotos( raiz );
 		iniciarItens( raiz );
 		iniciarContadores( raiz );
+		iniciarEscopo( raiz );
+		iniciarFotosUnicas( raiz );
 	}
 
 	function iniciarTodos() {
