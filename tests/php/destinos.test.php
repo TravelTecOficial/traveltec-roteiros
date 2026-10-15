@@ -97,8 +97,8 @@ $publicar( 'publish', 'draft', 'destinos' );
 igual( 1, $GLOBALS['tt_ligou'], 'destino publicado: liga o item Destinos nos menus do site' );
 $publicar( 'publish', 'publish', 'destinos' );
 $publicar( 'draft', 'publish', 'destinos' );
-$publicar( 'publish', 'draft', 'roteiros' );
-igual( 1, $GLOBALS['tt_ligou'], 'atualizar, despublicar ou publicar outro tipo não mexe nos menus' );
+$publicar( 'post', 'draft', 'post' );
+igual( 1, $GLOBALS['tt_ligou'], 'atualizar, despublicar ou publicar post do blog não mexe nos menus' );
 $GLOBALS['tt_vivos'] = array( 305 );
 $publicar( 'publish', 'draft', 'destinos' );
 igual( 1, $GLOBALS['tt_ligou'], 'sem a aba Destinos instalada, publicar não mexe nos menus' );
@@ -224,3 +224,13 @@ if ( ! function_exists( 'tt_voucher_valor' ) ) {
 $w = $sc['tt_destino_form']( array( 'titulo' => 'Solicite sua cotação' ) );
 contem( 'href="https://wa.me/5511912345678?text=Ol%C3%A1%21%20Quero%20uma%20cota%C3%A7%C3%A3o%20para%20Lisboa%20%26%20arredores."', $w, 'sem formulário: botão do WhatsApp com o destino na mensagem' );
 contem( '<h2 class="tt-destino-titulo">Solicite sua cotação</h2>', $w, 'sem formulário: título continua' );
+
+/* ---------------------------------------------------------------- 2.3.2: roteiro publicado também liga o menu */
+$GLOBALS['tt_ligou']             = 0;
+$GLOBALS['tt_ids']['docs']['lista'] = 1162;
+$GLOBALS['tt_vivos']             = array( 1162 );
+$publicar( 'publish', 'draft', 'roteiros' );
+igual( 1, $GLOBALS['tt_ligou'], 'primeiro roteiro publicado (lista de roteiros instalada): liga o item Roteiros no menu' );
+$GLOBALS['tt_vivos'] = array();
+$publicar( 'publish', 'draft', 'roteiros' );
+igual( 1, $GLOBALS['tt_ligou'], 'sem a lista de roteiros instalada, publicar roteiro não mexe nos menus' );

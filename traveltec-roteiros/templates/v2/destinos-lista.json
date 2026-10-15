@@ -11,410 +11,126 @@
  "topo_transparente": false,
  "data": [
   {
-   "id": "2b92703",
+   "id": "rtlhead",
    "elType": "container",
    "settings": {
-    "_title": "Topo",
-    "content_width": "boxed",
+    "content_width": "full",
     "flex_direction": "column",
     "padding": {
      "unit": "px",
-     "top": "72",
-     "right": "24",
-     "bottom": "72",
-     "left": "24",
-     "isLinked": false
-    },
-    "flex_gap": {
-     "unit": "px",
-     "size": 0,
-     "column": "0",
-     "row": "0",
+     "top": "0",
+     "right": "0",
+     "bottom": "0",
+     "left": "0",
      "isLinked": true
     },
-    "flex_align_items": "center",
-    "flex_justify_content": "center",
-    "min_height": {
-     "unit": "px",
-     "size": 380,
-     "sizes": []
-    },
-    "min_height_mobile": {
-     "unit": "px",
-     "size": 280,
-     "sizes": []
-    },
-    "padding_mobile": {
-     "unit": "px",
-     "top": "48",
-     "right": "16",
-     "bottom": "48",
-     "left": "16",
-     "isLinked": false
-    },
-    "background_background": "classic",
-    "background_image": {
-     "url": "{{IMG:banner-destinos.jpg}}",
-     "id": "{{IMGID:banner-destinos.jpg}}",
-     "size": "",
-     "alt": "",
-     "source": "library"
-    },
-    "background_position": "center center",
-    "background_size": "cover",
-    "background_repeat": "no-repeat",
-    "background_overlay_background": "classic",
-    "background_overlay_opacity": {
-     "unit": "px",
-     "size": 0.55,
-     "sizes": []
-    },
-    "background_color": "#E98300",
-    "background_overlay_color": "#E98300"
+    "html_tag": "section",
+    "css_classes": "blog-head"
    },
    "elements": [
     {
-     "id": "cddb2a0",
-     "elType": "container",
+     "id": "rtlhtml",
+     "elType": "widget",
      "settings": {
-      "_title": "Cabeçalho da seção",
-      "content_width": "full",
-      "flex_direction": "column",
-      "padding": {
-       "unit": "px",
-       "top": "0",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "flex_gap": {
-       "unit": "px",
-       "size": 12,
-       "column": "12",
-       "row": "12",
-       "isLinked": true
-      },
-      "flex_align_items": "center"
+      "html": "<div class=\"blog-head-in\">\n  <p class=\"eyebrow\">Destinos</p>\n  <h1>Lugares escolhidos para a sua próxima viagem</h1>\n  <p>Escolha um destino para ver o que fazer, quando ir e pedir sua cotação.</p>\n</div>"
      },
-     "elements": [
-      {
-       "id": "2d3d38c",
-       "elType": "widget",
-       "settings": {
-        "title": "Destinos",
-        "header_size": "h1",
-        "align": "center",
-        "title_color": "#FFFFFF",
-        "typography_typography": "custom",
-        "typography_font_family": "Montserrat",
-        "typography_font_weight": "700",
-        "typography_font_size": {
-         "unit": "px",
-         "size": 56,
-         "sizes": []
-        },
-        "typography_font_size_tablet": {
-         "unit": "px",
-         "size": 44,
-         "sizes": []
-        },
-        "typography_font_size_mobile": {
-         "unit": "px",
-         "size": 34,
-         "sizes": []
-        },
-        "typography_line_height": {
-         "unit": "em",
-         "size": 1.15,
-         "sizes": []
-        }
-       },
-       "elements": [],
-       "widgetType": "heading"
-      },
-      {
-       "id": "bda8236",
-       "elType": "widget",
-       "settings": {
-        "editor": "<p>Escolha um destino para ver o que fazer e pedir uma cotação.</p>",
-        "align": "center",
-        "text_color": "#FFB700"
-       },
-       "elements": [],
-       "widgetType": "text-editor"
-      }
-     ],
-     "isInner": false
+     "elements": [],
+     "widgetType": "html"
     }
    ],
    "isInner": false
   },
   {
-   "id": "cb7462f",
+   "id": "419d72f",
    "elType": "container",
    "settings": {
-    "_title": "Lista de destinos",
-    "content_width": "boxed",
-    "flex_direction": "column",
-    "padding": {
+    "margin": {
      "unit": "px",
-     "top": "96",
-     "right": "24",
-     "bottom": "96",
-     "left": "24",
+     "top": "0",
+     "right": "0",
+     "bottom": "50",
+     "left": "0",
      "isLinked": false
-    },
-    "flex_gap": {
-     "unit": "px",
-     "size": 0,
-     "column": "0",
-     "row": "0",
-     "isLinked": true
     },
     "padding_mobile": {
      "unit": "px",
-     "top": "56",
+     "top": "0",
      "right": "16",
-     "bottom": "56",
+     "bottom": "0",
      "left": "16",
      "isLinked": false
     }
    },
    "elements": [
     {
-     "id": "5be1795",
+     "id": "96b175f",
      "elType": "widget",
      "settings": {
-      "_skin": "post",
       "template_id": "{{DOC:destino-card}}",
-      "columns": 3,
-      "columns_tablet": 2,
-      "columns_mobile": 1,
+      "alternate_templates": [
+       {
+        "template_id": null,
+        "_id": "d659064"
+       }
+      ],
+      "post_query_post_type": "destinos",
+      "pagination_page_limit": "5",
+      "pagination_prev_label": "Anterior",
+      "pagination_next_label": "Próximo",
+      "text": "Ver mais",
+      "load_more_no_posts_custom_message": "",
+      "nothing_found_message_text": "Nenhum destino publicado ainda.",
+      "posts_per_page": 9,
+      "pagination_type": "numbers",
+      "post_query_post_status": [
+       "publish"
+      ],
+      "columns": "3",
+      "columns_tablet": "2",
+      "columns_mobile": "1",
       "column_gap": {
        "unit": "px",
-       "size": 24,
+       "size": 30,
        "sizes": []
       },
       "row_gap": {
        "unit": "px",
-       "size": 24,
+       "size": 30,
        "sizes": []
       },
       "equal_height": "yes",
-      "post_query_post_type": "destinos",
-      "posts_per_page": 12,
-      "pagination_type": "numbers",
       "pagination_align": "center",
-      "enable_nothing_found_message": "yes",
-      "nothing_found_message_text": "Nenhum destino publicado ainda.",
-      "post_query_post_status": [
-       "publish"
-      ]
+      "pagination_spacing_top": {
+       "unit": "px",
+       "size": 40,
+       "sizes": []
+      },
+      "pagination_color": "#3C3D3D",
+      "pagination_hover_color": "#E98300",
+      "pagination_active_color": "#E98300",
+      "pagination_typography_typography": "custom",
+      "pagination_typography_font_size": {
+       "unit": "px",
+       "size": 18,
+       "sizes": []
+      },
+      "pagination_typography_font_weight": "600",
+      "pagination_spacing": {
+       "unit": "px",
+       "size": 16,
+       "sizes": []
+      }
      },
      "elements": [],
      "widgetType": "loop-grid"
     }
    ],
    "isInner": false
-  },
-  {
-   "id": "7ca07e0",
-   "elType": "container",
-   "settings": {
-    "_title": "CTA cotação",
-    "content_width": "boxed",
-    "flex_direction": "column",
-    "padding": {
-     "unit": "px",
-     "top": "96",
-     "right": "24",
-     "bottom": "96",
-     "left": "24",
-     "isLinked": false
-    },
-    "flex_gap": {
-     "unit": "px",
-     "size": 28,
-     "column": "28",
-     "row": "28",
-     "isLinked": true
-    },
-    "flex_align_items": "center",
-    "background_background": "classic",
-    "padding_mobile": {
-     "unit": "px",
-     "top": "56",
-     "right": "16",
-     "bottom": "56",
-     "left": "16",
-     "isLinked": false
-    },
-    "background_color": "#E98300"
-   },
-   "elements": [
-    {
-     "id": "c085bbe",
-     "elType": "container",
-     "settings": {
-      "_title": "Cabeçalho da seção",
-      "content_width": "full",
-      "flex_direction": "column",
-      "padding": {
-       "unit": "px",
-       "top": "0",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "flex_gap": {
-       "unit": "px",
-       "size": 12,
-       "column": "12",
-       "row": "12",
-       "isLinked": true
-      },
-      "flex_align_items": "center"
-     },
-     "elements": [
-      {
-       "id": "bb076b9",
-       "elType": "widget",
-       "settings": {
-        "title": "Pronto para planejar sua próxima viagem?",
-        "header_size": "h2",
-        "align": "center",
-        "title_color": "#FFFFFF",
-        "typography_typography": "custom",
-        "typography_font_family": "Montserrat",
-        "typography_font_weight": "700",
-        "typography_font_size": {
-         "unit": "px",
-         "size": 40,
-         "sizes": []
-        },
-        "typography_font_size_tablet": {
-         "unit": "px",
-         "size": 34,
-         "sizes": []
-        },
-        "typography_font_size_mobile": {
-         "unit": "px",
-         "size": 28,
-         "sizes": []
-        },
-        "typography_line_height": {
-         "unit": "em",
-         "size": 1.2,
-         "sizes": []
-        }
-       },
-       "elements": [],
-       "widgetType": "heading"
-      },
-      {
-       "id": "b0f6b28",
-       "elType": "widget",
-       "settings": {
-        "editor": "<p>Conte o que você imagina e receba uma proposta sob medida.</p>",
-        "align": "center",
-        "text_color": "#FFB700"
-       },
-       "elements": [],
-       "widgetType": "text-editor"
-      }
-     ],
-     "isInner": false
-    },
-    {
-     "id": "9ae9243",
-     "elType": "container",
-     "settings": {
-      "_title": "CTA — botões",
-      "content_width": "full",
-      "flex_direction": "row",
-      "padding": {
-       "unit": "px",
-       "top": "0",
-       "right": "0",
-       "bottom": "0",
-       "left": "0",
-       "isLinked": false
-      },
-      "flex_gap": {
-       "unit": "px",
-       "size": 12,
-       "column": "12",
-       "row": "12",
-       "isLinked": true
-      },
-      "flex_justify_content": "center",
-      "flex_wrap": "wrap"
-     },
-     "elements": [
-      {
-       "id": "0a7c3f9",
-       "elType": "widget",
-       "settings": {
-        "text": "Solicitar cotação",
-        "link": {
-         "url": "https://tt.token/url_cotacao",
-         "is_external": "",
-         "nofollow": "",
-         "custom_attributes": ""
-        }
-       },
-       "elements": [],
-       "widgetType": "button"
-      },
-      {
-       "id": "ea9a2d5",
-       "elType": "widget",
-       "settings": {
-        "text": "Falar no WhatsApp",
-        "link": {
-         "url": "https://wa.me/%tt:whatsapp_digitos%",
-         "is_external": "on",
-         "nofollow": "",
-         "custom_attributes": ""
-        },
-        "background_background": "classic",
-        "background_color": "#FFFFFF00",
-        "button_background_hover_background": "classic",
-        "border_border": "solid",
-        "border_width": {
-         "unit": "px",
-         "top": "1",
-         "right": "1",
-         "bottom": "1",
-         "left": "1",
-         "isLinked": false
-        },
-        "selected_icon": {
-         "value": "fab fa-whatsapp",
-         "library": "fa-brands"
-        },
-        "icon_align": "left",
-        "icon_indent": {
-         "unit": "px",
-         "size": 8,
-         "sizes": []
-        },
-        "button_text_color": "#FFFFFF",
-        "border_color": "#FFFFFF",
-        "hover_color": "#E98300",
-        "button_background_hover_color": "#FFFFFF"
-       },
-       "elements": [],
-       "widgetType": "button"
-      }
-     ],
-     "isInner": false
-    }
-   ],
-   "isInner": false
   }
  ],
- "page_settings": {}
+ "page_settings": {
+  "page_template": "elementor_header_footer",
+  "preview_type": "archive/roteiros",
+  "custom_css": "/* chamada no padrão do blog (vars + .blog-head de padrao/blog/blog.css) */\n/* cores e fontes do site (padrão Voucher Tec) */\n:root{\n  --blog-fundo:#FFFFFF;\n  --blog-fundo-2:#F4F4F4;\n  --blog-texto:#3C3D3D;\n  --blog-texto-suave:#666666;\n  --blog-titulo:#3C3D3D;\n  --blog-acento:#E98300;\n  --blog-acento-texto:#C56F00;\n  --blog-fio:#E6E6E6;\n  --blog-display:\"Montserrat\",\"Segoe UI\",sans-serif;\n  --blog-ui:\"Roboto\",\"Segoe UI\",sans-serif;\n  --blog-nav-h:0px;\n  --blog-pad:max(16px,calc((100vw - 1140px) / 2));\n  --blog-ease:cubic-bezier(.22,.61,.36,1);\n  --blog-foto-filtro:none;\n  --blog-capa-fundo:#3C3D3D;\n  --blog-capa-filtro:brightness(.9);\n  --blog-capa-scrim:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,rgba(0,0,0,.15) 74%,rgba(0,0,0,.45) 100%);\n  --blog-capa-texto:#FFFFFF;\n  --blog-capa-texto-suave:rgba(255,255,255,.75);\n}\n.blog-head .eyebrow{font-family:var(--blog-ui);font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;margin:0}\n.blog-head{background:var(--blog-fundo);color:var(--blog-texto);padding:0}\n.blog-head-in{padding:calc(var(--blog-nav-h) + clamp(52px,7vw,96px)) var(--blog-pad) clamp(34px,4.5vw,56px);max-width:760px}\n.blog-head h1{font-family:var(--blog-display);font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.08;color:var(--blog-titulo);margin:20px 0 16px}\n.blog-head-in > p:not(.eyebrow){color:var(--blog-texto-suave);max-width:52ch;font-size:16.5px;line-height:1.6;margin:0}\n.blog-head .eyebrow,.blog-cta .eyebrow{color:var(--blog-acento-texto)}\n.blog-head-in{padding-left:var(--blog-pad)!important;padding-right:var(--blog-pad)!important}\n@media (max-width:767px){.blog-head-in{padding-top:40px}}\n/* tela larga: a margem esquerda entra na largura máxima */\n.blog-head-in{max-width:calc(760px + var(--blog-pad))}"
+ }
 }

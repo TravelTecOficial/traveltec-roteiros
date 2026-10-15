@@ -205,7 +205,7 @@ def textos_sobre(data):
 SRC_DESTINOS = RAIZ / "src" / "destinos"
 DESTINOS = [  # (chave, arquivo em src/destinos, título, tipo do modelo, condições)
     ("destino-card", "card", "Destinos — card", "loop-item", []),
-    ("destinos-lista", "lista", "Destinos — lista (/destinos/)", "archive", ["include/archive/destinos_archive"]),
+    ("destinos-lista", None, "Destinos — lista (/destinos/)", "archive", ["include/archive/destinos_archive"]),  # vem da lista de roteiros
     ("destino-single", "single", "Destinos — página do destino", "single-page", ["include/singular/destinos"]),
 ]
 COR_GLOBAL = {
@@ -220,7 +220,28 @@ TIPO_GLOBAL = {  # id: (fonte, peso, tamanho no computador, tablet, celular, ent
     "accent": ("Montserrat", "600", 16, 16, 16, 1.2),
     "text": ("Roboto", "400", 17, 16, 16, 1.7),
 }
-BANNER_DESTINOS = "banner-destinos.jpg"
+TOPO_DESTINOS = """<div class="blog-head-in">
+  <p class="eyebrow">Destinos</p>
+  <h1>Lugares escolhidos para a sua próxima viagem</h1>
+  <p>Escolha um destino para ver o que fazer, quando ir e pedir sua cotação.</p>
+</div>"""
+
+
+def lista_destinos():
+    """/destinos/ com o mesmo topo e estilo da lista de roteiros e do blog (pedido do dono, 15/10/2026): parte do modelo
+    da lista de roteiros já gerado, troca o texto do topo e aponta a grade para os destinos."""
+    base = json.loads((OUT / "lista.json").read_text(encoding="utf-8"))
+    data = copy.deepcopy(base["data"])
+    for e in percorrer(data):
+        st = e.get("settings") if isinstance(e.get("settings"), dict) else {}
+        if e.get("widgetType") == "html" and "eyebrow" in str(st.get("html")):
+            st["html"] = TOPO_DESTINOS
+        if e.get("widgetType") == "loop-grid":
+            st["template_id"] = "{{DOC:destino-card}}"
+            st["post_query_post_type"] = "destinos"
+            st["post_query_post_status"] = ["publish"]
+            st["nothing_found_message_text"] = "Nenhum destino publicado ainda."
+    return data, copy.deepcopy(base["page_settings"])
 
 
 def resolver_globais(no):
@@ -298,20 +319,6 @@ def montar_destino(chave, data):
     for e in percorrer(data):
         st = e.get("settings") if isinstance(e.get("settings"), dict) else {}
         wt = e.get("widgetType")
-        if chave == "destinos-lista":
-            if wt == "loop-grid":
-                st["template_id"] = "{{DOC:destino-card}}"
-                # mesma consulta da lista de roteiros. No site-modelo a grade usava a consulta própria "tt_destinos"
-                # (páginas-filhas de Destinos): com ela a lista de destinos sai vazia.
-                st["post_query_post_type"] = "destinos"
-                st["post_query_post_status"] = ["publish"]
-                st.pop("post_query_query_id", None)
-            fundo = st.get("background_image")
-            if isinstance(fundo, dict) and "banner-destinos" in str(fundo.get("url")):
-                st["background_image"] = {"url": "{{IMG:%s}}" % BANNER_DESTINOS, "id": "{{IMGID:%s}}" % BANNER_DESTINOS, "size": "", "alt": "", "source": "library"}
-            if wt == "button" and "tt_whatsapp_link" in str(st.get("__dynamic__")):
-                st.pop("__dynamic__", None)
-                st["link"] = {"url": "https://wa.me/%tt:whatsapp_digitos%", "is_external": "on", "nofollow": "", "custom_attributes": ""}
         if chave == "destino-card":
             filhos = [x for x in e.get("elements", []) if x.get("widgetType") != "post-info"]
             # a subchamada (v2) entra logo abaixo do nome do destino; destino sem subchamada: nada
@@ -366,11 +373,14 @@ def main():
         indice["docs"].append({"chave": chave, "tipo": tipo, "titulo": titulo, "slug": slug})
         print(f"{chave:22s} {len(txt) // 1024:4d} KB  restos da Rede: {len(restos)}")
     for chave, arq, titulo, tipo_modelo, cond in DESTINOS:
-        src = json.loads((SRC_DESTINOS / f"{arq}.json").read_text(encoding="utf-8"))
-        meta = src["meta"]
-        data = montar_destino(chave, json.loads(meta["_elementor_data"]))
-        ps = meta.get("_elementor_page_settings") or {}
-        ps = tratar(resolver_globais(ps) if isinstance(ps, dict) else {}, chave)
+        if chave == "destinos-lista":
+            data, ps = lista_destinos()
+        else:
+            src = json.loads((SRC_DESTINOS / f"{arq}.json").read_text(encoding="utf-8"))
+            meta = src["meta"]
+            data = montar_destino(chave, json.loads(meta["_elementor_data"]))
+            ps = meta.get("_elementor_page_settings") or {}
+            ps = tratar(resolver_globais(ps) if isinstance(ps, dict) else {}, chave)
         doc = {
             "chave": chave, "tipo": "elementor_library", "titulo": titulo, "slug": None, "condicoes": cond,
             "template_type": tipo_modelo, "page_template": "", "topo_transparente": False,

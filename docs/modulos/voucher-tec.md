@@ -171,6 +171,12 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   de condições do Elementor foi refeito na instalação com o tipo ainda desligado e perdeu `destinos_archive`. Agora o
   tipo é ligado antes do cache, o cache é refeito de novo na visita seguinte (`wp_loaded`) e, ao atualizar, uma vez no
   painel (`tt_voucher_ajustes_da_versao`), o que conserta os sites que já tinham instalado.
+- [x] **2.3.2** (15/10/2026, pedido do dono no DSelection): `/destinos/` com o topo da lista de roteiros (o modelo
+  `destinos-lista` agora é gerado a partir de `lista`, com etiqueta "Destinos", título "Lugares escolhidos para a sua
+  próxima viagem" e frase); títulos das seções do destino com tamanho fixo acima do Kit (H2 30px no máximo, H3 20px).
+  Menu do site: **toda parte instalada entra no menu do cabeçalho** (decisão do dono: "incluir no menu as opções quando
+  habilitadas"), mesmo sem conteúdo, na ordem Home, Destinos, Experiências, Roteiros, Sobre, Cotação, Contato
+  (`tt_voucher_menu_ordem`); roteiro publicado também liga o menu.
 
 ## Decisões do dono
 

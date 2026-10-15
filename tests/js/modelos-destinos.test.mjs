@@ -21,7 +21,7 @@ function widgets(no, saida = []) {
 test('os três modelos estão no índice e têm tipo e condição certos', () => {
   const indice = JSON.parse(ler('_indice'));
   for (const chave of CHAVES) assert.ok(indice.docs.some((d) => d.chave === chave), `índice: ${chave}`);
-  assert.ok(indice.imagens.includes('banner-destinos.jpg'), 'o banner da lista entra nas imagens instaladas');
+  assert.equal(indice.imagens.includes('banner-destinos.jpg'), false, 'a lista não usa mais o banner com foto');
   const [card, lista, single] = CHAVES.map((c) => JSON.parse(ler(c)));
   assert.equal(card.template_type, 'loop-item');
   assert.equal(lista.template_type, 'archive');
@@ -51,9 +51,28 @@ test('lista: grade com o card do plugin, só destinos publicados, sem o filtro d
   assert.deepEqual(grade.settings.post_query_post_status, ['publish']);
   // no site-modelo a grade usava a consulta 'tt_destinos' (páginas-filhas de Destinos): com ela a lista sai vazia
   assert.equal('post_query_query_id' in grade.settings, false);
-  assert.match(ler('destinos-lista'), /\{\{IMG:banner-destinos\.jpg\}\}/);
-  assert.match(ler('destinos-lista'), /https:\/\/tt\.token\/url_cotacao/);
-  assert.match(ler('destinos-lista'), /https:\/\/wa\.me\/%tt:whatsapp_digitos%/);
+  assert.equal(grade.settings.nothing_found_message_text, 'Nenhum destino publicado ainda.');
+});
+
+test('lista: mesmo topo da lista de roteiros e do blog (etiqueta, título e frase, fundo branco)', () => {
+  const lista = JSON.parse(ler('destinos-lista'));
+  const roteiros = JSON.parse(ler('lista'));
+  assert.equal(lista.data[0].settings.css_classes, 'blog-head');
+  const topo = lista.data[0].elements[0].settings.html;
+  assert.match(topo, /<p class="eyebrow">Destinos<\/p>/);
+  assert.match(topo, /<h1>Lugares escolhidos para a sua próxima viagem<\/h1>/);
+  assert.match(topo, /<p>Escolha um destino para ver o que fazer, quando ir e pedir sua cotação\.<\/p>/);
+  assert.equal(lista.page_settings.custom_css, roteiros.page_settings.custom_css, 'mesmo estilo da lista de roteiros');
+  assert.equal(lista.data.length, roteiros.data.length, 'sem a faixa de foto nem a chamada final');
+  assert.doesNotMatch(ler('destinos-lista'), /banner-destinos|Pronto para planejar/);
+});
+
+test('página do destino: títulos das seções no tamanho do site, acima do estilo global do Elementor', () => {
+  const css = fs.readFileSync(path.resolve(V2, '../../assets/destinos.css'), 'utf8');
+  // o Kit usa ".elementor-kit-N h2" (0,1,1): a regra precisa ser mais específica para valer
+  assert.match(css, /body h2\.tt-destino-titulo\{[^}]*font-size:clamp\(24px,2\.4vw,30px\)/);
+  assert.match(css, /body h3\.tt-destino-subtitulo\{[^}]*font-size:20px/);
+  assert.match(css, /body h4\.tt-destino-clima__estacao\{[^}]*font-size:17px/);
 });
 
 test('card: sem data nem autor (isso é de post de blog) e com a subchamada logo abaixo do nome', () => {
