@@ -85,10 +85,15 @@ add_action( 'init', function () {
 	}
 }, 99 );
 
-// Destino publicado (com a aba Destinos instalada): o item "Destinos" entra nos menus do site.
+// Destino ou roteiro publicado (com a parte instalada): o item entra nos menus do site, se ainda não estiver.
 // Prioridade 20: depois de o WordPress zerar a contagem de posts do tipo.
 add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
-	if ( 'publish' === $novo && 'publish' !== $antigo && 'destinos' === $post->post_type && tt_destinos_ativo() ) {
+	if ( 'publish' !== $novo || 'publish' === $antigo ) {
+		return;
+	}
+	$ids   = tt_voucher_ids();
+	$lista = ! empty( $ids['docs']['lista'] ) && tt_voucher_vivo( (int) $ids['docs']['lista'] );
+	if ( ( 'destinos' === $post->post_type && tt_destinos_ativo() ) || ( 'roteiros' === $post->post_type && $lista ) ) {
 		tt_voucher_menus_ligar();
 	}
 }, 20, 3 );

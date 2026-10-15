@@ -135,3 +135,9 @@ reinstale a parte em Voucher Tec › Configuração › Destinos (troca a págin
 
 2.3.1: /destinos/ podia abrir com o modelo do blog ("Experiências") em vez da lista de destinos: o Elementor
 perdia a condição da lista ao instalar a aba Destinos. Ao atualizar, o site se corrige na primeira visita ao painel.
+
+2.3.2: /destinos/ com o mesmo topo das listas de roteiros e do blog (etiqueta, título e frase, fundo branco; sai a foto
+e a chamada final). Títulos das seções da página do destino no tamanho do site (estavam maiores que o nome do destino).
+Menu do site: toda parte instalada entra sozinha (Destinos, Experiências, Roteiros, Sobre, Cotação, Contato), no lugar
+certo da ordem, mesmo antes de ter conteúdo. Depois de atualizar: reinstale a parte Destinos (troca a lista) e abra o
+painel uma vez (o menu se completa).

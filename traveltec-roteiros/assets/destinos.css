@@ -1,6 +1,11 @@
 /* Página do destino (Voucher Tec): seções, cards, clima, FAQ, galeria. Cores e fontes vêm do site (Kit do Elementor). */
 .tt-destino-titulo{margin:0 0 16px}
-.tt-destino-subtitulo{margin:32px 0 14px;font-size:1.25em}
+.tt-destino-subtitulo{margin:32px 0 14px}
+/* Tamanhos fixos acima do Kit (".elementor-kit-N h2" vale 0,1,1): sem isso o H2 do Kit, às vezes 48px, deixava os títulos
+   das seções maiores que o nome do destino (DSelection, 15/10/2026). */
+body h2.tt-destino-titulo{font-size:clamp(24px,2.4vw,30px);line-height:1.2}
+body h3.tt-destino-subtitulo{font-size:20px;line-height:1.3}
+body h4.tt-destino-clima__estacao{font-size:17px;line-height:1.3}
 .tt-destino-secao>.tt-destino-titulo+.tt-destino-subtitulo{margin-top:8px}
 .tt-destino-texto>:last-child{margin-bottom:0}
 .tt-destino-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}
@@ -28,7 +33,7 @@
 /* informações práticas */
 .tt-destino-clima{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .tt-destino-clima__card{padding:16px 18px;border-radius:10px;background:rgba(0,0,0,.035)}
-.tt-destino-clima__estacao{margin:0 0 2px;font-size:1.05em}
+.tt-destino-clima__estacao{margin:0 0 2px}
 .tt-destino-clima__meses{margin:0 0 10px;font-size:.85em;opacity:.7}
 .tt-destino-clima__card ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .tt-destino-clima__temp{display:flex;gap:12px}

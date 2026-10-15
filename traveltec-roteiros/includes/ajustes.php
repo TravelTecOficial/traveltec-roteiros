@@ -19,34 +19,105 @@ function tt_voucher_normalizar( $txt ) {
 	return trim( strtolower( remove_accents( wp_strip_all_tags( (string) $txt ) ) ) );
 }
 
-/** Páginas do plugin que devem estar no menu, com os nomes/endereços que o site pode já usar para elas. */
+/**
+ * Páginas do plugin que devem estar no menu, com os nomes/endereços que o site pode já usar para elas, na ordem
+ * padrão do menu. Entra toda parte instalada (pedido do dono, 15/10/2026: "incluir no menu as opções quando
+ * habilitadas"), mesmo sem conteúdo publicado; Destinos só com os destinos ligados no site.
+ */
 function tt_voucher_alvos_menu( $ids ) {
 	$alvos = array();
 	$pag   = function ( $k ) use ( $ids ) {
 		return ! empty( $ids['docs'][ $k ] ) && get_post( (int) $ids['docs'][ $k ] ) ? (int) $ids['docs'][ $k ] : 0;
 	};
+	if ( $pag( 'destinos-lista' ) && function_exists( 'tt_destinos_ativo' ) && tt_destinos_ativo() ) {
+		$url               = get_post_type_archive_link( 'destinos' );
+		$alvos['destinos'] = array( 'Destinos', 0, $url ? $url : home_url( '/destinos/' ), array( 'destinos' ), array( 'destinos' ) );
+	}
+	$blog = (int) get_option( 'page_for_posts' );
+	if ( $pag( 'blog-arquivo' ) && $blog && get_post( $blog ) ) {
+		$alvos['experiencias'] = array( 'Experiências', $blog, '', array( 'experiencias', 'blog', 'dicas' ), array( 'experiencias', 'blog', 'dicas de viagem' ) );
+	}
+	if ( $pag( 'lista' ) ) {
+		$url               = get_post_type_archive_link( 'roteiros' );
+		$alvos['roteiros'] = array( 'Roteiros', 0, $url ? $url : home_url( '/roteiros/' ), array( 'roteiros', 'pacotes' ), array( 'roteiros', 'pacotes' ) );
+	}
 	if ( $pag( 'sobre' ) ) {
 		$alvos['sobre'] = array( 'Sobre', $pag( 'sobre' ), '', array( 'sobre', 'quem-somos', 'sobre-nos', 'quem-sou', 'a-agencia' ), array( 'sobre', 'sobre nos', 'quem somos', 'a agencia' ) );
-	}
-	if ( $pag( 'contato' ) ) {
-		$alvos['contato'] = array( 'Contato', $pag( 'contato' ), '', array( 'contato', 'fale-conosco', 'contatos' ), array( 'contato', 'fale conosco', 'contatos' ) );
 	}
 	if ( $pag( 'cotacao' ) ) {
 		$alvos['cotacao'] = array( 'Cotação', $pag( 'cotacao' ), '', array( 'cotacao-de-viagens', 'cotacao-de-viagem', 'cotacao', 'orcamento' ), array( 'cotacao', 'cotacao de viagem', 'cotacao de viagens', 'orcamento', 'solicite um orcamento' ) );
 	}
-	// Roteiros só com roteiro publicado: lista vazia no menu não ajuda ninguém.
-	$n = wp_count_posts( 'roteiros' );
-	if ( $pag( 'lista' ) && ! empty( $n->publish ) ) {
-		$url             = get_post_type_archive_link( 'roteiros' );
-		$alvos['roteiros'] = array( 'Roteiros', 0, $url ? $url : home_url( '/roteiros/' ), array( 'roteiros', 'pacotes' ), array( 'roteiros', 'pacotes' ) );
-	}
-	// Destinos: mesma regra dos roteiros — só com destino publicado.
-	$d = wp_count_posts( 'destinos' );
-	if ( $pag( 'destinos-lista' ) && ! empty( $d->publish ) ) {
-		$url               = get_post_type_archive_link( 'destinos' );
-		$alvos['destinos'] = array( 'Destinos', 0, $url ? $url : home_url( '/destinos/' ), array( 'destinos' ), array( 'destinos' ) );
+	if ( $pag( 'contato' ) ) {
+		$alvos['contato'] = array( 'Contato', $pag( 'contato' ), '', array( 'contato', 'fale-conosco', 'contatos' ), array( 'contato', 'fale conosco', 'contatos' ) );
 	}
 	return $alvos;
+}
+
+/** Ordem padrão do menu do site (a do DSelection, aprovada pelo dono). */
+function tt_voucher_menu_ordem() {
+	return array( 'home', 'destinos', 'experiencias', 'roteiros', 'sobre', 'cotacao', 'contato' );
+}
+
+/**
+ * Posição (menu_order) para um item novo: logo depois do último item que vem antes dele na ordem padrão; sem nenhum
+ * antes, no lugar do primeiro que vem depois; menu sem nenhum dos dois, no fim. $ordens: papel => menu_order.
+ */
+function tt_voucher_menu_posicao( $ordens, $chave, $ultima ) {
+	$ordem = tt_voucher_menu_ordem();
+	$minha = array_search( $chave, $ordem, true );
+	$antes  = array();
+	$depois = array();
+	foreach ( (array) $ordens as $papel => $pos ) {
+		$i = array_search( $papel, $ordem, true );
+		if ( false === $i || false === $minha ) {
+			continue;
+		}
+		if ( $i < $minha ) {
+			$antes[] = (int) $pos;
+		} elseif ( $i > $minha ) {
+			$depois[] = (int) $pos;
+		}
+	}
+	if ( $antes ) {
+		return max( $antes ) + 1;
+	}
+	if ( $depois ) {
+		return min( $depois );
+	}
+	return (int) $ultima + 1;
+}
+
+/** O item é a Home? ("/", o endereço do site ou âncora na home, como "/#home") */
+function tt_voucher_item_e_home( $item ) {
+	if ( 'custom' !== $item->type ) {
+		return false;
+	}
+	$partes = wp_parse_url( (string) $item->url );
+	$host   = wp_parse_url( home_url(), PHP_URL_HOST );
+	if ( ! empty( $partes['host'] ) && $partes['host'] !== $host ) {
+		return false;
+	}
+	return '' === trim( isset( $partes['path'] ) ? $partes['path'] : '', '/' );
+}
+
+/** Argumentos para regravar um item do menu como está (só a posição muda). */
+function tt_voucher_item_args( $item, $posicao ) {
+	$args = array(
+		'menu-item-title'     => $item->title,
+		'menu-item-position'  => (int) $posicao,
+		'menu-item-parent-id' => (int) $item->menu_item_parent,
+		'menu-item-status'    => 'publish',
+		'menu-item-classes'   => implode( ' ', array_filter( (array) $item->classes ) ),
+		'menu-item-target'    => $item->target,
+		'menu-item-type'      => $item->type,
+	);
+	if ( 'custom' === $item->type ) {
+		$args['menu-item-url'] = $item->url;
+	} else {
+		$args['menu-item-object']    = $item->object;
+		$args['menu-item-object-id'] = (int) $item->object_id;
+	}
+	return $args;
 }
 
 /** O item já cumpre o papel do alvo? (mesma página, mesmo endereço ou mesmo nome) */
@@ -103,18 +174,24 @@ function tt_voucher_menus_ligar( &$rel = null ) {
 	$backup    = get_option( 'tt_voucher_menus_anteriores', array() );
 
 	foreach ( $menus as $menu_id ) {
-		$itens = (array) wp_get_nav_menu_items( $menu_id, array( 'post_status' => 'any' ) );
+		$itens  = (array) wp_get_nav_menu_items( $menu_id, array( 'post_status' => 'any' ) );
 		$ultima = 0;
+		$ordens = array(); // papel => menu_order dos itens que já estão no menu (para pôr os novos no lugar certo)
 		foreach ( $itens as $item ) {
 			$ultima = max( $ultima, (int) $item->menu_order );
+			if ( ! isset( $ordens['home'] ) && tt_voucher_item_e_home( $item ) ) {
+				$ordens['home'] = (int) $item->menu_order;
+			}
 		}
+		$faltam = array();
 		foreach ( $alvos as $chave => $alvo ) {
 			$achou = false;
 			foreach ( $itens as $item ) {
 				if ( ! tt_voucher_item_do_alvo( $item, $alvo ) ) {
 					continue;
 				}
-				$achou = true;
+				$achou            = true;
+				$ordens[ $chave ] = (int) $item->menu_order;
 				if ( tt_voucher_item_certo( $item, $alvo ) ) {
 					continue;
 				}
@@ -133,14 +210,35 @@ function tt_voucher_menus_ligar( &$rel = null ) {
 				}
 			}
 			if ( ! $achou && (int) $menu_id === (int) $cabecalho ) {
-				wp_update_nav_menu_item( $menu_id, 0, array(
-					'menu-item-title'    => $alvo[0],
-					'menu-item-position' => ++$ultima,
-					'menu-item-status'   => 'publish',
-				) + tt_voucher_destino_item( $alvo ) );
-				if ( is_array( $rel ) ) {
-					$rel['criados'][] = 'menu: item "' . $alvo[0] . '"';
+				$faltam[ $chave ] = $alvo;
+			}
+		}
+		// O que falta entra no menu do cabeçalho na ordem padrão, empurrando os itens seguintes uma posição.
+		foreach ( $faltam as $chave => $alvo ) {
+			$pos = tt_voucher_menu_posicao( $ordens, $chave, $ultima );
+			foreach ( $itens as $item ) {
+				if ( (int) $item->menu_order >= $pos ) {
+					wp_update_nav_menu_item( $menu_id, $item->ID, tt_voucher_item_args( $item, (int) $item->menu_order + 1 ) );
+					$item->menu_order = (int) $item->menu_order + 1;
 				}
+			}
+			foreach ( $ordens as $papel => $o ) {
+				if ( $o >= $pos ) {
+					$ordens[ $papel ] = $o + 1;
+				}
+			}
+			$novo = wp_update_nav_menu_item( $menu_id, 0, array(
+				'menu-item-title'    => $alvo[0],
+				'menu-item-position' => $pos,
+				'menu-item-status'   => 'publish',
+			) + tt_voucher_destino_item( $alvo ) );
+			$ordens[ $chave ] = $pos;
+			$ultima++;
+			if ( $novo && ! is_wp_error( $novo ) ) {
+				$itens[] = (object) array( 'ID' => $novo, 'menu_order' => $pos, 'title' => $alvo[0], 'menu_item_parent' => 0, 'classes' => array(), 'target' => '', 'type' => $alvo[1] ? 'post_type' : 'custom', 'object' => $alvo[1] ? 'page' : 'custom', 'object_id' => $alvo[1], 'url' => $alvo[2] );
+			}
+			if ( is_array( $rel ) ) {
+				$rel['criados'][] = 'menu: item "' . $alvo[0] . '"';
 			}
 		}
 	}
