@@ -144,3 +144,5 @@ painel uma vez (o menu se completa).
 
 2.3.3: formulário de cotação dentro da página do destino: o título dele não fica mais gigante e os subtítulos
 (Datas da viagem, Passageiros...) deixam de sair brancos no fundo claro.
+
+2.3.4: página do destino com o cabeçalho transparente sobre a foto (como roteiros e posts), que ganha fundo ao rolar.

@@ -179,6 +179,8 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   (`tt_voucher_menu_ordem`); roteiro publicado também liga o menu.
 - [x] **2.3.3** (15/10/2026): formulário de cotação na página do destino (DSelection): H2 do formulário com 20px e
   subtítulos H4 com a cor do texto (eram brancos, pensados para o fundo escuro da página de cotação).
+- [x] **2.3.4** (15/10/2026): página do destino ganha `tt-topo-transparente` (cabeçalho transparente sobre a foto, como
+  roteiros e posts) — regra em `tt_voucher_topo_transparente()` (`includes/dados.php`).
 
 ## Decisões do dono
 
