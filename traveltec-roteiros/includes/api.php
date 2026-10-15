@@ -122,8 +122,9 @@ add_action( 'rest_api_init', function () {
 		'permission_callback' => $pode,
 		'callback'            => function ( WP_REST_Request $req ) {
 			$r = tt_voucher_instalar( array(
-				'substituir' => (bool) $req->get_param( 'substituir' ),
-				'modulos'    => $req->get_param( 'modulos' ),
+				'substituir'     => (bool) $req->get_param( 'substituir' ),
+				'assumir_layout' => (bool) $req->get_param( 'assumir_layout' ),
+				'modulos'        => $req->get_param( 'modulos' ),
 			) );
 			return is_wp_error( $r ) ? $r : rest_ensure_response( $r );
 		},

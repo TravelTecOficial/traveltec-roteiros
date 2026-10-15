@@ -85,7 +85,7 @@ add_action( 'admin_post_tt_voucher_instalar', function () {
 	$aba    = tt_voucher_aba_postada();
 	$grupo  = isset( $_POST['grupo'] ) ? sanitize_key( wp_unslash( $_POST['grupo'] ) ) : '';
 	$grupos = tt_voucher_grupos();
-	$opcoes = array( 'substituir' => ! empty( $_POST['substituir'] ) );
+	$opcoes = array( 'substituir' => ! empty( $_POST['substituir'] ), 'assumir_layout' => ! empty( $_POST['assumir_layout'] ) );
 	if ( isset( $grupos[ $grupo ] ) ) {
 		$opcoes['modulos'] = $grupos[ $grupo ];
 	}
@@ -145,7 +145,8 @@ function tt_voucher_mostrar_relatorio() {
 	$rotulos = array(
 		'criados'         => 'Criado',
 		'atualizados'     => 'Atualizado',
-		'conflitos'       => 'Não mexido (já existe uma página nesse endereço — marque “usar o layout do plugin” para trocar)',
+		'conflitos'       => 'Não mexido (o site já tem essa página — marque “usar o layout do plugin” para trocar)',
+		'mantidos'        => 'Mantido o do site',
 		'avisos'          => 'Aviso',
 		'dados_alterados' => 'Dado alterado',
 	);
@@ -218,13 +219,16 @@ function tt_voucher_form_instalar( $aba, $grupo, $st ) {
 	}
 	$aviso = $grupo
 		? 'Instala só as peças desta aba. O que foi editado nelas volta ao padrão. Continuar?'
-		: 'Instala cabeçalho, rodapé, todas as páginas, formulários e menus, e troca as cores e fontes globais do Elementor. Só num site em preparação. Continuar?';
+		: 'Instala cabeçalho, rodapé, todas as páginas, formulários e menus, e troca as cores e fontes globais do Elementor. Cabeçalho, rodapé, blog e páginas que o site já tem ficam como estão. Continuar?';
 	echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin:14px 0 24px" onsubmit="return confirm(' . esc_attr( wp_json_encode( $aviso ) ) . ')">';
 	wp_nonce_field( 'tt_voucher_instalar' );
 	echo '<input type="hidden" name="action" value="tt_voucher_instalar"><input type="hidden" name="aba" value="' . esc_attr( $aba ) . '"><input type="hidden" name="grupo" value="' . esc_attr( $grupo ) . '">';
 	$tem_pagina = ! $grupo || array_intersect( $pecas, array( 'contato', 'cotacao', 'sobre', 'obrigado-contato', 'obrigado-cotacao', 'obrigado-newsletter' ) );
 	if ( $tem_pagina ) {
 		echo '<label><input type="checkbox" name="substituir" value="1"> Usar o layout do plugin também em páginas que já existem com o mesmo endereço (/contato/, /sobre/…)</label><br><br>';
+	}
+	if ( ! $grupo || array_intersect( $pecas, tt_voucher_pecas_do_site() ) ) {
+		echo '<label><input type="checkbox" name="assumir_layout" value="1"> Trocar o cabeçalho/rodapé/blog que o site já tem pelos do plugin (tira as condições dos modelos do site)</label><br><br>';
 	}
 	submit_button( $rotulo, $grupo ? 'secondary' : 'primary', 'submit', false );
 	echo '</form>';

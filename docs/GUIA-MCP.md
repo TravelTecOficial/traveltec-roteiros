@@ -25,7 +25,13 @@ POST /wp-json/voucher-tec/v1/instalar
 ```
 
 `substituir: true` usa o layout do plugin também em páginas que já existem com o mesmo endereço
-(`/sobre/`, `/contato/`, `/cotacao-de-viagens/`...). Sem ele, essas páginas voltam em `conflitos`.
+(`/sobre/`, `/contato/`, `/cotacao-de-viagens/`...). Sem ele, essas páginas voltam em `conflitos` — e também não
+são criadas se o site já tem a equivalente (`/quem-somos/`, `/fale-conosco/`, `/orcamento/`...; lista em
+`tt_voucher_slugs_equivalentes()`).
+Site com layout próprio (2.3.5): `header`, `footer`, `menu-popup`, `blog-arquivo` e `blog-post` só entram onde o site
+não tem modelo publicado no mesmo lugar; o do site fica com as condições dele e volta em `mantidos`. Menus do tema,
+Kit e página do blog só mudam junto com o cabeçalho/blog do plugin. `assumir_layout: true` troca de propósito (tira a
+condição do modelo do site, com backup em `tt_voucher_condicoes_anteriores`).
 `modulos: ["contato","obrigado-contato","newsletter"]` instala só as chaves pedidas e não mexe em mais nada: o Kit do
 Elementor (cores/fontes globais) só muda na instalação completa, os menus só com `header`/`footer`/`menu-popup` (ou
 se já foram instalados) e os formulários só os pedidos. As páginas de obrigado usam o formulário `newsletter`.

@@ -183,6 +183,23 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   roteiros e posts) — regra em `tt_voucher_topo_transparente()` (`includes/dados.php`).
 - [x] **Aprovado pelo dono em 15/10/2026** ("está ok"), conferido no DSelection: 2.3.1–2.3.4 (lista no padrão, títulos,
   formulário, cabeçalho transparente, menu automático).
+- [x] **2.3.5** (15/10/2026, release v2.3.5) — **instalação não quebra mais site com layout próprio**. Motivo: na AV Turismo
+  Gramado a ativação (site sem nada do plugin = "site novo") instalou tudo e tirou as condições do Header #48, Footer #50 e
+  Blog #68/#70 (revertido à mão; modelos 106–110 do plugin em rascunho). Agora (`includes/instalador.php`):
+  - `header`, `footer`, `blog-arquivo`, `blog-post` (`tt_voucher_pecas_do_site()`): se há modelo **publicado** do site
+    (não do plugin) da mesma família com condição que disputa o lugar (`tt_voucher_condicao_disputa`: igual, mais ampla,
+    mais estreita; `include/general` disputa com tudo; condições de roteiros/destinos não contam), a peça não é instalada e
+    nada é mexido — relatório `mantidos`. `menu-popup` só entra com o cabeçalho do plugin; popups nunca tiram condição de
+    outros popups.
+  - Páginas: Sobre/Contato/Cotação/obrigado não são criadas se o site tem equivalente publicada
+    (`tt_voucher_slugs_equivalentes()`); obrigado da cotação/contato só com a página-mãe do plugin; obrigado da newsletter só
+    com o rodapé ou o contato do plugin. A equivalente fica em `tt_voucher_ids()['equivalentes']` e vira o redirecionamento
+    do formulário, sem ter o conteúdo trocado.
+  - Menus do tema (`menu-1`/`menu-2`) só são ocupados se vazios ou já do plugin; Kit só muda se o cabeçalho do plugin entrou;
+    página do blog/`posts_per_page` só com o arquivo do blog do plugin.
+  - Para trocar de propósito: opção `assumir_layout` (checkbox no painel, parâmetro na API) — comportamento antigo.
+  - Testes: `tests/php/instalador.test.php` (caso AV Turismo). **Falta**: conferir num site no ar (instalar a 2.3.5 num
+    clone com Theme Builder próprio e ver o relatório "Mantido o do site").
 
 ## Decisões do dono
 
@@ -205,7 +222,9 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 
 ## Pendências / riscos a conferir no teste
 
-- Condições do Theme Builder: modelos concorrentes perdem a condição, com backup em `tt_voucher_condicoes_anteriores`.
+- Condições do Theme Builder: desde a 2.3.5 o plugin não instala cabeçalho/rodapé/blog onde o site já tem modelo
+  publicado; só com `assumir_layout` os concorrentes perdem a condição (backup em `tt_voucher_condicoes_anteriores`).
+  Regra do dono: instalar o plugin nunca pode mudar o visual de um site no ar.
 - Cabeçalho transparente na home (`tt_voucher_home_transparente`): só funciona se a home tiver imagem no topo.
 - JetFormBuilder: conferir se o formulário criado pelo plugin renderiza (meta `_jf_*`) e envia por AJAX.
 - Rede Turística (1.3.2) vai receber a 2.0 pela atualização: nada é instalado sozinho, mas conferir o painel.

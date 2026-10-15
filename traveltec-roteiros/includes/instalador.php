@@ -15,7 +15,7 @@ define( 'TT_VOUCHER_OPT_IDS', 'tt_voucher_ids' );
 
 function tt_voucher_ids() {
 	$ids = get_option( TT_VOUCHER_OPT_IDS, array() );
-	return array_merge( array( 'docs' => array(), 'forms' => array(), 'menus' => array(), 'midia' => array() ), is_array( $ids ) ? $ids : array() );
+	return array_merge( array( 'docs' => array(), 'forms' => array(), 'menus' => array(), 'midia' => array(), 'equivalentes' => array() ), is_array( $ids ) ? $ids : array() );
 }
 
 function tt_voucher_salvar_ids( $ids ) {
@@ -88,6 +88,30 @@ function tt_voucher_instalar_imagens( &$ids, &$rel ) {
 
 /* ------------------------------------------------------------------ Páginas (esqueleto) */
 
+/** Endereços que fazem o papel de cada página genérica do plugin (o mesmo endereço do plugin fica de fora). */
+function tt_voucher_slugs_equivalentes() {
+	return array(
+		'sobre'               => array( 'quem-somos', 'sobre-nos', 'quem-sou', 'a-agencia', 'nossa-historia', 'institucional' ),
+		'contato'             => array( 'fale-conosco', 'contatos', 'entre-em-contato' ),
+		'cotacao'             => array( 'cotacao-de-viagem', 'cotacao', 'orcamento', 'solicite-um-orcamento', 'solicitar-cotacao', 'solicite-sua-cotacao' ),
+		'obrigado-cotacao'    => array( 'obrigado-pela-cotacao', 'obrigado-orcamento', 'obrigado-cotacao-de-viagem' ),
+		'obrigado-contato'    => array( 'obrigado-pelo-contato', 'obrigado' ),
+		'obrigado-newsletter' => array( 'obrigado-newsletter', 'obrigado-por-assinar', 'obrigado' ),
+	);
+}
+
+/** Página publicada do site que já faz o papel da página $chave do plugin (ex.: /quem-somos/ para Sobre). */
+function tt_voucher_pagina_equivalente( $chave ) {
+	$slugs = tt_voucher_slugs_equivalentes();
+	foreach ( isset( $slugs[ $chave ] ) ? $slugs[ $chave ] : array() as $slug ) {
+		$p = get_page_by_path( $slug, OBJECT, 'page' );
+		if ( $p && 'publish' === get_post_status( $p->ID ) ) {
+			return $p;
+		}
+	}
+	return null;
+}
+
 /**
  * Garante o post de cada página antes de montar o conteúdo — os formulários precisam do ID das
  * páginas de obrigado e as páginas precisam do ID dos formulários.
@@ -100,11 +124,26 @@ function tt_voucher_garantir_pagina( $doc, &$ids, &$rel, $substituir ) {
 	$existente = get_page_by_path( $doc['slug'], OBJECT, 'page' );
 	if ( $existente ) {
 		if ( ! $substituir ) {
-			$rel['conflitos'][] = "Já existe a página /{$doc['slug']}/ (#{$existente->ID}). Use substituir para usar o layout do plugin nela.";
+			$ids['equivalentes'][ $chave ] = $existente->ID;
+			$rel['conflitos'][]            = "Já existe a página /{$doc['slug']}/ (#{$existente->ID}). Use substituir para usar o layout do plugin nela.";
 			return 0;
 		}
 		$ids['docs'][ $chave ] = $existente->ID;
 		return $existente->ID;
+	}
+	if ( ! $substituir ) {
+		// A página de obrigado só serve ao formulário da página do plugin (AV Turismo, 15/10/2026).
+		$mae = array( 'obrigado-contato' => 'contato', 'obrigado-cotacao' => 'cotacao' );
+		if ( isset( $mae[ $chave ] ) && ! ( ! empty( $ids['docs'][ $mae[ $chave ] ] ) && tt_voucher_vivo( $ids['docs'][ $mae[ $chave ] ] ) ) ) {
+			$rel['conflitos'][] = "Página /{$doc['slug']}/ não criada: a página " . ucfirst( $mae[ $chave ] ) . ' do plugin não está instalada.';
+			return 0;
+		}
+		$igual = tt_voucher_pagina_equivalente( $chave );
+		if ( $igual ) {
+			$ids['equivalentes'][ $chave ] = $igual->ID;
+			$rel['conflitos'][]            = "O site já tem /{$igual->post_name}/ (#{$igual->ID}), no lugar de {$doc['titulo']}: não criada.";
+			return 0;
+		}
 	}
 	$id = wp_insert_post( array(
 		'post_type'   => 'page',
@@ -128,7 +167,11 @@ function tt_voucher_acoes_form( $chave, $ids ) {
 	$email   = $email ? $email : get_option( 'admin_email' );
 	$nome    = tt_voucher_valor( 'nome' );
 	$pagina  = function ( $p ) use ( $ids ) {
-		return isset( $ids['docs'][ $p ] ) ? (int) $ids['docs'][ $p ] : 0;
+		if ( ! empty( $ids['docs'][ $p ] ) ) {
+			return (int) $ids['docs'][ $p ];
+		}
+		// sem a página do plugin, a do site que faz o mesmo papel
+		return isset( $ids['equivalentes'][ $p ] ) ? (int) $ids['equivalentes'][ $p ] : 0;
 	};
 	$redir   = function ( $p, $i ) use ( $pagina ) {
 		return array( 'id' => 9000 + $i, 'type' => 'redirect_to_page', 'conditions' => array(), 'events' => array(), 'index' => $i,
@@ -260,7 +303,10 @@ function tt_voucher_instalar_menus( &$ids, &$rel ) {
 				: array( 'menu-item-title' => $titulo, 'menu-item-url' => $url, 'menu-item-type' => 'custom', 'menu-item-status' => 'publish', 'menu-item-position' => $pos + 1 ) );
 		}
 		$ids['menus'][ $chave ] = $menu->term_id;
-		$locais[ $def[1] ]      = $menu->term_id;
+		// Posição do tema só se estiver vazia ou já for do plugin: não troca o menu que o site usa.
+		if ( empty( $locais[ $def[1] ] ) || in_array( (int) $locais[ $def[1] ], array_map( 'intval', $ids['menus'] ), true ) ) {
+			$locais[ $def[1] ] = $menu->term_id;
+		}
 	}
 	set_theme_mod( 'nav_menu_locations', $locais );
 }
@@ -287,13 +333,84 @@ function tt_voucher_marcadores( $ids ) {
 	return $t;
 }
 
+/** Tipos do Elementor que disputam as mesmas páginas (ex.: o "Single Post" de um site antigo e o single do plugin). */
+function tt_voucher_familia_modelo( $tipo ) {
+	return in_array( $tipo, array( 'single', 'single-post', 'single-page' ), true ) ? array( 'single', 'single-post', 'single-page' ) : array( $tipo );
+}
+
+/** Peças do layout do site no Theme Builder: só entram onde o site não tem modelo próprio publicado. */
+function tt_voucher_pecas_do_site() {
+	return array( 'header', 'footer', 'menu-popup', 'blog-arquivo', 'blog-post' );
+}
+
+/**
+ * A condição $outra (de um modelo do site) disputa o lugar de $minha? Igual, mais ampla (include/singular
+ * cobre include/singular/post) ou mais estreita (include/archive/post_archive cai em include/archive);
+ * include/general disputa com tudo. As dos tipos do próprio plugin (roteiros, destinos) não contam.
+ */
+function tt_voucher_condicao_disputa( $minha, $outra ) {
+	$minha = trim( (string) $minha, '/' );
+	$outra = trim( (string) $outra, '/' );
+	if ( 0 !== strpos( $minha, 'include/' ) || 0 !== strpos( $outra, 'include/' ) ) {
+		return false;
+	}
+	if ( preg_match( '#/(roteiros|destinos)(_archive)?(/|$)#', $outra ) ) {
+		return false;
+	}
+	if ( 'include/general' === $minha || 'include/general' === $outra ) {
+		return true;
+	}
+	return 0 === strpos( $minha . '/', $outra . '/' ) || 0 === strpos( $outra . '/', $minha . '/' );
+}
+
+/** Dos modelos [ id => [ tipo, condições ] ], o primeiro que já ocupa o lugar do documento; 0 se o lugar está livre. */
+function tt_voucher_ocupante( $doc, $modelos ) {
+	$familia = tt_voucher_familia_modelo( $doc['template_type'] );
+	foreach ( $modelos as $id => $m ) {
+		if ( ! in_array( $m[0], $familia, true ) ) {
+			continue;
+		}
+		foreach ( (array) $m[1] as $outra ) {
+			foreach ( (array) $doc['condicoes'] as $minha ) {
+				if ( tt_voucher_condicao_disputa( $minha, $outra ) ) {
+					return (int) $id;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+/** Modelo publicado do próprio site (não do plugin) no lugar do documento; 0 se o lugar está livre. */
+function tt_voucher_modelo_do_site( $doc, $ids ) {
+	if ( empty( $doc['condicoes'] ) ) {
+		return 0;
+	}
+	$lista = get_posts( array(
+		'post_type'  => 'elementor_library', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids',
+		'exclude'    => array_values( array_filter( array_map( 'intval', $ids['docs'] ) ) ),
+		'meta_query' => array( array( 'key' => '_elementor_template_type', 'value' => tt_voucher_familia_modelo( $doc['template_type'] ), 'compare' => 'IN' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+	) );
+	$modelos = array();
+	foreach ( $lista as $id ) {
+		if ( get_post_meta( $id, '_tt_voucher_modelo', true ) ) {
+			continue; // feito pelo plugin numa instalação anterior
+		}
+		$modelos[ $id ] = array( get_post_meta( $id, '_elementor_template_type', true ), array_filter( (array) get_post_meta( $id, '_elementor_conditions', true ) ) );
+	}
+	return tt_voucher_ocupante( $doc, $modelos );
+}
+
 /** Tira as condições de outros modelos do mesmo tipo que disputam o mesmo lugar (ex.: outro cabeçalho "site inteiro"). */
 function tt_voucher_liberar_condicoes( $tipo, $condicoes, $meu_id, &$rel ) {
 	if ( ! $condicoes ) {
 		return;
 	}
-	// single, single-post e single-page disputam as mesmas páginas (ex.: o "Single Post" de um site antigo).
-	$familia = in_array( $tipo, array( 'single', 'single-post', 'single-page' ), true ) ? array( 'single', 'single-post', 'single-page' ) : array( $tipo );
+	// Popups não disputam lugar: vários convivem no site inteiro (o gatilho decide). Não mexe nos do site.
+	if ( 'popup' === $tipo ) {
+		return;
+	}
+	$familia = tt_voucher_familia_modelo( $tipo );
 	$outros  = get_posts( array(
 		'post_type' => 'elementor_library', 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids', 'exclude' => array( $meu_id ),
 		'meta_query' => array( array( 'key' => '_elementor_template_type', 'value' => $familia, 'compare' => 'IN' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
@@ -425,11 +542,17 @@ add_action( 'wp_loaded', 'tt_voucher_regenerar_condicoes_pendente' );
  * Com modulos, só as peças pedidas mudam — é o que permite trocar um site no ar parte por parte:
  * formulários só os pedidos, menus só com cabeçalho/rodapé/menu do celular, página do blog só com o
  * arquivo do blog e o Kit do Elementor (cores e fontes globais) só na instalação completa.
+ *
+ * Site com layout próprio (AV Turismo, 15/10/2026): cabeçalho, rodapé, menu do celular e blog só entram onde o
+ * site não tem modelo publicado no mesmo lugar — o do site fica com as condições dele. assumir_layout (bool)
+ * passa por cima disso (o plugin assume o lugar e tira a condição do modelo do site, com backup).
+ * Páginas genéricas (Sobre, Contato, Cotação, obrigado) não são criadas se o site já tem uma equivalente.
  */
 function tt_voucher_instalar( $opcoes = array() ) {
 	$substituir = ! empty( $opcoes['substituir'] );
+	$assumir    = ! empty( $opcoes['assumir_layout'] );
 	$so         = isset( $opcoes['modulos'] ) && is_array( $opcoes['modulos'] ) ? $opcoes['modulos'] : null;
-	$rel        = array( 'criados' => array(), 'atualizados' => array(), 'conflitos' => array(), 'avisos' => array() );
+	$rel        = array( 'criados' => array(), 'atualizados' => array(), 'conflitos' => array(), 'mantidos' => array(), 'avisos' => array() );
 	$dep        = tt_voucher_dependencias();
 	if ( ! $dep['elementor'] || ! $dep['elementor_pro'] ) {
 		return new WP_Error( 'sem_elementor', 'Elementor e Elementor Pro (ou PRO Elements) precisam estar ativos.' );
@@ -444,8 +567,37 @@ function tt_voucher_instalar( $opcoes = array() ) {
 
 	tt_voucher_instalar_imagens( $ids, $rel );
 
+	// 1) esqueleto das páginas  2) formulários  3) modelos  4) menus  5) conteúdo das páginas
+	$docs        = array();
+	$docs_titulo = array();
+	foreach ( $indice['docs'] as $d ) {
+		if ( $quer( $d['chave'] ) ) {
+			$docs[ $d['chave'] ]        = tt_voucher_modelo( $d['chave'] );
+			$docs_titulo[ $d['chave'] ] = isset( $docs[ $d['chave'] ]['titulo'] ) ? $docs[ $d['chave'] ]['titulo'] : $d['chave'];
+		}
+	}
+	$docs = array_filter( $docs );
+
+	// Peças do layout: o modelo que o site já tem no lugar fica como está.
+	foreach ( tt_voucher_pecas_do_site() as $chave ) {
+		if ( 'menu-popup' === $chave || ! isset( $docs[ $chave ] ) || $assumir ) {
+			continue;
+		}
+		$dono = tt_voucher_modelo_do_site( $docs[ $chave ], $ids );
+		if ( $dono ) {
+			unset( $docs[ $chave ] );
+			$rel['mantidos'][] = "{$docs_titulo[ $chave ]}: o site já tem o modelo #$dono (" . get_the_title( $dono ) . ') — não instalado, condições do site intactas.';
+		}
+	}
+	// O menu do celular só serve ao cabeçalho do plugin.
+	$header_vivo = ! empty( $ids['docs']['header'] ) && tt_voucher_vivo( $ids['docs']['header'] );
+	if ( isset( $docs['menu-popup'] ) && ! isset( $docs['header'] ) && ( $quer( 'header' ) || ! $header_vivo ) ) {
+		unset( $docs['menu-popup'] );
+		$rel['mantidos'][] = 'Menu (celular): não instalado — só serve ao cabeçalho do plugin.';
+	}
+
 	// Página do blog (lista de posts), quando o site usa página inicial estática.
-	if ( $quer( 'blog-arquivo' ) && ! get_option( 'page_for_posts' ) && 'page' === get_option( 'show_on_front' ) ) {
+	if ( isset( $docs['blog-arquivo'] ) && ! get_option( 'page_for_posts' ) && 'page' === get_option( 'show_on_front' ) ) {
 		$blog = get_page_by_path( 'blog', OBJECT, 'page' );
 		$blog_id = $blog ? $blog->ID : wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Blog', 'post_name' => 'blog' ) );
 		if ( $blog_id && ! is_wp_error( $blog_id ) ) {
@@ -454,17 +606,20 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		}
 	}
 
-	// 1) esqueleto das páginas  2) formulários  3) modelos  4) menus  5) conteúdo das páginas
-	$docs = array();
-	foreach ( $indice['docs'] as $d ) {
-		if ( $quer( $d['chave'] ) ) {
-			$docs[ $d['chave'] ] = tt_voucher_modelo( $d['chave'] );
+	foreach ( $docs as $chave => $doc ) {
+		if ( 'page' !== $doc['tipo'] ) {
+			continue;
 		}
-	}
-	foreach ( $docs as $doc ) {
-		if ( $doc && 'page' === $doc['tipo'] ) {
-			tt_voucher_garantir_pagina( $doc, $ids, $rel, $substituir );
+		// Obrigado da newsletter só com o rodapé ou a página de contato do plugin (onde fica o formulário).
+		$com_newsletter = isset( $docs['footer'] )
+			|| ( ! empty( $ids['docs']['footer'] ) && tt_voucher_vivo( $ids['docs']['footer'] ) )
+			|| ( ! empty( $ids['docs']['contato'] ) && tt_voucher_vivo( $ids['docs']['contato'] ) );
+		if ( 'obrigado-newsletter' === $chave && ! $substituir && ! $com_newsletter && empty( $ids['docs'][ $chave ] ) ) {
+			unset( $docs[ $chave ] );
+			$rel['conflitos'][] = 'Página de obrigado da newsletter não criada: o rodapé e a página de contato do plugin não estão instalados.';
+			continue;
 		}
+		tt_voucher_garantir_pagina( $doc, $ids, $rel, $substituir );
 	}
 	$forms = array_values( array_filter( $indice['forms'], $quer ) );
 	if ( $forms && $dep['jetformbuilder'] ) {
@@ -480,7 +635,7 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		}
 	}
 	// Os menus do plugin só entram com o cabeçalho/rodapé; depois disso são refeitos a cada peça (ganham a página nova).
-	if ( $quer( 'header' ) || $quer( 'footer' ) || $quer( 'menu-popup' ) || ! empty( $ids['menus'] ) ) {
+	if ( isset( $docs['header'] ) || isset( $docs['footer'] ) || isset( $docs['menu-popup'] ) || ! empty( $ids['menus'] ) ) {
 		tt_voucher_instalar_menus( $ids, $rel );
 	}
 	foreach ( $ordem as $chave ) {
@@ -503,9 +658,11 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		update_option( 'tt_voucher_captacao', 1 );
 	}
 	update_option( 'tt_roteiros_versao_modelos', TT_VOUCHER_VERSAO_MODELOS );
-	if ( null === $so ) {
+	// Kit (cores e fontes globais) só quando o cabeçalho do plugin entrou: senão mudaria o visual do site.
+	if ( null === $so && isset( $docs['header'] ) ) {
 		tt_voucher_estilo_no_kit( tt_voucher_estilo() );
 	}
+	$rel['conflitos'] = array_values( array_unique( $rel['conflitos'] ) );
 	tt_voucher_limpar_cache();
 	flush_rewrite_rules( true );
 	$rel['ids'] = $ids;

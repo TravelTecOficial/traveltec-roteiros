@@ -146,3 +146,11 @@ painel uma vez (o menu se completa).
 (Datas da viagem, Passageiros...) deixam de sair brancos no fundo claro.
 
 2.3.4: página do destino com o cabeçalho transparente sobre a foto (como roteiros e posts), que ganha fundo ao rolar.
+
+2.3.5: instalar num site que já tem layout próprio não muda mais o visual dele (AV Turismo, 15/10/2026). Cabeçalho,
+rodapé, menu do celular e blog (arquivo e post) só entram onde o site não tem modelo publicado no mesmo lugar — o do
+site fica com as condições dele, e o relatório diz "Mantido o do site". Roteiros e destinos entram normalmente.
+Sobre, Contato, Cotação e páginas de obrigado não são criadas se o site já tem a equivalente (/quem-somos/,
+/fale-conosco/, /orcamento/...). Menus do tema, cores/fontes do Kit e a página do blog só mudam junto com o cabeçalho
+ou o blog do plugin. Para trocar de propósito: marque "Trocar o cabeçalho/rodapé/blog que o site já tem" (painel) ou
+assumir_layout=true (API).
