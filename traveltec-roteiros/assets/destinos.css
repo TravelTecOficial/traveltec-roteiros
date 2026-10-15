@@ -6,6 +6,10 @@
 body h2.tt-destino-titulo{font-size:clamp(24px,2.4vw,30px);line-height:1.2}
 body h3.tt-destino-subtitulo{font-size:20px;line-height:1.3}
 body h4.tt-destino-clima__estacao{font-size:17px;line-height:1.3}
+/* Formulário de cotação dentro da página do destino: o título dele segue o tamanho das seções e os subtítulos usam a
+   cor do texto (o formulário foi pensado para o fundo escuro da página de cotação, onde eles são brancos). */
+body #tt-destino-cotacao h2.wp-block-heading{font-size:20px;line-height:1.3;margin:24px 0 12px}
+body #tt-destino-cotacao h3.wp-block-heading,body #tt-destino-cotacao h4.wp-block-heading{color:inherit;line-height:1.3;margin:24px 0 10px}
 .tt-destino-secao>.tt-destino-titulo+.tt-destino-subtitulo{margin-top:8px}
 .tt-destino-texto>:last-child{margin-bottom:0}
 .tt-destino-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}

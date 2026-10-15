@@ -141,3 +141,6 @@ e a chamada final). Títulos das seções da página do destino no tamanho do si
 Menu do site: toda parte instalada entra sozinha (Destinos, Experiências, Roteiros, Sobre, Cotação, Contato), no lugar
 certo da ordem, mesmo antes de ter conteúdo. Depois de atualizar: reinstale a parte Destinos (troca a lista) e abra o
 painel uma vez (o menu se completa).
+
+2.3.3: formulário de cotação dentro da página do destino: o título dele não fica mais gigante e os subtítulos
+(Datas da viagem, Passageiros...) deixam de sair brancos no fundo claro.

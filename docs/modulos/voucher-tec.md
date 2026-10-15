@@ -177,6 +177,8 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   Menu do site: **toda parte instalada entra no menu do cabeçalho** (decisão do dono: "incluir no menu as opções quando
   habilitadas"), mesmo sem conteúdo, na ordem Home, Destinos, Experiências, Roteiros, Sobre, Cotação, Contato
   (`tt_voucher_menu_ordem`); roteiro publicado também liga o menu.
+- [x] **2.3.3** (15/10/2026): formulário de cotação na página do destino (DSelection): H2 do formulário com 20px e
+  subtítulos H4 com a cor do texto (eram brancos, pensados para o fundo escuro da página de cotação).
 
 ## Decisões do dono
 

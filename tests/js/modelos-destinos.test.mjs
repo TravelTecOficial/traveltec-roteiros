@@ -73,6 +73,10 @@ test('página do destino: títulos das seções no tamanho do site, acima do est
   assert.match(css, /body h2\.tt-destino-titulo\{[^}]*font-size:clamp\(24px,2\.4vw,30px\)/);
   assert.match(css, /body h3\.tt-destino-subtitulo\{[^}]*font-size:20px/);
   assert.match(css, /body h4\.tt-destino-clima__estacao\{[^}]*font-size:17px/);
+  // formulário de cotação dentro da página: o título dele não pode ficar gigante (H2 do Kit) nem os subtítulos brancos
+  // (cor pensada para o fundo escuro da página de cotação) — DSelection, 15/10/2026
+  assert.match(css, /body #tt-destino-cotacao h2\.wp-block-heading\{[^}]*font-size:20px/);
+  assert.match(css, /body #tt-destino-cotacao h4\.wp-block-heading\{[^}]*color:inherit/);
 });
 
 test('card: sem data nem autor (isso é de post de blog) e com a subchamada logo abaixo do nome', () => {
