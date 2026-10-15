@@ -132,3 +132,6 @@ práticas; O que fazer; Onde ficar; Galeria; FAQ (também marcado para o Google,
 de cotação (sem ele, botão do WhatsApp do site). Seção sem dado não aparece. O card da lista mostra a subchamada.
 API: /wp-json/wp/v2/destinos, "acf" com os campos novos; listas vão e voltam como array. Depois de atualizar,
 reinstale a parte em Voucher Tec › Configuração › Destinos (troca a página e o card).
+
+2.3.1: /destinos/ podia abrir com o modelo do blog ("Experiências") em vez da lista de destinos: o Elementor
+perdia a condição da lista ao instalar a aba Destinos. Ao atualizar, o site se corrige na primeira visita ao painel.

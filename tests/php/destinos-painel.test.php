@@ -36,3 +36,14 @@ $docs = array(
 );
 igual( array( 'card', 'destino-card', 'lista', 'destinos-lista', 'contato' ), tt_voucher_ordem_docs( $docs ), 'cards (loop-item) primeiro; o resto na ordem do índice; modelo que não carregou fica de fora' );
 igual( array(), tt_voucher_ordem_docs( array() ), 'sem documentos, lista vazia' );
+
+/* ---------------------------------------------------------------- 2.3.1: condição da lista de destinos no cache do Elementor */
+// DSelection, 15/10/2026: /destinos/ abria com o modelo do blog. O cache de condições foi refeito na instalação com o
+// tipo ainda "desligado" (sem show_in_nav_menus), e o Elementor descartou include/archive/destinos_archive.
+contem( 'function tt_voucher_regenerar_condicoes(', $inst, 'refazer o cache de condições virou função' );
+$pos_tipo  = strpos( $inst, 'tt_destinos_registrar_tipo( true );' );
+$pos_cache = strpos( $inst, 'tt_voucher_regenerar_condicoes( $rel );' );
+ok( false !== $pos_tipo && false !== $pos_cache && $pos_tipo < $pos_cache, 'instalação: liga o tipo Destinos antes de refazer o cache de condições' );
+contem( "update_option( 'tt_voucher_regenerar_condicoes', 1 );", $inst, 'instalação: pede outro refazer do cache na próxima visita (o Elementor pode ter lido os tipos antes)' );
+contem( "add_action( 'wp_loaded', 'tt_voucher_regenerar_condicoes_pendente' );", $inst, 'o pedido pendente é atendido no wp_loaded' );
+ok( (bool) preg_match( '/function tt_voucher_ajustes_da_versao\(\) \{.*?tt_destinos_ativo\(\).*?tt_voucher_regenerar_condicoes\(\);.*?\n\}/s', $aj ), 'atualizar o plugin: site com destinos ligados refaz o cache (conserta quem já instalou)' );
