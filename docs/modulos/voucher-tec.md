@@ -167,6 +167,10 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 - Ficou para depois (revisão de 11/10/2026): faixa do formulário aparece vazia sem formulário de cotação instalado;
   menus criados pelo próprio plugin só ganham "Destinos" na instalação seguinte de uma parte; barra invertida some ao
   salvar (igual aos roteiros); `banner-destinos.jpg` entra na Biblioteca a cada reinstalação parcial.
+- [x] **2.3.1** (15/10/2026): `/destinos/` do DSelection abria com o modelo do blog (#1167, "Experiências") — o cache
+  de condições do Elementor foi refeito na instalação com o tipo ainda desligado e perdeu `destinos_archive`. Agora o
+  tipo é ligado antes do cache, o cache é refeito de novo na visita seguinte (`wp_loaded`) e, ao atualizar, uma vez no
+  painel (`tt_voucher_ajustes_da_versao`), o que conserta os sites que já tinham instalado.
 
 ## Decisões do dono
 

@@ -389,6 +389,33 @@ function tt_voucher_ordem_docs( $docs ) {
 	return array_merge( $cards, $outros );
 }
 
+/** O Elementor Pro só reconhece as condições dos modelos depois que o cache dele é refeito. */
+function tt_voucher_regenerar_condicoes( &$rel = null ) {
+	try {
+		if ( ! class_exists( '\\ElementorPro\\Plugin' ) ) {
+			return;
+		}
+		$modulo = \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
+		if ( $modulo ) {
+			$modulo->get_conditions_manager()->get_cache()->regenerate();
+		}
+	} catch ( \Throwable $e ) {
+		if ( is_array( $rel ) ) {
+			$rel['avisos'][] = 'Cache de condições do Elementor: ' . $e->getMessage();
+		}
+	}
+}
+
+/** Pedido da instalação para refazer o cache numa visita seguinte, com todos os tipos de conteúdo já registrados. */
+function tt_voucher_regenerar_condicoes_pendente() {
+	if ( ! get_option( 'tt_voucher_regenerar_condicoes' ) ) {
+		return;
+	}
+	delete_option( 'tt_voucher_regenerar_condicoes' );
+	tt_voucher_regenerar_condicoes();
+}
+add_action( 'wp_loaded', 'tt_voucher_regenerar_condicoes_pendente' );
+
 /* ------------------------------------------------------------------ Instalação completa */
 
 /**
@@ -466,15 +493,12 @@ function tt_voucher_instalar( $opcoes = array() ) {
 	// páginas novas entram nos menus que o site já usa (ajustes.php)
 	tt_voucher_menus_ligar( $rel );
 
-	// O Elementor Pro só reconhece as condições depois que o cache dele é refeito.
-	try {
-		$modulo = \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
-		if ( $modulo ) {
-			$modulo->get_conditions_manager()->get_cache()->regenerate();
-		}
-	} catch ( \Throwable $e ) {
-		$rel['avisos'][] = 'Cache de condições do Elementor: ' . $e->getMessage();
-	}
+	// Com a aba Destinos instalada, o tipo passa a responder em /destinos/. Liga ANTES de refazer o cache de condições:
+	// com o tipo desligado o Elementor descarta include/archive/destinos_archive (DSelection, 15/10/2026).
+	tt_destinos_registrar_tipo( true );
+	tt_voucher_regenerar_condicoes( $rel );
+	// O Elementor pode ter lido os tipos de conteúdo antes, nesta mesma visita: refaz de novo na próxima.
+	update_option( 'tt_voucher_regenerar_condicoes', 1 );
 	if ( $forms && $dep['jetformbuilder'] ) {
 		update_option( 'tt_voucher_captacao', 1 );
 	}
@@ -483,8 +507,6 @@ function tt_voucher_instalar( $opcoes = array() ) {
 		tt_voucher_estilo_no_kit( tt_voucher_estilo() );
 	}
 	tt_voucher_limpar_cache();
-	// Com a aba Destinos instalada, o tipo passa a responder em /destinos/ — registra de novo antes de refazer as regras.
-	tt_destinos_registrar_tipo( true );
 	flush_rewrite_rules( true );
 	$rel['ids'] = $ids;
 	return $rel;

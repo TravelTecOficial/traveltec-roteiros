@@ -225,6 +225,10 @@ function tt_voucher_ajustes_da_versao() {
 	if ( tt_voucher_ids_documentos() ) {
 		tt_voucher_menus_ligar();
 	}
+	// Sites que instalaram Destinos antes da 2.3.1 ficaram com a lista /destinos/ fora do cache de condições.
+	if ( function_exists( 'tt_destinos_ativo' ) && tt_destinos_ativo() ) {
+		tt_voucher_regenerar_condicoes();
+	}
 	if ( $mudou ) {
 		tt_voucher_limpar_cache();
 	}
