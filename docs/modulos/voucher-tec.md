@@ -181,6 +181,8 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   subtítulos H4 com a cor do texto (eram brancos, pensados para o fundo escuro da página de cotação).
 - [x] **2.3.4** (15/10/2026): página do destino ganha `tt-topo-transparente` (cabeçalho transparente sobre a foto, como
   roteiros e posts) — regra em `tt_voucher_topo_transparente()` (`includes/dados.php`).
+- [x] **Aprovado pelo dono em 15/10/2026** ("está ok"), conferido no DSelection: 2.3.1–2.3.4 (lista no padrão, títulos,
+  formulário, cabeçalho transparente, menu automático).
 
 ## Decisões do dono
 
