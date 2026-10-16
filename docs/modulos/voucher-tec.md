@@ -200,6 +200,13 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   - Para trocar de propósito: opção `assumir_layout` (checkbox no painel, parâmetro na API) — comportamento antigo.
   - Testes: `tests/php/instalador.test.php` (caso AV Turismo). **Falta**: conferir num site no ar (instalar a 2.3.5 num
     clone com Theme Builder próprio e ver o relatório "Mantido o do site").
+- [x] **2.3.6** (16/10/2026, pronta; release depois do OK do dono): `tt_destinos_limpar_cache` (`includes/destinos.php`)
+  limpa no LiteSpeed o destino (`litespeed_purge_post`), as listas do tipo (`litespeed_purge_posttype`) e `/destinos/`
+  (`litespeed_purge_url`) ao publicar, atualizar, despublicar ou mandar para a lixeira (`transition_post_status`) e depois
+  da gravação pela API (`rest_after_insert_destinos`); uma vez por destino por requisição; nunca `litespeed_purge_all`.
+  Achado na Caanon (`/destinos/bangkok-tailandia/` não aparecia na lista). O CSS do Elementor da lista não muda com
+  destino novo (a grade é montada na hora), então não é limpo. Teste: distribuir um destino pelo Cliente Ideal e abrir
+  `/destinos/` em janela anônima.
 
 ## Decisões do dono
 

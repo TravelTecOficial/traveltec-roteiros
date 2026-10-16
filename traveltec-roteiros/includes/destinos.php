@@ -98,6 +98,44 @@ add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 	}
 }, 20, 3 );
 
+/* ------------------------------------------------------------------ Cache (LiteSpeed) */
+
+/**
+ * Destino publicado, atualizado ou fora do ar: limpa no LiteSpeed a página dele, as listas do tipo e /destinos/
+ * (a lista é montada pelo Elementor e pode não ser tratada como arquivo do tipo). Sem LiteSpeed, os do_action não
+ * fazem nada. O LiteSpeed manda a limpeza no fim da resposta, então uma vez por destino por requisição basta —
+ * mesmo chamando antes de a API gravar os campos acf. Caanon, 16/10/2026: destino novo não aparecia em /destinos/.
+ */
+function tt_destinos_limpar_cache( $post_id ) {
+	$post_id = (int) $post_id;
+	$feitos  = isset( $GLOBALS['tt_cache_destinos'] ) ? (array) $GLOBALS['tt_cache_destinos'] : array();
+	if ( ! $post_id || isset( $feitos[ $post_id ] ) ) {
+		return;
+	}
+	$feitos[ $post_id ] = true;
+	do_action( 'litespeed_purge_post', $post_id );
+	if ( empty( $feitos['lista'] ) ) {
+		$feitos['lista'] = true;
+		do_action( 'litespeed_purge_posttype', 'destinos' );
+		do_action( 'litespeed_purge_url', home_url( '/destinos/' ) );
+	}
+	$GLOBALS['tt_cache_destinos'] = $feitos;
+}
+
+// Publicar, atualizar (o reenvio da API é um update do mesmo post), despublicar, lixeira — e a edição no painel.
+add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
+	if ( isset( $post->post_type, $post->ID ) && 'destinos' === $post->post_type && ( 'publish' === $novo || 'publish' === $antigo ) ) {
+		tt_destinos_limpar_cache( $post->ID );
+	}
+}, 10, 3 );
+
+// Depois de a API gravar os campos "acf".
+add_action( 'rest_after_insert_destinos', function ( $post ) {
+	if ( isset( $post->ID ) && 'publish' === $post->post_status ) {
+		tt_destinos_limpar_cache( $post->ID );
+	}
+} );
+
 /**
  * Campo "acf" na API REST — mesmo formato dos roteiros: { title, excerpt, acf: { ..., imagem_destaque } }.
  * Leitura: listas como array (perfis, o_que_fazer, galeria e as listas JSON), versao como número. Gravação: aceita

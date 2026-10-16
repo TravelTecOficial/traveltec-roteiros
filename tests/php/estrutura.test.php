@@ -48,7 +48,7 @@ ok( array_search( 'includes/opcoes.php', $m[1], true ) < array_search( 'includes
 preg_match( '/^\s*\*\s*Version:\s*(\S+)/m', $principal, $cab );
 preg_match( "/define\( 'TT_ROTEIROS_VERSION', '([^']+)' \)/", $principal, $const );
 igual( $cab[1], $const[1], 'versão do cabeçalho = constante' );
-ok( version_compare( $const[1], '2.3.5', '>=' ), 'versão é 2.3.5 ou mais' );
+ok( version_compare( $const[1], '2.3.6', '>=' ), 'versão é 2.3.6 ou mais' );
 
 /* ---------------------------------------------------------------- caixa antiga fora, menu com permissão certa */
 ok( false === strpos( $principal, "'add_meta_boxes'" ), 'o plugin principal não registra mais a caixa antiga' );
