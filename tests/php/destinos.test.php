@@ -234,3 +234,46 @@ igual( 1, $GLOBALS['tt_ligou'], 'primeiro roteiro publicado (lista de roteiros i
 $GLOBALS['tt_vivos'] = array();
 $publicar( 'publish', 'draft', 'roteiros' );
 igual( 1, $GLOBALS['tt_ligou'], 'sem a lista de roteiros instalada, publicar roteiro não mexe nos menus' );
+
+/* ---------------------------------------------------------------- 2.3.6: cache do LiteSpeed ao publicar/atualizar destino */
+// Caanon, 16/10/2026: destino publicado pela API não aparecia em /destinos/ (cópia velha do LiteSpeed, 7 dias).
+$GLOBALS['tt_disparos'] = array();
+function do_action( $gancho, ...$args ) { $GLOBALS['tt_disparos'][] = $gancho . '(' . implode( ',', $args ) . ')'; }
+function home_url( $p = '' ) { return 'https://exemplo.test' . $p; }
+$limpeza = array( 'litespeed_purge_post(41)', 'litespeed_purge_posttype(destinos)', 'litespeed_purge_url(https://exemplo.test/destinos/)' );
+ok( isset( $GLOBALS['tt_acoes']['rest_after_insert_destinos'] ), 'limpa depois de a API gravar o destino (com os campos acf)' );
+
+$GLOBALS['tt_cache_destinos'] = array();
+$GLOBALS['tt_disparos']       = array();
+foreach ( $GLOBALS['tt_acoes']['rest_after_insert_destinos'] as $cb ) {
+	$cb( (object) array( 'ID' => 41, 'post_type' => 'destinos', 'post_status' => 'publish' ), null, true );
+}
+igual( $limpeza, $GLOBALS['tt_disparos'], 'API: limpa o destino, as listas do tipo e /destinos/' );
+$publicar = function ( $novo, $antigo, $tipo, $id = 41 ) {
+	foreach ( $GLOBALS['tt_acoes']['transition_post_status'] as $cb ) {
+		$cb( $novo, $antigo, (object) array( 'ID' => $id, 'post_type' => $tipo ) );
+	}
+};
+$publicar( 'publish', 'publish', 'destinos' );
+igual( $limpeza, $GLOBALS['tt_disparos'], 'mesma requisição: não limpa de novo o mesmo destino' );
+
+$GLOBALS['tt_cache_destinos'] = array();
+$GLOBALS['tt_disparos']       = array();
+$publicar( 'publish', 'publish', 'destinos' );
+igual( $limpeza, $GLOBALS['tt_disparos'], 'destino atualizado (reenvio): limpa' );
+$GLOBALS['tt_cache_destinos'] = array();
+$GLOBALS['tt_disparos']       = array();
+$publicar( 'trash', 'publish', 'destinos' );
+igual( $limpeza, $GLOBALS['tt_disparos'], 'destino que sai do ar (lixeira): limpa' );
+$GLOBALS['tt_cache_destinos'] = array();
+$GLOBALS['tt_disparos']       = array();
+$publicar( 'draft', 'draft', 'destinos' );
+$publicar( 'publish', 'publish', 'roteiros' );
+foreach ( $GLOBALS['tt_acoes']['rest_after_insert_destinos'] as $cb ) {
+	$cb( (object) array( 'ID' => 41, 'post_type' => 'destinos', 'post_status' => 'draft' ), null, true );
+}
+igual( array(), $GLOBALS['tt_disparos'], 'rascunho de destino ou outro tipo: nada a limpar' );
+$publicar( 'publish', 'draft', 'destinos', 42 );
+$publicar( 'publish', 'draft', 'destinos', 43 );
+igual( array( 'litespeed_purge_post(42)', 'litespeed_purge_posttype(destinos)', 'litespeed_purge_url(https://exemplo.test/destinos/)', 'litespeed_purge_post(43)' ), $GLOBALS['tt_disparos'], 'vários destinos na mesma requisição: cada página uma vez, a lista uma vez só' );
+ok( false === strpos( file_get_contents( '/p/includes/destinos.php' ), 'litespeed_purge_all' ), 'nunca limpa o cache inteiro do site' );

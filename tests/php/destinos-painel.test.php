@@ -17,7 +17,7 @@ contem( 'function tt_voucher_aba_destinos( $st )', $admin, 'a aba tem a sua fun�
 contem( 'function tt_voucher_pagina_em_conflito( $caminho )', $admin, 'aviso de página no mesmo endereço' );
 contem( 'tt_destino_form_id()', $admin, 'a aba avisa quando falta o formulário de cotação' );
 contem( 'tt_destinos_registrar_tipo();', $inst, 'a instalação registra o tipo antes de refazer os endereços' );
-contem( "$pag( 'destinos-lista' ) && function_exists( 'tt_destinos_ativo' ) && tt_destinos_ativo()", $aj, 'menu do site: Destinos entra com os destinos ligados (2.3.2: mesmo sem destino publicado, decisão do dono)' );
+contem( "\$pag( 'destinos-lista' ) && function_exists( 'tt_destinos_ativo' ) && tt_destinos_ativo()", $aj, 'menu do site: Destinos entra com os destinos ligados (2.3.2: mesmo sem destino publicado, decisão do dono)' );
 contem( 'tt_destinos_registrar_tipo( true );', $inst, 'instalar a aba Destinos liga os endereços do tipo antes de refazer as regras' );
 contem( "array( 'Destinos', home_url( '/destinos/' ), 0 )", $inst, 'menus do próprio plugin: Destinos entra' );
 contem( 'tt_destinos_ativo()', $admin, 'a aba avisa enquanto os destinos não estão ligados no site' );

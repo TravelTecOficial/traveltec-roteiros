@@ -154,3 +154,6 @@ Sobre, Contato, Cotação e páginas de obrigado não são criadas se o site já
 /fale-conosco/, /orcamento/...). Menus do tema, cores/fontes do Kit e a página do blog só mudam junto com o cabeçalho
 ou o blog do plugin. Para trocar de propósito: marque "Trocar o cabeçalho/rodapé/blog que o site já tem" (painel) ou
 assumir_layout=true (API).
+
+2.3.6: destino publicado, atualizado ou tirado do ar (pela API do Cliente Ideal ou pelo painel) limpa no LiteSpeed a
+página dele e a lista /destinos/ — antes o destino novo só aparecia quando o cache vencia. Não limpa o cache inteiro.
