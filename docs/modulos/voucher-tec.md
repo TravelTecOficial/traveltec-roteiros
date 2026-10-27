@@ -208,13 +208,13 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
   destino novo (a grade é montada na hora), então não é limpo. Teste: distribuir um destino pelo Cliente Ideal e abrir
   `/destinos/` em janela anônima.
 
-- [x] **2.4.0 — link de afiliado da Viator nos passeios do destino** (27/10/2026, **pronta no repositório, NÃO publicada**: sem release, aguarda o OK do dono). Pedido do dono: "no item da atração, aparece o link para a VIATOR já com o parametro para o programa de afiliados"; decisão: **só o código da própria agência** (sem código padrão da TravelTec), sem código = passeio sem link.
+- [x] **2.4.0 — link de afiliado da Viator nos passeios do destino** (27/10/2026, **release v2.4.0 publicada** com OK do dono no mesmo dia; os sites atualizam pelo painel). Pedido do dono: "no item da atração, aparece o link para a VIATOR já com o parametro para o programa de afiliados"; decisão: **só o código da própria agência** (sem código padrão da TravelTec), sem código = passeio sem link.
   - Voucher Tec › Configuração › Destinos: campo "Código de afiliado da Viator" (option `tt_voucher_viator_pid`, formato `P` + 5–12 dígitos; inválido não grava e avisa). Também em `aplicar` (`viator_pid`) e em `status` (`opcoes.viator_pid`).
   - Passeio ganha o sub-campo `url` (regra `url` em `tt_destino_listas()`): só https de viator.com, gravado **sem query** (o `productUrl` da API traz o pid da TravelTec). Coluna "Link na Viator" no cadastro.
   - Página: `tt_destino_passeios_com_link()` + botão "Ver passeio" (`.tt-destino-card__link`, `rel="sponsored noopener"`, outra aba) com `?pid=<código>&mcid=42383&medium=link`. Sem reinstalar modelos.
   - Cliente Ideal manda o `url` desde 27/10/2026 (DEV; `destinos.md` 1.3.0). Destinos já distribuídos só ganham o endereço se forem gerados de novo — ou colando o link à mão no cadastro.
   - Testes: `tests/php/destino-dados.test.php`, `destinos.test.php` e `sintaxe.test.php` (novo: sintaxe de todos os PHP). Zip: `dist/traveltec-roteiros.zip` 2.4.0.
-  - **Falta**: OK do dono → release v2.4.0 → num site com destinos: código de afiliado na Configuração e conferir o botão.
+  - **Falta**: num site com destinos: atualizar para a 2.4.0, preencher o código de afiliado e conferir o botão num destino gerado depois de 27/10/2026.
 
 ## Decisões do dono
 
@@ -246,7 +246,7 @@ Rede Turística. O MCP conecta, aplica os dados do Cliente Ideal e faz só os aj
 
 ## Próximo passo
 
-Dono aprova a 2.4.0 (afiliado Viator) → release v2.4.0 → teste num site com destino que tenha passeios com link.
+2.4.0 publicada: teste num site com destino que tenha passeios com link (código de afiliado da agência na Configuração › Destinos).
 Dono aprova a 2.3.0 (Destinos v2) → release → site-modelo com destino v1 e v2. Dono confere a tela de cadastro de destinos.
 Depois: automação dos destinos v2 (Supabase + n8n / Cliente Ideal).
 Antes de instalar a aba Destinos no Ajimex ou na Zizi Quatti: passar as páginas de destino para o cadastro.
