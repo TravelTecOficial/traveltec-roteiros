@@ -288,7 +288,7 @@ add_shortcode( 'tt_destino_o_que_fazer', function ( $atts ) {
 	$passeios = tt_destino_json_ler( 'passeios', tt_destino_meta( 'passeios' ) );
 	return tt_destino_secao_html( 'o-que-fazer', $atts['titulo'], array(
 		tt_destino_cards_html( tt_destino_com_fotos( tt_destino_json_ler( 'pontos_turisticos', tt_destino_meta( 'pontos_turisticos' ) ) ), 'nome', 'descricao', 'Pontos turísticos' ),
-		count( $passeios ) >= 3 ? tt_destino_cards_html( tt_destino_com_fotos( $passeios ), 'titulo', 'duracao', 'Passeios', 'Foto: Viator' ) : '',
+		count( $passeios ) >= 3 ? tt_destino_cards_html( tt_destino_passeios_com_link( tt_destino_com_fotos( $passeios ), tt_destino_viator_pid() ), 'titulo', 'duracao', 'Passeios', 'Foto: Viator' ) : '',
 		tt_destino_gastronomia_html( tt_destino_meta( 'gastronomia' ), 'Gastronomia' ),
 		tt_destino_lista_html( tt_destino_meta( 'o_que_fazer' ) ),
 	) );

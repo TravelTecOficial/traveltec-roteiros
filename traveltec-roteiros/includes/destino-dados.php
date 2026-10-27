@@ -57,7 +57,7 @@ function tt_destino_listas() {
 	return array(
 		'clima'             => array( 4, array( 'estacao' => 'estacao', 'meses' => 40, 'max' => 'int', 'min' => 'int', 'chuva_mm' => 'int' ), array( 'estacao' ) ),
 		'pontos_turisticos' => array( 8, array( 'nome' => 80, 'descricao' => 160, 'foto' => 'id' ), array( 'nome' ) ),
-		'passeios'          => array( 6, array( 'titulo' => 120, 'duracao' => 40, 'foto' => 'id' ), array( 'titulo' ) ),
+		'passeios'          => array( 6, array( 'titulo' => 120, 'duracao' => 40, 'foto' => 'id', 'url' => 'url' ), array( 'titulo' ) ),
 		'gastronomia'       => array( 6, array( 'nome' => 80, 'descricao' => 160 ), array( 'nome' ) ),
 		'onde_ficar'        => array( 5, array( 'bairro' => 80, 'descricao' => 240, 'perfil' => 60 ), array( 'bairro' ) ),
 		'faq'               => array( 8, array( 'pergunta' => 160, 'resposta' => 600 ), array( 'pergunta', 'resposta' ) ),
@@ -193,6 +193,7 @@ function tt_destino_inteiro( $valor ) {
 /**
  * Itens limpos de uma lista JSON ($chave em tt_destino_listas()). Aceita array (REST) ou o texto JSON gravado.
  * Sub-campo de texto: sem HTML e cortado no limite. 'int': inteiro ou null. 'id': id positivo ou null.
+ * 'url': endereço da Viator sem parâmetros, ou ''.
  * Item sem os obrigatórios sai; acima do máximo, sobra fora. Clima: uma linha por estação, na ordem do ano.
  */
 function tt_destino_json_ler( $chave, $valor ) {
@@ -221,6 +222,8 @@ function tt_destino_json_ler( $chave, $valor ) {
 			} elseif ( 'id' === $regra ) {
 				$id             = tt_destino_inteiro( $v );
 				$item[ $campo ] = $id && $id > 0 ? $id : null;
+			} elseif ( 'url' === $regra ) {
+				$item[ $campo ] = tt_destino_viator_url( $v );
 			} elseif ( 'estacao' === $regra ) {
 				$e              = is_scalar( $v ) ? strtr( strtolower( trim( (string) $v ) ), array( 'ã' => 'a' ) ) : '';
 				$item[ $campo ] = isset( $estacoes[ $e ] ) ? $e : '';
@@ -470,9 +473,54 @@ function tt_destino_info_html( $moeda, $idioma, $fuso ) {
 	return '' === $cards ? '' : '<div class="tt-destino-info">' . $cards . '</div>';
 }
 
+/* ------------------------------------------------------------------ Viator (afiliado da agência) */
+
+/**
+ * Endereço do passeio na Viator, gravado sem parâmetros: o que vem da API traz o pid da chave da TravelTec, e o pid
+ * certo é o da agência, posto só na exibição. Endereço https de viator.com (ou subdomínio); outro site: ''.
+ */
+function tt_destino_viator_url( $v ) {
+	$url    = is_scalar( $v ) ? trim( (string) $v ) : '';
+	$host   = strtolower( (string) parse_url( $url, PHP_URL_HOST ) );
+	$viator = 'viator.com' === $host || '.viator.com' === substr( $host, -11 );
+	if ( ! $viator || 'https' !== strtolower( (string) parse_url( $url, PHP_URL_SCHEME ) ) ) {
+		return '';
+	}
+	$url = preg_replace( '/[?#].*$/', '', $url );
+	return strlen( $url ) > 500 ? '' : $url;
+}
+
+/** Código de afiliado da Viator (pid, "P00…") limpo, ou '' se não tiver esse formato. */
+function tt_destino_viator_pid_limpo( $v ) {
+	$pid = strtoupper( preg_replace( '/\s+/', '', is_scalar( $v ) ? (string) $v : '' ) );
+	return preg_match( '/^P\d{5,12}$/', $pid ) ? $pid : '';
+}
+
+/** Código de afiliado da agência (Voucher Tec › Configuração › Destinos), ou '' sem código. */
+function tt_destino_viator_pid() {
+	return tt_destino_viator_pid_limpo( get_option( 'tt_voucher_viator_pid', '' ) );
+}
+
+/** Link de afiliado: o endereço do passeio com o pid da agência. Sem endereço ou sem código: ''. */
+function tt_destino_viator_link( $url, $pid ) {
+	if ( '' === (string) $url || '' === (string) $pid ) {
+		return '';
+	}
+	return $url . '?' . http_build_query( array( 'pid' => $pid, 'mcid' => '42383', 'medium' => 'link' ) );
+}
+
+/** Passeios com 'link' de afiliado (vazio sem código da agência ou sem endereço do passeio). */
+function tt_destino_passeios_com_link( $passeios, $pid ) {
+	foreach ( $passeios as $i => $p ) {
+		$passeios[ $i ]['link'] = tt_destino_viator_link( isset( $p['url'] ) ? $p['url'] : '', $pid );
+	}
+	return $passeios;
+}
+
 /**
  * Cards com foto (pontos turísticos, passeios). $itens: os da lista JSON, cada um com 'foto_url' já resolvido
  * (foto que saiu da Biblioteca: sem imagem). $titulo/$texto: sub-campos do título e da linha de baixo.
+ * Item com 'link' ganha o botão "Ver passeio" (link de afiliado da Viator, em outra aba).
  */
 function tt_destino_cards_html( $itens, $titulo, $texto, $subtitulo = '', $credito = '' ) {
 	$cards = '';
@@ -485,8 +533,11 @@ function tt_destino_cards_html( $itens, $titulo, $texto, $subtitulo = '', $credi
 				. ( '' !== $credito ? '<figcaption>' . esc_html( $credito ) . '</figcaption>' : '' ) . '</figure>'
 			: '';
 		$linha  = isset( $item[ $texto ] ) && '' !== $item[ $texto ] ? '<p>' . esc_html( $item[ $texto ] ) . '</p>' : '';
+		$link   = ! empty( $item['link'] )
+			? '<a class="tt-destino-card__link" href="' . esc_url( $item['link'] ) . '" target="_blank" rel="sponsored noopener">Ver passeio</a>'
+			: '';
 		$cards .= '<article class="tt-destino-card' . ( '' === $foto ? ' tt-destino-card--sem-foto' : '' ) . '">' . $foto
-			. '<div class="tt-destino-card__corpo"><h4>' . esc_html( $item[ $titulo ] ) . '</h4>' . $linha . '</div></article>';
+			. '<div class="tt-destino-card__corpo"><h4>' . esc_html( $item[ $titulo ] ) . '</h4>' . $linha . $link . '</div></article>';
 	}
 	return '' === $cards ? '' : tt_destino_subtitulo_html( $subtitulo ) . '<div class="tt-destino-cards">' . $cards . '</div>';
 }

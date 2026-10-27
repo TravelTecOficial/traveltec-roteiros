@@ -8,7 +8,11 @@
  * - Preço nos roteiros (aba Roteiros): 'exibir' (padrão) ou 'consulte'. Na exibição, o campo preco_de_referencia sai
  *   como "Consulte-nos" (card e página do roteiro, sem reinstalar modelos). O dado gravado no roteiro não muda.
  *
- * Também aceitas em POST /wp-json/voucher-tec/v1/aplicar: moeda_orcamento (USD|BRL) e preco_roteiros (exibir|consulte).
+ * - Código de afiliado da Viator (aba Destinos): o pid da agência ("P00…"). Com ele, cada passeio do destino que tem
+ *   o endereço na Viator ganha o botão "Ver passeio" com ?pid=<código>&mcid=42383&medium=link. Vazio: sem link.
+ *
+ * Também aceitas em POST /wp-json/voucher-tec/v1/aplicar: moeda_orcamento (USD|BRL), preco_roteiros (exibir|consulte)
+ * e viator_pid ('' apaga).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -124,6 +128,16 @@ function tt_voucher_salvar_opcoes( $entrada ) {
 		update_option( TT_VOUCHER_OPT_PRECO, $preco );
 		$rel['dados_alterados'][] = 'Preço dos roteiros: ' . ( 'consulte' === $preco ? TT_VOUCHER_TEXTO_CONSULTE : 'exibir o valor' );
 	}
+	if ( isset( $entrada['viator_pid'] ) ) {
+		$bruto = trim( sanitize_text_field( (string) $entrada['viator_pid'] ) );
+		$pid   = tt_destino_viator_pid_limpo( $bruto );
+		if ( '' !== $bruto && '' === $pid ) {
+			$rel['avisos'][] = 'Código de afiliado da Viator não gravado: use o formato P00 seguido de números (ex.: P00123456).';
+		} else {
+			update_option( 'tt_voucher_viator_pid', $pid );
+			$rel['dados_alterados'][] = '' === $pid ? 'Código de afiliado da Viator removido: os passeios ficam sem link' : 'Código de afiliado da Viator: ' . $pid;
+		}
+	}
 	return $rel;
 }
 
@@ -133,7 +147,7 @@ add_action( 'admin_post_tt_voucher_opcoes', function () {
 	}
 	check_admin_referer( 'tt_voucher_opcoes' );
 	$entrada = array();
-	foreach ( array( 'moeda_orcamento', 'preco_roteiros' ) as $campo ) {
+	foreach ( array( 'moeda_orcamento', 'preco_roteiros', 'viator_pid' ) as $campo ) {
 		if ( isset( $_POST[ $campo ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce conferido acima
 			$entrada[ $campo ] = sanitize_text_field( wp_unslash( $_POST[ $campo ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
@@ -157,4 +171,15 @@ function tt_voucher_form_opcao( $aba, $campo, $titulo, $descricao, $opcoes, $atu
 	}
 	submit_button( 'Salvar', 'secondary', 'submit', false );
 	echo '</form>';
+}
+
+/** Bloco do painel: um campo de texto e o botão Salvar. */
+function tt_voucher_form_texto( $aba, $campo, $titulo, $descricao, $atual, $exemplo = '' ) {
+	echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin:8px 0 24px;max-width:860px">';
+	wp_nonce_field( 'tt_voucher_opcoes' );
+	echo '<input type="hidden" name="action" value="tt_voucher_opcoes"><input type="hidden" name="aba" value="' . esc_attr( $aba ) . '">';
+	echo '<h2>' . esc_html( $titulo ) . '</h2><p class="description">' . esc_html( $descricao ) . '</p>';
+	echo '<p><input type="text" class="regular-text" name="' . esc_attr( $campo ) . '" value="' . esc_attr( $atual ) . '" placeholder="' . esc_attr( $exemplo ) . '"> ';
+	submit_button( 'Salvar', 'secondary', 'submit', false );
+	echo '</p></form>';
 }

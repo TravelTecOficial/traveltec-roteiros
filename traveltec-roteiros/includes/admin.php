@@ -364,6 +364,14 @@ function tt_voucher_aba_destinos( $st ) {
 	tt_voucher_aviso_site_antigo( $st );
 	tt_voucher_tabela_pecas( tt_voucher_grupos()['destinos'], $st );
 	tt_voucher_form_instalar( 'destinos', 'destinos', $st );
+	tt_voucher_form_texto(
+		'destinos',
+		'viator_pid',
+		'Código de afiliado da Viator',
+		'O código (pid) do programa de afiliados da agência na Viator. Com ele, cada passeio da página do destino ganha o botão “Ver passeio”, que leva à Viator com o seu código. Deixe vazio para mostrar os passeios sem link.',
+		tt_destino_viator_pid(),
+		'P00123456'
+	);
 }
 
 function tt_voucher_aba_experiencias( $st ) {

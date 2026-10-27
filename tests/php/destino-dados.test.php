@@ -190,3 +190,23 @@ contem( '"@type":"FAQPage"', $ld, 'faq: FAQPage' );
 contem( '"name":"Precisa de visto?"', $ld, 'faq: pergunta no JSON-LD' );
 igual( 1, substr_count( $ld, '</script>' ), 'faq: texto com </script> não fecha a tag antes da hora' );
 igual( '', tt_destino_faq_jsonld( '' ), 'sem FAQ: sem JSON-LD' );
+
+/* ---------------------------------------------------------------- Viator: link de afiliado (2.4.0) */
+igual( 'https://www.viator.com/pt-BR/tours/Lisboa/Barco/d538-123P1', tt_destino_viator_url( ' https://www.viator.com/pt-BR/tours/Lisboa/Barco/d538-123P1?pid=P00099999&mcid=42383&medium=api#x ' ), 'viator: endereço sem parâmetros (tira o pid da TravelTec)' );
+igual( 'https://viator.com/tours/x', tt_destino_viator_url( 'https://viator.com/tours/x' ), 'viator: domínio sem www' );
+igual( '', tt_destino_viator_url( 'http://www.viator.com/tours/x' ), 'viator: só https' );
+igual( '', tt_destino_viator_url( 'https://www.viator.com.golpe.test/tours/x' ), 'viator: outro site com viator.com no meio' );
+igual( '', tt_destino_viator_url( 'https://fakeviator.com/x' ), 'viator: domínio parecido' );
+igual( '', tt_destino_viator_url( array( 'x' ) ), 'viator: não texto' );
+$ps = tt_destino_json_ler( 'passeios', array( array( 'titulo' => 'T', 'url' => 'https://www.viator.com/tours/a?pid=P1' ), array( 'titulo' => 'U', 'url' => 'javascript:alert(1)' ) ) );
+igual( 'https://www.viator.com/tours/a', $ps[0]['url'], 'passeios: url limpa na leitura' );
+igual( '', $ps[1]['url'], 'passeios: url de outro site some' );
+igual( 'P00123456', tt_destino_viator_pid_limpo( ' p00 123456 ' ), 'pid: maiúscula e sem espaço' );
+igual( '', tt_destino_viator_pid_limpo( 'P00"><script>' ), 'pid: formato inválido' );
+igual( '', tt_destino_viator_link( 'https://www.viator.com/tours/a', '' ), 'link: sem código da agência, sem link' );
+igual( '', tt_destino_viator_link( '', 'P00123456' ), 'link: sem endereço, sem link' );
+igual( 'https://www.viator.com/tours/a?pid=P00123456&mcid=42383&medium=link', tt_destino_viator_link( 'https://www.viator.com/tours/a', 'P00123456' ), 'link: pid, mcid e medium' );
+$cl = tt_destino_cards_html( tt_destino_passeios_com_link( array( array( 'titulo' => 'Barco', 'duracao' => '3 h', 'url' => 'https://www.viator.com/tours/a' ), array( 'titulo' => 'Trem', 'duracao' => '', 'url' => '' ) ), 'P00123456' ), 'titulo', 'duracao', 'Passeios' );
+contem( '<a class="tt-destino-card__link" href="https://www.viator.com/tours/a?pid=P00123456&amp;mcid=42383&amp;medium=link" target="_blank" rel="sponsored noopener">Ver passeio</a>', $cl, 'cards: botão Ver passeio com o link de afiliado' );
+igual( 1, substr_count( $cl, 'tt-destino-card__link' ), 'cards: passeio sem endereço fica sem botão' );
+ok( false === strpos( tt_destino_cards_html( tt_destino_passeios_com_link( array( array( 'titulo' => 'Barco', 'url' => 'https://www.viator.com/tours/a' ) ), '' ), 'titulo', 'duracao' ), 'Ver passeio' ), 'cards: sem código da agência, nenhum botão' );

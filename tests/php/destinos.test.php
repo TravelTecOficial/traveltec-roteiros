@@ -20,6 +20,7 @@ function wpautop( $s ) { return $s; }
 function sanitize_key( $s ) { return preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $s ) ); }
 function wp_get_attachment_image_url( $id, $tam = 'thumbnail' ) { return isset( $GLOBALS['tt_anexos'][ $id ] ) ? $GLOBALS['tt_anexos'][ $id ] . '?' . $tam : false; }
 function tt_voucher_ids() { return $GLOBALS['tt_ids']; }
+function get_option( $k, $padrao = false ) { return isset( $GLOBALS['tt_opcoes'][ $k ] ) ? $GLOBALS['tt_opcoes'][ $k ] : $padrao; }
 function tt_voucher_vivo( $id ) { return in_array( $id, $GLOBALS['tt_vivos'], true ); }
 
 require '/p/includes/roteiro-dados.php';
@@ -144,6 +145,14 @@ contem( '<h3 class="tt-destino-subtitulo">Passeios</h3>', $of, 'o que fazer: 3 p
 contem( '<figcaption>Foto: Viator</figcaption>', $of, 'o que fazer: crédito da foto do passeio' );
 contem( '<article class="tt-destino-card tt-destino-card--sem-foto"><div class="tt-destino-card__corpo"><h4>Vinho</h4>', $of, 'o que fazer: foto apagada da Biblioteca, card sem imagem' );
 contem( '<strong>Bacalhau</strong>', $of, 'o que fazer: gastronomia' );
+ok( false === strpos( $of, 'Ver passeio' ), 'passeios: sem código de afiliado, sem link' );
+$GLOBALS['tt_opcoes']['tt_voucher_viator_pid'] = 'P00123456';
+$GLOBALS['tt_meta'][9]['passeios'] = '[{"titulo":"Barco","duracao":"3 h","foto":202,"url":"https://www.viator.com/tours/a?pid=P00099999"},{"titulo":"Trem","duracao":"1 dia"},{"titulo":"Vinho","duracao":"4 h"}]';
+$of2 = $sc['tt_destino_o_que_fazer']( array( 'titulo' => 'O que fazer' ) );
+contem( 'href="https://www.viator.com/tours/a?pid=P00123456&amp;mcid=42383&amp;medium=link"', $of2, 'passeios: com código, link com o pid da agência' );
+igual( 1, substr_count( $of2, 'Ver passeio' ), 'passeios: só o passeio com endereço ganha link' );
+$GLOBALS['tt_opcoes'] = array();
+$GLOBALS['tt_meta'][9]['passeios'] = $passeios3;
 contem( '<h3>Alfama</h3>', $sc['tt_destino_onde_ficar']( array( 'titulo' => 'Onde ficar' ) ), 'onde ficar' );
 contem( '<summary>Precisa de visto?</summary>', $sc['tt_destino_faq']( array( 'titulo' => 'Perguntas frequentes' ) ), 'faq' );
 igual( '<p class="tt-destino-atualizado">Atualizado em 14/10/2026</p>', $sc['tt_destino_atualizado']( array() ), 'atualizado em' );

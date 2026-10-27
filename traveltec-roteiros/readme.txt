@@ -157,3 +157,9 @@ assumir_layout=true (API).
 
 2.3.6: destino publicado, atualizado ou tirado do ar (pela API do Cliente Ideal ou pelo painel) limpa no LiteSpeed a
 página dele e a lista /destinos/ — antes o destino novo só aparecia quando o cache vencia. Não limpa o cache inteiro.
+
+2.4.0: link de afiliado da Viator nos passeios do destino. Em Voucher Tec › Configuração › Destinos a agência informa o
+código de afiliado (pid, "P00…"); cada passeio que tem o endereço na Viator ganha o botão "Ver passeio", que abre a
+Viator com ?pid=<código>&mcid=42383&medium=link. Sem código: os passeios aparecem como antes, sem link. O endereço é
+gravado sem parâmetros (campo "Link na Viator" no cadastro do destino ou url do passeio pela API). Também em
+POST /voucher-tec/v1/aplicar (viator_pid) e no status (opcoes.viator_pid).

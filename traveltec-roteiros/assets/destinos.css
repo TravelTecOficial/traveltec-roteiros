@@ -54,6 +54,8 @@ body #tt-destino-cotacao h3.wp-block-heading,body #tt-destino-cotacao h4.wp-bloc
 .tt-destino-card__corpo{padding:14px 16px}
 .tt-destino-card__corpo h4{margin:0 0 6px;font-size:1.05em}
 .tt-destino-card__corpo p{margin:0;font-size:.92em;line-height:1.45}
+.tt-destino-card__link{display:inline-block;margin-top:10px;padding:6px 14px;border-radius:999px;background:var(--e-global-color-primary,#333);color:#fff;font-size:.85em;font-weight:600;text-decoration:none}
+.tt-destino-card__link:hover{opacity:.88;color:#fff}
 .tt-destino-pratos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 32px}
 .tt-destino-pratos li{display:flex;flex-direction:column;gap:2px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,.08)}
 

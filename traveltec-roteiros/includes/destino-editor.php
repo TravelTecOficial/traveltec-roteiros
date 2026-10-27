@@ -58,6 +58,8 @@ function tt_destino_campo_linhas( $chave, $rotulo, $valor, $colunas, $ajuda = ''
 			echo '<label class="tt-dest-linha__campo tt-dest-linha__campo--' . esc_attr( $col[1] ) . '"><span>' . esc_html( $col[0] ) . '</span>';
 			if ( 'foto' === $col[1] ) {
 				tt_destino_campo_foto( $nome, $v );
+			} elseif ( 'url' === $col[1] ) {
+				echo '<input type="url" class="widefat" name="' . esc_attr( $nome ) . '" value="' . esc_attr( $v ) . '" maxlength="500" placeholder="https://www.viator.com/...">';
 			} elseif ( 'area' === $col[1] ) {
 				echo '<textarea rows="3" class="widefat" name="' . esc_attr( $nome ) . '" maxlength="' . (int) $limite[ $sub ] . '">' . esc_textarea( $v ) . '</textarea>';
 			} else {
@@ -132,7 +134,7 @@ function tt_destino_painel_praticas( $v ) {
 
 function tt_destino_painel_fazer( $v ) {
 	tt_destino_campo_linhas( 'pontos_turisticos', 'Pontos turísticos', $v['pontos_turisticos'], array( 'nome' => array( 'Nome', 'texto' ), 'descricao' => array( 'Uma linha', 'texto' ), 'foto' => array( 'Foto', 'foto' ) ), 'De 4 a 8. Linha em branco não aparece.' );
-	tt_destino_campo_linhas( 'passeios', 'Passeios', $v['passeios'], array( 'titulo' => array( 'Título', 'texto' ), 'duracao' => array( 'Duração', 'texto' ), 'foto' => array( 'Foto', 'foto' ) ), 'De 3 a 6. Com menos de 3, a seção não aparece no site. A foto sai com o crédito "Foto: Viator".' );
+	tt_destino_campo_linhas( 'passeios', 'Passeios', $v['passeios'], array( 'titulo' => array( 'Título', 'texto' ), 'duracao' => array( 'Duração', 'texto' ), 'foto' => array( 'Foto', 'foto' ), 'url' => array( 'Link na Viator', 'url' ) ), 'De 3 a 6. Com menos de 3, a seção não aparece no site. A foto sai com o crédito "Foto: Viator". Com o código de afiliado na Configuração › Destinos, o passeio com link ganha o botão "Ver passeio".' );
 	tt_destino_campo_linhas( 'gastronomia', 'Gastronomia', $v['gastronomia'], array( 'nome' => array( 'Prato', 'texto' ), 'descricao' => array( 'Uma linha', 'texto' ) ), 'De 3 a 6 pratos típicos.' );
 	$lista = tt_destino_lista_ler( $v['o_que_fazer'] );
 	if ( ! $lista ) {
