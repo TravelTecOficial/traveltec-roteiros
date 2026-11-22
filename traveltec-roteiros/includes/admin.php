@@ -412,6 +412,7 @@ function tt_voucher_aba_cotacao( $st ) {
 	);
 	echo '<h2>Captação de leads</h2><p style="max-width:860px">Depois de cada envio com sucesso (cotação, contato e newsletter), o site manda o lead ao webhook com o ID da agência, os dados do formulário, as UTMs e os ids de clique (gclid, fbclid…), guardados por 90 dias.</p>';
 	echo '<p>Situação: <strong>' . ( $st['captacao'] ? 'ligada' : 'desligada' ) . '</strong> · ID da agência: <strong>' . ( $st['dados']['id'] ? esc_html( $st['dados']['id'] ) : 'não preenchido (aba Licença)' ) . '</strong></p>';
+	tt_voucher_form_forms_site( 'cotacao' );
 	tt_voucher_form_dados( 'cotacao', $st );
 }
 

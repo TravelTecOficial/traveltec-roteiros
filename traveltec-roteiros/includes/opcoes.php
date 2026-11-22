@@ -11,8 +11,12 @@
  * - Código de afiliado da Viator (aba Destinos): o pid da agência ("P00…"). Com ele, cada passeio do destino que tem
  *   o endereço na Viator ganha o botão "Ver passeio" com ?pid=<código>&mcid=42383&medium=link. Vazio: sem link.
  *
- * Também aceitas em POST /wp-json/voucher-tec/v1/aplicar: moeda_orcamento (USD|BRL), preco_roteiros (exibir|consulte)
- * e viator_pid ('' apaga).
+ * - Formulários do site na captação (aba Cotação): ID do JetFormBuilder de cada papel (cotacao, contato, newsletter,
+ *   newsletter-blog) quando o formulário não foi instalado pelo plugin (site feito à mão, como a Rede Turística).
+ *   Vale por cima do formulário instalado do mesmo papel. Gravar algum liga a captação.
+ *
+ * Também aceitas em POST /wp-json/voucher-tec/v1/aplicar: moeda_orcamento (USD|BRL), preco_roteiros (exibir|consulte),
+ * viator_pid ('' apaga) e form_cotacao / form_contato / form_newsletter / form_newsletter_blog ('' ou 0 apaga).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,6 +26,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'TT_VOUCHER_OPT_MOEDA', 'tt_voucher_moeda_orcamento' );
 define( 'TT_VOUCHER_OPT_PRECO', 'tt_voucher_preco_roteiros' );
 define( 'TT_VOUCHER_TEXTO_CONSULTE', 'Consulte-nos' );
+define( 'TT_VOUCHER_OPT_FORMS_SITE', 'tt_voucher_forms_site' );
+
+/** Papéis da captação (chave do campo no painel/REST => papel do captacao.js). */
+function tt_voucher_papeis_forms() {
+	return array(
+		'form_cotacao'        => array( 'cotacao', 'Cotação' ),
+		'form_contato'        => array( 'contato', 'Contato' ),
+		'form_newsletter'     => array( 'newsletter', 'Newsletter' ),
+		'form_newsletter_blog' => array( 'newsletter-blog', 'Newsletter do blog' ),
+	);
+}
+
+/** Formulários indicados à mão: papel => ID. */
+function tt_voucher_forms_site() {
+	$v = get_option( TT_VOUCHER_OPT_FORMS_SITE, array() );
+	return is_array( $v ) ? array_map( 'intval', $v ) : array();
+}
+
+/** É um formulário do JetFormBuilder publicado neste site? */
+function tt_voucher_form_existe( $id ) {
+	return $id && tt_voucher_vivo( $id ) && 'jet-form-builder' === get_post_type( $id );
+}
+
+/**
+ * Mapa da captação: "<ID do formulário>" => papel. Entram os formulários instalados pelo plugin que ainda existem
+ * (um ID guardado de outro site, por clone, fica de fora) e, por cima, os indicados à mão.
+ */
+function tt_voucher_forms_captacao() {
+	$mapa  = array();
+	$manual = tt_voucher_forms_site();
+	foreach ( tt_voucher_ids()['forms'] as $papel => $id ) {
+		$id = (int) $id;
+		if ( ! isset( $manual[ $papel ] ) && tt_voucher_form_existe( $id ) ) {
+			$mapa[ (string) $id ] = $papel;
+		}
+	}
+	foreach ( $manual as $papel => $id ) {
+		if ( tt_voucher_form_existe( $id ) ) {
+			$mapa[ (string) $id ] = $papel;
+		}
+	}
+	return $mapa;
+}
 
 function tt_voucher_moeda_orcamento() {
 	return 'BRL' === get_option( TT_VOUCHER_OPT_MOEDA, 'USD' ) ? 'BRL' : 'USD';
@@ -138,6 +185,37 @@ function tt_voucher_salvar_opcoes( $entrada ) {
 			$rel['dados_alterados'][] = '' === $pid ? 'Código de afiliado da Viator removido: os passeios ficam sem link' : 'Código de afiliado da Viator: ' . $pid;
 		}
 	}
+	$manual = tt_voucher_forms_site();
+	$mexeu  = false;
+	foreach ( tt_voucher_papeis_forms() as $campo => $papel ) {
+		if ( ! isset( $entrada[ $campo ] ) ) {
+			continue;
+		}
+		$id = absint( preg_replace( '/\D+/', '', (string) $entrada[ $campo ] ) );
+		if ( ! $id ) {
+			if ( isset( $manual[ $papel[0] ] ) ) {
+				unset( $manual[ $papel[0] ] );
+				$mexeu = true;
+				$rel['dados_alterados'][] = 'Formulário de ' . $papel[1] . ': volta a ser o instalado pelo plugin';
+			}
+			continue;
+		}
+		if ( ! tt_voucher_form_existe( $id ) ) {
+			$rel['avisos'][] = 'Formulário de ' . $papel[1] . ' não gravado: o #' . $id . ' não é um formulário do JetFormBuilder publicado neste site.';
+			continue;
+		}
+		if ( ! isset( $manual[ $papel[0] ] ) || $manual[ $papel[0] ] !== $id ) {
+			$manual[ $papel[0] ] = $id;
+			$mexeu = true;
+			$rel['dados_alterados'][] = 'Formulário de ' . $papel[1] . ' na captação: #' . $id;
+		}
+	}
+	if ( $mexeu ) {
+		update_option( TT_VOUCHER_OPT_FORMS_SITE, $manual );
+		if ( $manual ) {
+			update_option( 'tt_voucher_captacao', 1 );
+		}
+	}
 	return $rel;
 }
 
@@ -147,7 +225,7 @@ add_action( 'admin_post_tt_voucher_opcoes', function () {
 	}
 	check_admin_referer( 'tt_voucher_opcoes' );
 	$entrada = array();
-	foreach ( array( 'moeda_orcamento', 'preco_roteiros', 'viator_pid' ) as $campo ) {
+	foreach ( array_merge( array( 'moeda_orcamento', 'preco_roteiros', 'viator_pid' ), array_keys( tt_voucher_papeis_forms() ) ) as $campo ) {
 		if ( isset( $_POST[ $campo ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce conferido acima
 			$entrada[ $campo ] = sanitize_text_field( wp_unslash( $_POST[ $campo ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
@@ -182,4 +260,27 @@ function tt_voucher_form_texto( $aba, $campo, $titulo, $descricao, $atual, $exem
 	echo '<p><input type="text" class="regular-text" name="' . esc_attr( $campo ) . '" value="' . esc_attr( $atual ) . '" placeholder="' . esc_attr( $exemplo ) . '"> ';
 	submit_button( 'Salvar', 'secondary', 'submit', false );
 	echo '</p></form>';
+}
+
+/** Bloco do painel (aba Cotação): ID do formulário de cada papel na captação. */
+function tt_voucher_form_forms_site( $aba ) {
+	$manual = tt_voucher_forms_site();
+	$ativos = tt_voucher_forms_captacao();
+	echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin:8px 0 24px;max-width:860px">';
+	wp_nonce_field( 'tt_voucher_opcoes' );
+	echo '<input type="hidden" name="action" value="tt_voucher_opcoes"><input type="hidden" name="aba" value="' . esc_attr( $aba ) . '">';
+	echo '<h3>Formulários do site</h3><p class="description">Para formulários feitos no site (não instalados pelo plugin): informe o ID do formulário do JetFormBuilder (o número depois de post= no endereço da tela de edição do formulário). Em branco: vale o formulário instalado pelo plugin. O formulário precisa estar com envio por AJAX.</p>';
+	echo '<table class="form-table" role="presentation"><tbody>';
+	foreach ( tt_voucher_papeis_forms() as $campo => $papel ) {
+		$atual = isset( $manual[ $papel[0] ] ) ? (string) $manual[ $papel[0] ] : '';
+		echo '<tr><th scope="row"><label for="tt-' . esc_attr( $campo ) . '">' . esc_html( $papel[1] ) . '</label></th><td><input type="number" min="1" class="small-text" id="tt-' . esc_attr( $campo ) . '" name="' . esc_attr( $campo ) . '" value="' . esc_attr( $atual ) . '"></td></tr>';
+	}
+	echo '</tbody></table>';
+	$lista = array();
+	foreach ( $ativos as $id => $papel ) {
+		$lista[] = '#' . $id . ' = ' . $papel;
+	}
+	echo '<p>Enviando ao webhook hoje: <strong>' . esc_html( $lista ? implode( ' · ', $lista ) : 'nenhum formulário' ) . '</strong></p>';
+	submit_button( 'Salvar', 'secondary', 'submit', false );
+	echo '</form>';
 }
