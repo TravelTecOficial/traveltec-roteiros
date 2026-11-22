@@ -56,7 +56,7 @@ function tt_voucher_aplicar( $entrada ) {
 		$rel['estilo']     = array( 'documentos_alterados' => tt_voucher_aplicar_estilo( $novo ), 'paleta' => tt_voucher_estilo() );
 	}
 
-	if ( isset( $entrada['moeda_orcamento'] ) || isset( $entrada['preco_roteiros'] ) || isset( $entrada['viator_pid'] ) ) {
+	if ( array_intersect( array_merge( array( 'moeda_orcamento', 'preco_roteiros', 'viator_pid' ), array_keys( tt_voucher_papeis_forms() ) ), array_keys( $entrada ) ) ) {
 		$op                     = tt_voucher_salvar_opcoes( $entrada );
 		$rel['dados_alterados'] = array_merge( (array) $rel['dados_alterados'], $op['dados_alterados'] );
 		$rel['avisos']          = array_merge( (array) $rel['avisos'], $op['avisos'] );
@@ -92,6 +92,7 @@ function tt_voucher_status() {
 		'menus'          => $ids['menus'],
 		'midia'          => $ids['midia'],
 		'captacao'       => (bool) get_option( 'tt_voucher_captacao' ),
+		'captacao_forms' => tt_voucher_forms_captacao(),
 		'dados'          => tt_voucher_dados(),
 		'estilo'         => tt_voucher_estilo(),
 		'opcoes'         => array(

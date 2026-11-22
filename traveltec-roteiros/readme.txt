@@ -163,3 +163,9 @@ código de afiliado (pid, "P00…"); cada passeio que tem o endereço na Viator 
 Viator com ?pid=<código>&mcid=42383&medium=link. Sem código: os passeios aparecem como antes, sem link. O endereço é
 gravado sem parâmetros (campo "Link na Viator" no cadastro do destino ou url do passeio pela API). Também em
 POST /voucher-tec/v1/aplicar (viator_pid) e no status (opcoes.viator_pid).
+
+2.4.1: captação com os formulários feitos no site (Rede Turística, 22/11/2026). Na aba Cotação › Formulários do site
+informa-se o ID do JetFormBuilder de Cotação, Contato, Newsletter e Newsletter do blog; esses IDs entram no mapa da
+captação por cima dos instalados pelo plugin, e gravar algum liga a captação. IDs guardados que não são formulários
+deste site (vindos de clone, como 6010/6011) saem do mapa sozinhos. Também em POST /voucher-tec/v1/aplicar
+(form_cotacao, form_contato, form_newsletter, form_newsletter_blog) e no status (captacao_forms).
